@@ -46,7 +46,7 @@ public class CreatureDaoImpl implements CreatureDao {
     }
 
     public List<Creature> findAll() {
-        TypedQuery<Creature> query = em.createQuery("SELECT c FROM Creature as c", Creature.class);
+        TypedQuery<Creature> query = em.createQuery("SELECT c FROM Creature AS c", Creature.class);
         return query.getResultList();
     }
 }
