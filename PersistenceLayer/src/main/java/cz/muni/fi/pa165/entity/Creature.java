@@ -83,37 +83,37 @@ public class Creature {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Creature)) {
+        if ( !(obj instanceof Creature)) {
             return false;
         }
-        Creature creature = (Creature) obj;
+        Creature other = (Creature) obj;
 
-        if (creature.getName() == null) {
+        if (other.getName() == null) {
             if (this.name != null) {
                 return false;
             }
 
-        } else if ( !creature.getName().equals(this.name)) {
+        } else if ( !other.getName().equals(this.name)) {
             return false;
         }
 
-        if (creature.getHeight() == null) {
+        if (other.getHeight() == null) {
             if (this.height != null) {
                 return false;
             }
-        } else if ( !creature.getHeight().equals(this.height)) {
+        } else if ( !other.getHeight().equals(this.height)) {
             return false;
         }
 
-        if (creature.getWeight() == null) {
+        if (other.getWeight() == null) {
             if (this.weight != null) {
                 return false;
             }
-        } else if ( !creature.getWeight().equals(this.weight)) {
+        } else if ( !other.getWeight().equals(this.weight)) {
             return false;
         }
 
-        if (creature.getType() != this.type) {
+        if (other.getType() != this.type) {
             return false;
         }
 
