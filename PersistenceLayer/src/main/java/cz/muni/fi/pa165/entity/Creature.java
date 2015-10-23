@@ -10,11 +10,10 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "CREATURE_TABLE")
 public class Creature {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -89,32 +88,32 @@ public class Creature {
         }
         Creature creature = (Creature) obj;
 
-        if (creature.name == null) {
+        if (creature.getName() == null) {
             if (this.name != null) {
                 return false;
             }
 
-        } else if ( !creature.name.equals(this.name)) {
+        } else if ( !creature.getName().equals(this.name)) {
             return false;
         }
 
-        if (creature.height == null) {
+        if (creature.getHeight() == null) {
             if (this.height != null) {
                 return false;
             }
-        } else if ( !creature.height.equals(this.height)) {
+        } else if ( !creature.getHeight().equals(this.height)) {
             return false;
         }
 
-        if (creature.weight == null) {
+        if (creature.getWeight() == null) {
             if (this.weight != null) {
                 return false;
             }
-        } else if ( !creature.weight.equals(this.weight)) {
+        } else if ( !creature.getWeight().equals(this.weight)) {
             return false;
         }
 
-        if (creature.type != this.type) {
+        if (creature.getType() != this.type) {
             return false;
         }
 
