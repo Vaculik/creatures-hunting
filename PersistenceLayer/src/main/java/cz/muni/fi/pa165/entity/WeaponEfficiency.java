@@ -17,8 +17,8 @@ public class WeaponEfficiency {
     @ManyToOne(optional = false)
     private Creature creature;
 
-//    @ManyToOne(optional = false)
-//    private Weapon weapon;
+    @ManyToOne(optional = false)
+    private Weapon weapon;
 
     public Long getId() {
         return id;
@@ -40,20 +40,20 @@ public class WeaponEfficiency {
         return creature;
     }
 
-//    public void setWeapon(Weapon weapon) {
-//        this.weapon = weapon;
-//    }
-//
-//    public Weapon getWeapon() {
-//        return weapon;
-//    }
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
 
     @Override
     public int hashCode() {
         int hash = 1;
         hash = 23 * hash + ((efficiency != null) ? efficiency.hashCode() : 0);
         hash = 11 * hash + ((creature != null) ? creature.hashCode() : 0);
-//        hash = 29 * hash + ((weapon != null) ? weapon.hashCode() : 0);
+        hash = 29 * hash + ((weapon != null) ? weapon.hashCode() : 0);
         return hash;
     }
 
@@ -80,13 +80,13 @@ public class WeaponEfficiency {
             return false;
         }
 
-//        if (other.getWeapon() == null) {
-//            if (this.weapon != null) {
-//                return false;
-//            }
-//        } else if ( !other.getWeapon().equals(this.weapon)) {
-//            return false;
-//        }
+        if (other.getWeapon() == null) {
+            if (this.weapon != null) {
+                return false;
+            }
+        } else if ( !other.getWeapon().equals(this.weapon)) {
+            return false;
+        }
 
         return true;
     }
