@@ -5,10 +5,7 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.Creature;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author Martin Zboril
  */
-
 @Repository
 public class AreaDaoImpl implements AreaDao {
 
@@ -37,7 +33,6 @@ public class AreaDaoImpl implements AreaDao {
         try {
             em.persist(ar);
         } catch (Exception ex) {
-
             throw new NoResultException("Error while creating area");
         }
     }
@@ -84,7 +79,7 @@ public class AreaDaoImpl implements AreaDao {
     }
 
     @Override
-    public Area findById(Long id) {
+    public Area getById(Long id) {
         if (id == null) {
             throw new NullPointerException("Input Id is null");
         }
@@ -95,158 +90,20 @@ public class AreaDaoImpl implements AreaDao {
     }
 
     @Override
-    public Area findByName(String name) {
+    public Area getByName(String name) {
         if (name == null) {
             throw new NullPointerException("Input Name is null");
         }
         if (name.length() == 0) {
             throw new IllegalArgumentException("Name has no length");
         }
-        if (name.length() < 50) {
+        if (name.length() > 50) {
             throw new IllegalArgumentException("Name is too long");
         }
-        return em.find(Area.class, name);
-    }
-
-    @Override
-    public List<String> retrieveAreasNames() {
         try {
-            TypedQuery<Area> qr = em.createQuery("select ar.name from Area ar", Area.class);
-            List<String> names = new ArrayList<String>();
-            for (Area ar : qr.getResultList()) {
-                names.add(ar.getName());
-            }
-            return names;
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting names. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public List<Area> retrieveAreasWithNoCreature() {
-        try {
-            List<Area> results = new ArrayList<Area>();
-            for (Area ar : findAll()) {
-                if (ar.getCreatures().isEmpty()) {
-                    results.add(ar);
-                }
-            }
-            return results;
+            return em.createQuery("SELECT ar FROM Area ar WHERE name = :parName", Area.class).setParameter("parName", name).getSingleResult();
         } catch (Exception ex) {
             throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
         }
-    }
-
-    @Override
-    public List<Area> retrieveAreasWithAnyCreature() {
-        try {
-            List<Area> results = new ArrayList<Area>();
-            for (Area ar : findAll()) {
-                if (!ar.getCreatures().isEmpty()) {
-                    results.add(ar);
-                }
-            }
-            return results;
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public List<Area> retrieveAreasMostCreatures() {
-        try {
-            List<Area> results = new ArrayList<Area>();
-            for (Area ar : findAll()) {
-                if (results.isEmpty()) {
-                    results.add(ar);
-                }
-                if (retrieveCreaturesAmount(results.get(0)) < retrieveCreaturesAmount(ar)) {
-                    results.clear();
-                    results.add(ar);
-                } else if (retrieveCreaturesAmount(results.get(0)) == retrieveCreaturesAmount(ar)) {
-                    results.add(ar);
-                }
-            }
-            return results;
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting area. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public List<Area> retrieveAreasFewestCreatures() {
-        try {
-            List<Area> results = new ArrayList<Area>();
-            for (Area ar : findAll()) {
-                if (results.isEmpty()) {
-                    results.add(ar);
-                }
-                if (retrieveCreaturesAmount(results.get(0)) > retrieveCreaturesAmount(ar)) {
-                    results.clear();
-                    results.add(ar);
-                } else if (retrieveCreaturesAmount(results.get(0)) == retrieveCreaturesAmount(ar)) {
-                    results.add(ar);
-                }
-            }
-            return results;
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting area. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public void addCreature(Area ar, Creature cr) {
-        try {
-            em.detach(ar);
-            Set<Creature> creatures = ar.getCreatures();
-            creatures.add(cr);
-            ar.setCreatures(creatures);
-            em.merge(ar);
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting area. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public boolean removeCreature(Area ar, Creature cr) {
-        try {
-            em.detach(ar);
-            Set<Creature> creatures = ar.getCreatures();
-            if (!creatures.contains(cr)) {
-                return false;
-            }
-            creatures.remove(cr);
-            ar.setCreatures(creatures);
-            em.merge(ar);
-            return true;
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting area. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public int retrieveCreaturesAmount(Area ar) {
-        if (ar == null) {
-            throw new NullPointerException("Input Are is null");
-        }
-        if (ar.getName() == null || ar.getId() == null) {
-            throw new IllegalArgumentException("Area does not exist");
-        }
-
-        try {
-            return findById(ar.getId()).getCreatures().size();
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting area. Error: " + ex.getMessage());
-        }
-    }
-
-    @Override
-    public boolean containAreaCreature(Area ar, Creature cr) {
-        List<Area> areas = findAll();
-        if (!areas.contains(ar)) {
-            System.err.println("Area does not exists in database");
-            return false;
-        }
-        return ar.getCreatures().contains(cr);
     }
 }
