@@ -3,6 +3,9 @@ package cz.muni.fi.pa165.entity;
 import javax.persistence.*;
 
 /**
+ * The entity represents relation between Weapon and Creature entities with
+ * efficiency parameter.
+ *
  * Created by vaculik on 23.10.15.
  */
 @Entity
@@ -19,6 +22,10 @@ public class WeaponEfficiency {
 
     @ManyToOne(optional = false)
     private Weapon weapon;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -9,6 +9,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * The class implements basic operations on WeaponEfficiency entity.
+ *
  * Created by vaculik on 23.10.15.
  */
 @Repository

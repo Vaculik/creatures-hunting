@@ -6,6 +6,9 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import javax.persistence.*;
 
 /**
+ * The entity represents a creature which we want to track and holds some basic
+ * information about it like name, height, weight or type.
+ *
  * Created by vaculik on 23.10.15.
  */
 
@@ -25,7 +28,12 @@ public class Creature {
     @Enumerated
     private CreatureType type;
 
+    // Parameter description is not relevant for distinguishing two creatures
     private String description;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

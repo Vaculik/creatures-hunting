@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import java.util.List;
 
 /**
+ * The interface represents basic operations on WeaponEfficiency entity.
+ *
  * Created by vaculik on 23.10.15.
  */
 public interface WeaponEfficiencyDao {

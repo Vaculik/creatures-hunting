@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * The class implements basic operations on Creature entity.
+ *
  * Created by vaculik on 23.10.15.
  */
 
