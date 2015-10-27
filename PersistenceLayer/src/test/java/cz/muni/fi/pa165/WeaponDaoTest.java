@@ -18,6 +18,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
+ * Tests for basic operations on entity Weapon defined in interface WeaponDao.
+ *
  * Created by vaculik on 26.10.15.
  */
 
