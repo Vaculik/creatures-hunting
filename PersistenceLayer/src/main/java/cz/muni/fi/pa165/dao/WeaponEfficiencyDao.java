@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface WeaponEfficiencyDao {
 
-    WeaponEfficiency findById(Long id);
+    WeaponEfficiency getById(Long id);
 
     void create(WeaponEfficiency weaponEfficiency);
 

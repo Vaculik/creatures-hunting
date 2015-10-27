@@ -21,11 +21,11 @@ public class CreatureDaoImpl implements CreatureDao {
     @PersistenceContext
     private EntityManager em;
 
-    public Creature findById(Long id) {
+    public Creature getById(Long id) {
         return em.find(Creature.class, id);
     }
 
-    public Creature findByName(String name) {
+    public Creature getByName(String name) {
         TypedQuery<Creature> query = em.createQuery("SELECT c FROM Creature as c WHERE c.name=:n",
                 Creature.class).setParameter("n", name);
         try {
