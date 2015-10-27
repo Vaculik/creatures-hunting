@@ -2,6 +2,12 @@ package cz.muni.fi.pa165.dao;
 
 import java.util.List;
 import cz.muni.fi.pa165.entity.User;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Repository
 public class UserDaoImpl implements UserDao{

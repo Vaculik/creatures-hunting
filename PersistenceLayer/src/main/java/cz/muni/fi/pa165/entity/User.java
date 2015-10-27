@@ -5,6 +5,11 @@ import java.util.Date;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Entity
 public class User {
 	
