@@ -7,7 +7,6 @@
         <artifactId>CreaturesHunting</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>cz.muni.fi.pa165</groupId>
     <artifactId>PersistenceLayer</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>PersistenceLayer</name>
@@ -23,6 +22,16 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
             <version>2.1.0</version>
@@ -30,7 +39,8 @@
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
-            <version>1.0.0.GA</version>
+            <version>1.1.0.Final</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -40,22 +50,22 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>2.5.6</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>2.5.6</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>2.5.6</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>2.5.6</version>
+            <version>4.2.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -66,7 +76,23 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>2.5</version>
+            <version>4.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>4.3.5.Final</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-jpa</artifactId>
+            <version>1.9.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>10.12.1.1</version>
         </dependency>
     </dependencies>
 </project>
