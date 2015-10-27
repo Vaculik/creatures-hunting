@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Weapon;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -11,6 +13,7 @@ import javax.persistence.TypedQuery;
  *
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
+@Repository
 public class WeaponDaoImpl implements WeaponDao {
     @PersistenceContext
     private EntityManager em;

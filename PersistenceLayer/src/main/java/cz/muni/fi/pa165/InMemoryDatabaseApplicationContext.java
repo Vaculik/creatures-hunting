@@ -15,17 +15,20 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories
+@ComponentScan(basePackageClasses={cz.muni.fi.pa165.dao.WeaponDao.class})
 public class InMemoryDatabaseApplicationContext {
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-//		em.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
-		em.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
+		em.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
 		em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		return em;
 	}
@@ -35,10 +38,10 @@ public class InMemoryDatabaseApplicationContext {
 		return  new JpaTransactionManager(entityManagerFactory().getObject());
 	}
 
-//	@Bean
-//	public LoadTimeWeaver instrumentationLoadTimeWeaver() {
-//		return new InstrumentationLoadTimeWeaver();
-//	}
+	@Bean
+	public LoadTimeWeaver instrumentationLoadTimeWeaver() {
+		return new InstrumentationLoadTimeWeaver();
+	}
 
 	@Bean
 	public DataSource dataSource(){

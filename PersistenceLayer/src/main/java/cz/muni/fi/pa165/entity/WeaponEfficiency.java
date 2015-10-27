@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * The entity represents relation between Weapon and Creature entities with
@@ -15,15 +16,21 @@ public class WeaponEfficiency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private Integer efficiency;
 
     @ManyToOne(optional = false)
+    @NotNull
     private Creature creature;
 
     @ManyToOne(optional = false)
+    @NotNull
     private Weapon weapon;
 
-    public void setId(Long id) {
+    public WeaponEfficiency() {
+    }
+
+    public WeaponEfficiency(Long id) {
         this.id = id;
     }
 
