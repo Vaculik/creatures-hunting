@@ -116,14 +116,14 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
         Weapon w2 = createDefaultWeapon("W2");
         weaponDao.create(w1);
         weaponDao.create(w2);
-        weaponDao.remove(w2);
+        weaponDao.delete(w2);
         List<Weapon> result = weaponDao.findAll();
 
         Assert.assertEquals(result.size(), 1);
         Assert.assertTrue(result.contains(w1));
         Assert.assertFalse(result.contains(w2));
 
-        weaponDao.remove(w1);
+        weaponDao.delete(w1);
         result = weaponDao.findAll();
 
         Assert.assertEquals(result.size(), 0);
@@ -131,7 +131,7 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test(expectedExceptions = NullPointerException.class)
     public void removeNull() {
-        weaponDao.remove(null);
+        weaponDao.delete(null);
     }
 
     private Weapon createDefaultWeapon() {

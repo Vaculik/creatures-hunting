@@ -29,7 +29,8 @@ public class Area {
     
     String description;
         
-    @OneToMany(mappedBy = "id")
+    // Mapping by Id causes Creature to crash on persist
+    @OneToMany
     Set<Creature> creatures;
 
     public Long getId() {

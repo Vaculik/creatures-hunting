@@ -52,7 +52,7 @@ public class WeaponDaoImpl implements WeaponDao {
         em.merge(weapon);
     }
 
-    public void remove(Weapon weapon) {
+    public void delete(Weapon weapon) {
         
         if (weapon == null)
             throw new NullPointerException("Argument weapon is null");
