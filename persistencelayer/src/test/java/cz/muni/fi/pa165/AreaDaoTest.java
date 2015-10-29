@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -72,14 +74,12 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
 		Assert.assertEquals(tmp, area);
     }
     
-	@Test
+	@Test(expectedExceptions = NoResultException.class)
 	public void getByNameWrong() {
 		Area area = createArea("Brno", "StudentCity");
 		areaDao.create(area);
 		
 		Area tmp = areaDao.getByName("Praha");
-		Assert.assertNotEquals(tmp, area);
-		Assert.assertNull(tmp);
 	}
 	
     @Test(expectedExceptions = NullPointerException.class)
@@ -89,7 +89,7 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
         areaDao.getByName(null);
     }
     
-    @Test
+    @Test(expectedExceptions = NoResultException.class)
     public void deleteAreaTest() {
     	Area area = createArea("Brno", "StudentCity");
 		areaDao.create(area);
@@ -99,32 +99,18 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
 		areaDao.delete(area);
 		
 		Area tmp2 = areaDao.getByName("Brno");
-		Assert.assertNotEquals(area, tmp2);
-		Assert.assertNull(tmp2);
     }
     
     @Test
     public void updateUserTest() {
     	Area area = createArea("Brno", "StudentCity");
 		areaDao.create(area);
-		
-		Area tmp = areaDao.getById(area.getId());
-		Assert.assertEquals(area.getName(), tmp.getName());
-		Assert.assertEquals(area.getDescription(), tmp.getDescription());
-		
-		//Area newArea = areaDao.getByName(area.getName());
 		area.setName("Praha");
 		area.setDescription("Big city");
-		
-		Set<Creature> creatureList = new HashSet<Creature>();
-		creatureList.add(makeCreature("Michael"));
-		area.setCreatures(creatureList);
-		
 		areaDao.update(area);
 		
-		Area tmp2 = areaDao.getById(area.getId());
-		Assert.assertNotEquals(tmp.getName(), tmp2.getName());
-		Assert.assertNotEquals(tmp.getDescription(), tmp2.getDescription());
+		Area result = areaDao.getById(area.getId());
+		Assert.assertEquals(area, result);
     }
     
     @Test

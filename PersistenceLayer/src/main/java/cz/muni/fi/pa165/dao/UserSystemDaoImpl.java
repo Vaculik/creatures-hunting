@@ -8,6 +8,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
+/**
+ * This class implements basic operations on UserSystem entity.
+ *
+ * @author Jakub Miculka
+ */
 @Repository
 public class UserSystemDaoImpl implements UserSystemDao {
 
