@@ -20,18 +20,30 @@ public class WeaponEfficiencyDaoImpl implements WeaponEfficiencyDao {
     private EntityManager em;
 
     public WeaponEfficiency getById(Long id) {
+        if (id == null) {
+            throw new NullPointerException("Argument id is null");
+        }
         return em.find(WeaponEfficiency.class, id);
     }
 
     public void create(WeaponEfficiency weaponEfficiency) {
+        if (weaponEfficiency == null) {
+            throw new NullPointerException("Argument weaponEfficiency is null");
+        }
         em.persist(weaponEfficiency);
     }
 
     public void delete(WeaponEfficiency weaponEfficiency) {
+        if (weaponEfficiency == null) {
+            throw new NullPointerException("Argument weaponEfficiency is null");
+        }
         em.remove(weaponEfficiency);
     }
 
     public void update(WeaponEfficiency weaponEfficiency) {
+        if (weaponEfficiency == null) {
+            throw new NullPointerException("Argument weaponEfficiency is null");
+        }
         em.merge(weaponEfficiency);
     }
 

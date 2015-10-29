@@ -3,7 +3,7 @@ package cz.muni.fi.pa165.dao;
 import cz.muni.fi.pa165.entity.Weapon;
 import java.util.List;
 /**
- *
+ * This class represents an interface of Data Access Object of Weapon Entity. 
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 public interface WeaponDao {

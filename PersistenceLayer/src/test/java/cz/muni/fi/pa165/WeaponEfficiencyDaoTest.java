@@ -24,7 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- *
+ * This test class test methods of WeaponEfficiencyDao.
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 
@@ -60,12 +60,12 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void getById_nullArg() {
         efficiencyDao.getById(null);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void create_nullArg() {
         efficiencyDao.create(null);
     }
@@ -103,7 +103,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void delete_nullArg() {
         efficiencyDao.delete(null);
     }
@@ -142,7 +142,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
     
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void update_nullArg() {
         efficiencyDao.update(null);
     }

@@ -18,8 +18,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- *
- * @author Pavel Vesely <448290@mail.muni.cz>
+ * This test class test methods of CreatuDao.
+ * @author Pavel VeselÃ½ <448290@mail.muni.cz>
  */
 
 @ContextConfiguration(classes=InMemoryDatabaseApplicationContext.class)

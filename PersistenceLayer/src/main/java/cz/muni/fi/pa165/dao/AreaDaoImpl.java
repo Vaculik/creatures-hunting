@@ -5,14 +5,20 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Area;
+import cz.muni.fi.pa165.entity.UserSystem;
+
 import java.util.List;
+
 import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
 import org.springframework.stereotype.Repository;
 
 /**
+ * This class represents an implementation of Area Data Access Object interface.
+ * It contains several basic methods.
  *
  * @author Martin Zboril
  */
@@ -23,45 +29,45 @@ public class AreaDaoImpl implements AreaDao {
     private EntityManager em;
 
     @Override
-    public void create(Area ar) {
-        if (ar == null) {
+    public void create(Area area) {
+        if (area == null) {
             throw new NullPointerException("Input Are is null");
         }
-        if (ar.getName() == null) {
+        if (area.getName() == null) {
             throw new IllegalArgumentException("Area has no name");
         }
         try {
-            em.persist(ar);
+            em.persist(area);
         } catch (Exception ex) {
             throw new NoResultException("Error while creating area");
         }
     }
 
     @Override
-    public void delete(Area ar) {
-        if (ar == null) {
+    public void delete(Area area) {
+        if (area == null) {
             throw new NullPointerException("Input Are is null");
         }
-        if (ar.getName() == null || ar.getId() == null) {
+        if (area.getName() == null || area.getId() == null) {
             throw new IllegalArgumentException("Area does not exist");
         }
         try {
-            em.remove(ar);
+            em.remove(area);
         } catch (Exception ex) {
             throw new NoResultException("Error while deleting area.  Error: " + ex.getMessage());
         }
     }
 
     @Override
-    public void update(Area ar) {
-        if (ar == null) {
+    public void update(Area area) {
+        if (area == null) {
             throw new NullPointerException("Input Are is null");
         }
-        if (ar.getName() == null || ar.getId() == null) {
+        if (area.getName() == null || area.getId() == null) {
             throw new IllegalArgumentException("Area does not exist");
         }
         try {
-            em.merge(ar);
+            em.merge(area);
         } catch (Exception ex) {
             throw new NoResultException("Error while updating area. Error: " + ex.getMessage());
         }
@@ -71,7 +77,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public List<Area> findAll() {
         try {
-            TypedQuery<Area> qr = em.createQuery("select ar from Area ar", Area.class);
+            TypedQuery<Area> qr = em.createQuery("SELECT ar FROM Area AS ar", Area.class);
             return qr.getResultList();
         } catch (Exception ex) {
             throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
@@ -101,7 +107,7 @@ public class AreaDaoImpl implements AreaDao {
             throw new IllegalArgumentException("Name is too long");
         }
         try {
-            return em.createQuery("SELECT ar FROM Area ar WHERE name = :parName", Area.class).setParameter("parName", name).getSingleResult();
+            return em.createQuery("SELECT area FROM Area as area WHERE area.name = :parName", Area.class).setParameter("parName", name).getSingleResult();
         } catch (Exception ex) {
             throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
         }

@@ -2,7 +2,6 @@ package cz.muni.fi.pa165;
 
 import javax.sql.DataSource;
 
-import cz.muni.fi.pa165.dao.AreaDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,36 +16,35 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses={cz.muni.fi.pa165.dao.WeaponDao.class})
+@ComponentScan(basePackageClasses = {cz.muni.fi.pa165.dao.WeaponDao.class})
 public class InMemoryDatabaseApplicationContext {
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(dataSource());
-		em.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
-		em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-		return em;
-	}
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setLoadTimeWeaver(instrumentationLoadTimeWeaver());
+        em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        return em;
+    }
 
-	@Bean
-	public JpaTransactionManager transactionManager(){
-		return  new JpaTransactionManager(entityManagerFactory().getObject());
-	}
+    @Bean
+    public JpaTransactionManager transactionManager() {
+        return new JpaTransactionManager(entityManagerFactory().getObject());
+    }
 
-	@Bean
-	public LoadTimeWeaver instrumentationLoadTimeWeaver() {
-		return new InstrumentationLoadTimeWeaver();
-	}
+    @Bean
+    public LoadTimeWeaver instrumentationLoadTimeWeaver() {
+        return new InstrumentationLoadTimeWeaver();
+    }
 
-	@Bean
-	public DataSource dataSource(){
-		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.DERBY).build();
-		return db;
-	}
+    @Bean
+    public DataSource dataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.DERBY).build();
+        return db;
+    }
 }
