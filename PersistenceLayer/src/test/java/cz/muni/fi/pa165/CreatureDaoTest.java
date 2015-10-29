@@ -18,7 +18,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * This test class 
+ * This test class test methods of CreatuDao.
  * @author Pavel VeselÃ½ <448290@mail.muni.cz>
  */
 

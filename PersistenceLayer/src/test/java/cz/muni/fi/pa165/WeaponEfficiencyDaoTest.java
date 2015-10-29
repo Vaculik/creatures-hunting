@@ -24,7 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- *
+ * This test class test methods of WeaponEfficiencyDao.
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 
