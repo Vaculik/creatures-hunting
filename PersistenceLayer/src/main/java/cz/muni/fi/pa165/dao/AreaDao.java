@@ -17,21 +17,21 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AreaDao {
     /**
      * This method creates an area in a database
-     * @param ar Area to be created
+     * @param area Area to be created
      */
-    public void create(Area ar);
+    public void create(Area area);
     
     /**
      * This method deletes an area in a database
-     * @param ar Area to be deleted
+     * @param area Area to be deleted
      */
-    public void delete(Area ar);
+    public void delete(Area area);
     
     /**
      * This method updates an area in a database
-     * @param ar Area to be updated
+     * @param area Area to be updated
      */
-    public void update(Area ar);
+    public void update(Area area);
     
     /**
      * This method finds all areas in a database
