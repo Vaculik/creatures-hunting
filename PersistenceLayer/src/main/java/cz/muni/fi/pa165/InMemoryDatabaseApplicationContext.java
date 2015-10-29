@@ -2,7 +2,6 @@ package cz.muni.fi.pa165;
 
 import javax.sql.DataSource;
 
-import cz.muni.fi.pa165.dao.AreaDao;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

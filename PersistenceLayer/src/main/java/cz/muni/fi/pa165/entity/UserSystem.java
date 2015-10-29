@@ -1,37 +1,50 @@
 package cz.muni.fi.pa165.entity;
 
-import java.util.Date;
+//import java.util.Date;
 
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
-public class User {
+public class UserSystem {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     private String name;
     
+    @Enumerated
+    @NotNull
     private UserType type;
     
+    @Enumerated
+    @NotNull
     private SexType sex;
     
-    private Date dateOfBirth; //TODO what type is date??????
+//    @Temporal
+//    private Date dateOfBirth; //TODO what type is date??????
     
+    @NotNull
     private String userName;
     
+    @NotNull
     private Integer password;
+    
+    public UserSystem(){        
+    }
+    
+    public UserSystem(Long id) {
+        this.id = id;
+    }
 
 	public Long getId() {
 		return id;
@@ -65,14 +78,6 @@ public class User {
 		this.sex = sex;
 	}
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -89,12 +94,14 @@ public class User {
 		this.password = password;
 	}
 
+        // set get Date
+        
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+//		result = prime * result
+//				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
@@ -114,12 +121,12 @@ public class User {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
-				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
+		UserSystem other = (UserSystem) obj;
+//		if (dateOfBirth == null) {
+//			if (other.dateOfBirth != null)
+//				return false;
+//		} else if (!dateOfBirth.equals(other.dateOfBirth))
+//			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
