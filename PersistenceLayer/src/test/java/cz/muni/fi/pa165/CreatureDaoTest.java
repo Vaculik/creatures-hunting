@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 
 /**
  *
- * @author Pavel VeselÃ½ <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 
 @ContextConfiguration(classes=InMemoryDatabaseApplicationContext.class)
