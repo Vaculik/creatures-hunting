@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface CreatureDao {
 
-    Creature findById(Long id);
+    Creature getById(Long id);
 
-    Creature findByName(String name);
+    Creature getByName(String name);
 
     void create(Creature creature);
 

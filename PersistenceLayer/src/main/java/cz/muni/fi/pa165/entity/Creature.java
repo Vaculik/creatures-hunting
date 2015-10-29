@@ -4,6 +4,7 @@ package cz.muni.fi.pa165.entity;
 import cz.muni.fi.pa165.enums.CreatureType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * The entity represents a creature which we want to track and holds some basic
@@ -19,19 +20,26 @@ public class Creature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer height;
 
+    @NotNull
     private Integer weight;
 
     @Enumerated
+    @NotNull
     private CreatureType type;
 
     // Parameter description is not relevant for distinguishing two creatures
     private String description;
 
-    public void setId(Long id) {
+    public Creature() {
+    }
+
+    public Creature(Long id) {
         this.id = id;
     }
 

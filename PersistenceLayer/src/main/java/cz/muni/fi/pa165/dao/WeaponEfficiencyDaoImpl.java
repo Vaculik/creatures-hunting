@@ -19,7 +19,7 @@ public class WeaponEfficiencyDaoImpl implements WeaponEfficiencyDao {
     @PersistenceContext
     private EntityManager em;
 
-    public WeaponEfficiency findById(Long id) {
+    public WeaponEfficiency getById(Long id) {
         return em.find(WeaponEfficiency.class, id);
     }
 
