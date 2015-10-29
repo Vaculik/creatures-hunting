@@ -14,7 +14,6 @@ import java.util.List;
  *
  * Created by vaculik on 23.10.15.
  */
-
 @Repository
 public class CreatureDaoImpl implements CreatureDao {
 

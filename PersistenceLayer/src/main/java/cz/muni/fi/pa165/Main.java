@@ -27,26 +27,26 @@ public class Main {
         emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        
+
         Weapon weapon = new Weapon();
         weapon.setName("Zweihandler");
         Creature creature = new Creature();
         creature.setName("Rabbit");
         UserSystem user = new UserSystem();
         user.setName("JohnSnow");
-        
+
         em.persist(weapon);
         em.persist(creature);
         em.persist(user);
         em.getTransaction().commit();
         em.close();
-        
+
         EntityManager em2 = emf.createEntityManager();
         em2.getTransaction().begin();
         Weapon weaponFound = em2.find(Weapon.class, weapon.getId());
         Creature creatureFound = em2.find(Creature.class, creature.getId());
         UserSystem userFound = em2.find(UserSystem.class, user.getId());
-        
+
         em2.getTransaction().commit();
         em2.close();;
         assert "Zweihandler".equals(weaponFound.getName());

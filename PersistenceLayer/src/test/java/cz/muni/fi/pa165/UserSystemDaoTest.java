@@ -26,7 +26,7 @@ import org.testng.Assert;
 @ContextConfiguration(classes = InMemoryDatabaseApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
-public class UserDaoTest extends AbstractTestNGSpringContextTests {
+public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserSystemDao userDao;
