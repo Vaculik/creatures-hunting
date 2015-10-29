@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.enums.AmmoType;
+import javax.validation.constraints.NotNull;
 
 /**
  * This class represents an Entity of Weapon
@@ -18,12 +19,16 @@ public class Weapon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @NotNull
     private String name;
     
+    @NotNull
     private WeaponType type;
     
+    @NotNull
     private int range;
     
+    @NotNull
     private AmmoType ammoType;
     
     private String description;
