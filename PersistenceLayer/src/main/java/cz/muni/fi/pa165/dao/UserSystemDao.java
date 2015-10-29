@@ -10,5 +10,5 @@ public interface UserSystemDao {
     public List<UserSystem> findAll();
     public void create(UserSystem user);
     public void update(UserSystem user);
-    public void remove(UserSystem user);
+    public void delete(UserSystem user);
 }

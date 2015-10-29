@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * This entity represents an area (a location} of the world. 
+ * This entity includes set of creatures.  
  * @author Martin Zboril
  */
 @Entity

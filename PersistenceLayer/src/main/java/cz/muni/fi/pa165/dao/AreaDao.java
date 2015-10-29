@@ -11,6 +11,8 @@ import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * This class represents an interface for Area Data Access Object implementation.
+ * It contains several basic methods.
  * @author Martin Zboril
  */
 @Transactional

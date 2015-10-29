@@ -8,7 +8,7 @@ import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.enums.AmmoType;
 
 /**
- *
+ * This class represents an Entity of Weapon
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 @Entity

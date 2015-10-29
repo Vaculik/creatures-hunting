@@ -13,7 +13,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 /**
- *
+ * This class represents an implementation of Area Data Access Object interface.
+ * It contains several basic methods.
  * @author Martin Zboril
  */
 @Repository

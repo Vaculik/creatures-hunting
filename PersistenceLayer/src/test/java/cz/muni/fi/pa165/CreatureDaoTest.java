@@ -18,7 +18,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- *
+ * This test class 
  * @author Pavel VeselÃ½ <448290@mail.muni.cz>
  */
 

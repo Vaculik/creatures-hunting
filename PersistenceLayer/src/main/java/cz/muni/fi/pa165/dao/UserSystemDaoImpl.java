@@ -8,48 +8,61 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public class UserSystemDaoImpl implements UserSystemDao{
+public class UserSystemDaoImpl implements UserSystemDao {
 
     @PersistenceContext
     private EntityManager em;
-    
-	@Override
-	public UserSystem getById(Long id) {
-		return em.find(UserSystem.class, id);
-	}
 
-	@Override
-	public UserSystem getByName(String name) {
-        TypedQuery<UserSystem> query = em.createQuery("SELECT user FROM User as user WHERE user.name=:n",
+    @Override
+    public UserSystem getById(Long id) {
+        if (id == null) {
+            throw new NullPointerException("Argument id is null");
+        }
+        return em.find(UserSystem.class, id);
+    }
+
+    @Override
+    public UserSystem getByName(String name) {
+        if (name == null) {
+            throw new NullPointerException("Argument name is null");
+        }
+        TypedQuery<UserSystem> query = em.createQuery("SELECT userSystem FROM UserSystem as userSystem WHERE userSystem.name=:n",
                 UserSystem.class).setParameter("n", name);
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
-	}
+    }
 
-	@Override
-	public List<UserSystem> findAll() {
-		TypedQuery<UserSystem> query = em.createQuery("SELECT user FROM User AS c", UserSystem.class);
-	     return query.getResultList();
-	}
+    @Override
+    public List<UserSystem> findAll() {
+        TypedQuery<UserSystem> query = em.createQuery("SELECT userSys FROM UserSystem AS userSys", UserSystem.class);
+        return query.getResultList();
+    }
 
-	@Override
-	public void create(UserSystem user) {
-		em.persist(user);
-	}
+    @Override
+    public void create(UserSystem user) {
+        if (user == null) {
+            throw new NullPointerException("Argument user is null");
+        }
+        em.persist(user);
+    }
 
-	@Override
-	public void update(UserSystem user) {
-		em.merge(user);
-	}
+    @Override
+    public void update(UserSystem user) {
+        if (user == null) {
+            throw new NullPointerException("Argument user is null");
+        }
+        em.merge(user);
+    }
 
-	@Override
-	public void remove(UserSystem user) {
-		em.remove(user);
-	}
-
+    @Override
+    public void delete(UserSystem user) {
+        if (user == null) {
+            throw new NullPointerException("Argument user is null");
+        }
+        em.remove(user);
+    }
 }
