@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.enums;
 
 /**
- * Created by vaculik on 23.10.15.
+ * @author Karel Vaculik
  */
 public enum CreatureType {
     UNDEAD,

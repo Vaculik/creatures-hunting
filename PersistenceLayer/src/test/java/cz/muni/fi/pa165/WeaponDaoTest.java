@@ -5,8 +5,6 @@ import cz.muni.fi.pa165.entity.Weapon;
 import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.WeaponType;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +18,7 @@ import org.testng.annotations.Test;
 /**
  * Tests for basic operations on entity Weapon defined in interface WeaponDao.
  *
- * Created by vaculik on 26.10.15.
+ * @author Karel Vaculik
  */
 
 @ContextConfiguration(classes=InMemoryDatabaseApplicationContext.class)
