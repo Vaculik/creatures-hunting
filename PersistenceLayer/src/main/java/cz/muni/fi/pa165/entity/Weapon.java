@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.enums.AmmoType;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -20,6 +21,7 @@ public class Weapon {
     private Long id;
     
     @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
     
     @NotNull

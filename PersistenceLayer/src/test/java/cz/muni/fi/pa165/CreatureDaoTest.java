@@ -3,7 +3,6 @@ package cz.muni.fi.pa165;
 import cz.muni.fi.pa165.dao.CreatureDao;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
-import cz.muni.fi.pa165.dao.WeaponDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,7 +30,7 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     private CreatureDao creatureDao;    
     
     @Test
-    public void getById_standard() {
+    public void getByIdStandard() {
         Creature creature = makeCreature();
         creatureDao.create(creature);
         Creature result = creatureDao.getById(creature.getId());
@@ -40,19 +39,19 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void getById_noResult() {
+    public void getByIdNoResult() {
         Creature result = creatureDao.getById(Long.MAX_VALUE);
         Assert.assertNull(result);
     }
     
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void getById_null() {
+    public void getByIdNull() {
         creatureDao.getById(null);
     }
     
     @Test
-    public void getByName_standard() {
+    public void getByNameStandard() {
         Creature creature = makeCreature("c001");
         creatureDao.create(creature);
         Creature result = creatureDao.getByName(creature.getName());
@@ -61,7 +60,7 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void getByName_noResult() {
+    public void getByNameNoResult() {
         Creature creature = makeCreature("c001");
         creatureDao.create(creature);
         Creature result = creatureDao.getByName("no such creature");
@@ -69,13 +68,24 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
     
+    @Test
+    public void getByNameNullArg() {
+//        try {
+            Creature result = creatureDao.getByName(null);
+//            System.out.println("NoException");
+            Assert.assertNull(result);
+//        } catch (Exception e) {
+//            System.out.println(e.toString());
+//        }
+    }
+    
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void create_nullArg() {
+    public void createNullArg() {
         creatureDao.create(null);
     }
     
     @Test
-    public void delete_standard() {
+    public void deleteStandard() {
         Creature creature = makeCreature();
         creatureDao.create(creature);
         creatureDao.delete(creature);
@@ -85,7 +95,7 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void delete_noSuchCreature() {
+    public void deleteNoSuchCreature() {
         Creature creat0 = makeCreature("creat0");
         Creature creat1 = makeCreature("creat1");
         creatureDao.create(creat0);
@@ -97,12 +107,12 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void delete_nullArg() {
+    public void deleteNullArg() {
         creatureDao.delete(null);
     }
     
     @Test
-    public void update_standard() {
+    public void updateStandard() {
         Creature creature = makeCreature("creat0");
         creatureDao.create(creature);
         creature.setName("creat1");
@@ -113,7 +123,7 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void update_noSuchCreature() {
+    public void updateNoSuchCreature() {
         Creature creat0 = makeCreature("creat0");
         Creature creat1 = makeCreature("creat1");
         creatureDao.create(creat0);
@@ -126,12 +136,12 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void update_nullArg() {
+    public void updateNullArg() {
         creatureDao.update(null);
     }
     
     @Test
-    public void findAll_standard() {
+    public void findAllStandard() {
         Creature creat0 = makeCreature("creat0");
         Creature creat1 = makeCreature("creat1");
         creatureDao.create(creat0);
@@ -145,7 +155,7 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void findAll_empty() {
+    public void findAllEmpty() {
         List<Creature> result = creatureDao.findAll();
         Assert.assertEquals(result.size(), 0);
     }
