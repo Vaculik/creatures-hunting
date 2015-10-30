@@ -33,9 +33,6 @@ public class AreaDaoImpl implements AreaDao {
         if (area == null) {
             throw new NullPointerException("Input Are is null");
         }
-        if (area.getName() == null) {
-            throw new IllegalArgumentException("Area has no name");
-        }
         try {
             em.persist(area);
         } catch (Exception ex) {
@@ -48,9 +45,6 @@ public class AreaDaoImpl implements AreaDao {
         if (area == null) {
             throw new NullPointerException("Input Are is null");
         }
-        if (area.getName() == null || area.getId() == null) {
-            throw new IllegalArgumentException("Area does not exist");
-        }
         try {
             em.remove(area);
         } catch (Exception ex) {
@@ -62,9 +56,6 @@ public class AreaDaoImpl implements AreaDao {
     public void update(Area area) {
         if (area == null) {
             throw new NullPointerException("Input Are is null");
-        }
-        if (area.getName() == null || area.getId() == null) {
-            throw new IllegalArgumentException("Area does not exist");
         }
         try {
             em.merge(area);
@@ -89,9 +80,6 @@ public class AreaDaoImpl implements AreaDao {
         if (id == null) {
             throw new NullPointerException("Input Id is null");
         }
-        if (id < 0) {
-            throw new IllegalArgumentException("Id is less then 0");
-        }
         return em.find(Area.class, id);
     }
 
@@ -99,12 +87,6 @@ public class AreaDaoImpl implements AreaDao {
     public Area getByName(String name) {
         if (name == null) {
             throw new NullPointerException("Input Name is null");
-        }
-        if (name.length() == 0) {
-            throw new IllegalArgumentException("Name has no length");
-        }
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("Name is too long");
         }
         try {
             return em.createQuery("SELECT area FROM Area as area WHERE area.name = :parName", Area.class).setParameter("parName", name).getSingleResult();
