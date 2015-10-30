@@ -30,7 +30,7 @@ public class UserSystem {
     @Enumerated
     @NotNull
     private SexType sex;
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
     private Date dateOfBirth;
     private String userName;
     private Integer password;
