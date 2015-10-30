@@ -70,13 +70,8 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void getByNameNullArg() {
-//        try {
-            Creature result = creatureDao.getByName(null);
-//            System.out.println("NoException");
-            Assert.assertNull(result);
-//        } catch (Exception e) {
-//            System.out.println(e.toString());
-//        }
+        Creature result = creatureDao.getByName(null);
+        Assert.assertNull(result);
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
