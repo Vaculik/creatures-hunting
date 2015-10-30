@@ -60,12 +60,12 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
     
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void getById_nullArg() {
         efficiencyDao.getById(null);
     }
     
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void create_nullArg() {
         efficiencyDao.create(null);
     }
@@ -103,7 +103,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
     
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void delete_nullArg() {
         efficiencyDao.delete(null);
     }
@@ -142,7 +142,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
     
-    @Test(expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void update_nullArg() {
         efficiencyDao.update(null);
     }
