@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
  * The entity represents relation between Weapon and Creature entities with
  * efficiency parameter.
  *
- * Created by vaculik on 23.10.15.
+ * @author Karel Vaculik
  */
 @Entity
 public class WeaponEfficiency {

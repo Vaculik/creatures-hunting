@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * The entity represents a creature which we want to track and holds some basic
  * information about it like name, height, weight or type.
  *
- * Created by vaculik on 23.10.15.
+ * @author Karel Vaculik
  */
 
 @Entity
@@ -21,6 +21,7 @@ public class Creature {
     private Long id;
 
     @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull
