@@ -25,7 +25,6 @@ public interface CreatureDao {
      *
      * @param name  name of a Creature entity
      * @return      the found Creature entity or null if the entity does not exist
-     * @throws IllegalArgumentException if the name argument is null
      */
     Creature getByName(String name);
 

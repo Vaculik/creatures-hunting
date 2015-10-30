@@ -142,11 +142,9 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
 		Area area = new Area();
 		area.setName(name);
 		area.setDescription(description);
-		
-		Set<Creature> creatureList = new HashSet<Creature>();
-		creatureList.add(makeCreature("Bob"));
-		creatureList.add(makeCreature("Tom"));
-		area.setCreatures(creatureList);
+				
+		area.addCreature(makeCreature("Bob"));
+                area.addCreature(makeCreature("Tom"));
 		
 		return area;	
 	}

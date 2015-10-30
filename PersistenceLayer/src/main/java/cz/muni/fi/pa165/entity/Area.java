@@ -4,6 +4,8 @@
  */
 package cz.muni.fi.pa165.entity;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -33,7 +35,7 @@ public class Area {
         
     // Mapping by Id causes Creature to crash on persist
     @OneToMany
-    Set<Creature> creatures;
+    Set<Creature> creatures = new HashSet<Creature>();
 
     public Long getId() {
         return id;
@@ -65,11 +67,11 @@ public class Area {
     }
 
     public Set<Creature> getCreatures() {
-        return creatures;
+        return  Collections.unmodifiableSet(creatures);
     }
 
-    public void setCreatures(Set<Creature> creatures) {
-        this.creatures = creatures;
+    public void addCreature(Creature creature) {
+        creatures.add(creature);
     }
 
     @Override

@@ -41,7 +41,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     private WeaponEfficiencyDao efficiencyDao;
     
     @Test
-    public void getById_standard() {
+    public void getByIdStandard() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         WeaponEfficiency efficiency = makeEfficiency(weapon, creature);
@@ -55,23 +55,23 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void getById_noResult() {
+    public void getByIdNoResult() {
         WeaponEfficiency result = efficiencyDao.getById(Long.MAX_VALUE);
         Assert.assertNull(result);
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void getById_nullArg() {
+    public void getByIdNullArg() {
         efficiencyDao.getById(null);
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void create_nullArg() {
+    public void createNullArg() {
         efficiencyDao.create(null);
     }
         
     @Test
-    public void delete_standard() {
+    public void deleteStandard() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         WeaponEfficiency efficiency = makeEfficiency(weapon, creature);
@@ -86,7 +86,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void delete_noSuchEfficiency() {
+    public void deleteNoSuchEfficiency() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         Weapon weapon2 = makeWeapon("weapon2");
@@ -104,12 +104,12 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void delete_nullArg() {
+    public void deleteNullArg() {
         efficiencyDao.delete(null);
     }
     
     @Test
-    public void update_standard() {
+    public void updateStandard() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         WeaponEfficiency efficiency = makeEfficiency(weapon, creature);
@@ -125,7 +125,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void update_noSuchEfficiency() {
+    public void updateNoSuchEfficiency() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         Weapon weapon2 = makeWeapon("weapon2");
@@ -143,12 +143,12 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void update_nullArg() {
+    public void updateNullArg() {
         efficiencyDao.update(null);
     }
     
     @Test
-    public void findAll_standard() {
+    public void findAllStandard() {
         Creature creature = makeCreature();
         Weapon weapon = makeWeapon();
         Weapon weapon2 = makeWeapon("weapon2");
@@ -168,7 +168,7 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
     }
     
     @Test
-    public void findAll_empty() {
+    public void findAllEmpty() {
         List<WeaponEfficiency> result = efficiencyDao.findAll();
         Assert.assertEquals(result.size(), 0);
     }
