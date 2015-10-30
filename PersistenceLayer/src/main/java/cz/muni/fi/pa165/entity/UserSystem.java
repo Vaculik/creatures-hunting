@@ -86,7 +86,15 @@ public class UserSystem {
         return password;
     }
 
-    public void setPassword(Integer password) {
+    public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public void setPassword(Integer password) {
         this.password = password;
     }
 
