@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * This class represents an Entity of Weapon
+ *
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 @Entity
@@ -34,55 +35,57 @@ public class Weapon {
     private AmmoType ammoType;
     
     private String description;
-    
+
     public Long getId() {
         return this.id;
     }
-    
+
     public String getName() {
         return this.name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
+
     public WeaponType getType() {
         return this.type;
     }
-    
+
     public void setType(WeaponType type) {
         this.type = type;
     }
+
     public int getRange() {
         return this.range;
     }
-    
+
     public void setRange(int range) {
         this.range = range;
     }
-    
+
     public AmmoType getAmmotype() {
         return this.ammoType;
     }
-    
+
     public void setAmmoType(AmmoType ammoType) {
         this.ammoType = ammoType;
     }
-    
+
     public String getDescription() {
         return this.description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 1;
-        hash = 53 * hash + ((name != null)? name.hashCode() : 0);
-        hash = 59 * hash + ((type != null)? type.hashCode() : 0);
-        hash = 67 * hash + ((ammoType != null)? ammoType.hashCode() : 0);
+        hash = 53 * hash + ((name != null) ? name.hashCode() : 0);
+        hash = 59 * hash + ((type != null) ? type.hashCode() : 0);
+        hash = 67 * hash + ((ammoType != null) ? ammoType.hashCode() : 0);
         return hash;
     }
 

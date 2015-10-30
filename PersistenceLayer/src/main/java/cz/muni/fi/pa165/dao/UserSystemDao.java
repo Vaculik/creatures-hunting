@@ -5,8 +5,8 @@ import java.util.List;
 import cz.muni.fi.pa165.entity.UserSystem;
 
 /**
- * This class represents an interface for UserSystem Data Access Object. 
- * It contains several basic methods.
+ * This class represents an interface for UserSystem Data Access Object. It
+ * contains several basic methods.
  *
  * @author Jakub Miculka
  */

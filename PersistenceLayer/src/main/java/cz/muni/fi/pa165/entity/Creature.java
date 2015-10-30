@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.entity;
 
-
 import cz.muni.fi.pa165.enums.CreatureType;
 
 import javax.persistence.*;
@@ -12,28 +11,27 @@ import javax.validation.constraints.NotNull;
  *
  * @author Karel Vaculik
  */
-
 @Entity
 public class Creature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
-
+    
     @NotNull
     private Integer height;
-
+    
     @NotNull
     private Integer weight;
-
+    
     @Enumerated
     @NotNull
     private CreatureType type;
-
+    
     // Parameter description is not relevant for distinguishing two creatures
     private String description;
 
@@ -94,13 +92,13 @@ public class Creature {
         hash = 17 * hash + ((name != null) ? name.hashCode() : 0);
         hash = 13 * hash + ((height != null) ? height.hashCode() : 0);
         hash = 19 * hash + ((weight != null) ? weight.hashCode() : 0);
-        hash = 23 * hash + ((type != null ) ? type.hashCode() : 0);
+        hash = 23 * hash + ((type != null) ? type.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if ( !(obj instanceof Creature)) {
+        if (!(obj instanceof Creature)) {
             return false;
         }
         Creature other = (Creature) obj;
@@ -110,7 +108,7 @@ public class Creature {
                 return false;
             }
 
-        } else if ( !other.getName().equals(this.name)) {
+        } else if (!other.getName().equals(this.name)) {
             return false;
         }
 
@@ -118,7 +116,7 @@ public class Creature {
             if (this.height != null) {
                 return false;
             }
-        } else if ( !other.getHeight().equals(this.height)) {
+        } else if (!other.getHeight().equals(this.height)) {
             return false;
         }
 
@@ -126,7 +124,7 @@ public class Creature {
             if (this.weight != null) {
                 return false;
             }
-        } else if ( !other.getWeight().equals(this.weight)) {
+        } else if (!other.getWeight().equals(this.weight)) {
             return false;
         }
 

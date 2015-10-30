@@ -21,18 +21,24 @@ public class UserSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @NotNull
     @Column(nullable = false, unique = true)
     private String name;
+    
     @Enumerated
     @NotNull
     private UserType type;
+    
     @Enumerated
     @NotNull
     private SexType sex;
+    
     //@Temporal(TemporalType.DATE)
     private Date dateOfBirth;
+    
     private String userName;
+    
     private Integer password;
 
     public UserSystem() {
@@ -87,14 +93,14 @@ public class UserSystem {
     }
 
     public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
+        return dateOfBirth;
+    }
 
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public void setPassword(Integer password) {
+    public void setPassword(Integer password) {
         this.password = password;
     }
 
@@ -102,8 +108,8 @@ public class UserSystem {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-		result = prime * result
-				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
+        result = prime * result
+                + ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result
@@ -127,11 +133,13 @@ public class UserSystem {
             return false;
         }
         UserSystem other = (UserSystem) obj;
-		if (dateOfBirth == null) {
-			if (other.dateOfBirth != null)
-				return false;
-		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
+        if (dateOfBirth == null) {
+            if (other.dateOfBirth != null) {
+                return false;
+            }
+        } else if (!dateOfBirth.equals(other.dateOfBirth)) {
+            return false;
+        }
         if (id == null) {
             if (other.id != null) {
                 return false;

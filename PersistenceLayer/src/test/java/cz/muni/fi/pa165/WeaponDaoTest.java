@@ -20,8 +20,7 @@ import org.testng.annotations.Test;
  *
  * @author Karel Vaculik
  */
-
-@ContextConfiguration(classes=InMemoryDatabaseApplicationContext.class)
+@ContextConfiguration(classes = InMemoryDatabaseApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
@@ -146,4 +145,3 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
         return w;
     }
 }
-

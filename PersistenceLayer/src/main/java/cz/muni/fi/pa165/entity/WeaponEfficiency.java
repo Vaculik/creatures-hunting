@@ -15,14 +15,14 @@ public class WeaponEfficiency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @NotNull
     private Integer efficiency;
-
+    
     @ManyToOne(optional = false)
     @NotNull
     private Creature creature;
-
+    
     @ManyToOne(optional = false)
     @NotNull
     private Weapon weapon;
@@ -98,7 +98,7 @@ public class WeaponEfficiency {
             if (this.weapon != null) {
                 return false;
             }
-        } else if ( !other.getWeapon().equals(this.weapon)) {
+        } else if (!other.getWeapon().equals(this.weapon)) {
             return false;
         }
 

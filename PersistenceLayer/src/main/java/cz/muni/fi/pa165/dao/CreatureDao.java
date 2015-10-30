@@ -14,8 +14,8 @@ public interface CreatureDao {
     /**
      * Find a Creature entity by id.
      *
-     * @param id    id of a Creature entity
-     * @return      the found Creature entity or null if the entity does not exist
+     * @param id id of a Creature entity
+     * @return the found Creature entity or null if the entity does not exist
      * @throws IllegalArgumentException if the id argument is null
      */
     Creature getById(Long id);
@@ -23,15 +23,15 @@ public interface CreatureDao {
     /**
      * Find a Creature entity by name.
      *
-     * @param name  name of a Creature entity
-     * @return      the found Creature entity or null if the entity does not exist
+     * @param name name of a Creature entity
+     * @return the found Creature entity or null if the entity does not exist
      */
     Creature getByName(String name);
 
     /**
      * Create the Creature entity.
      *
-     * @param creature  Creature entity
+     * @param creature Creature entity
      * @throws IllegalArgumentException if the Creature argument is null
      */
     void create(Creature creature);
@@ -39,7 +39,7 @@ public interface CreatureDao {
     /**
      * Remove the Creature entity.
      *
-     * @param creature  Creature entity
+     * @param creature Creature entity
      * @throws IllegalArgumentException if the Creature argument is null
      */
     void delete(Creature creature);
@@ -47,7 +47,7 @@ public interface CreatureDao {
     /**
      * Update the Creature entity.
      *
-     * @param creature  Creature entity
+     * @param creature Creature entity
      * @throws IllegalArgumentException if the Creature argument is null
      */
     void update(Creature creature);

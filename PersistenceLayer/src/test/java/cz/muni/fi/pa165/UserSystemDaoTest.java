@@ -19,7 +19,8 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 
 /**
- * This class test functionality of methods of UserSystem Data Access Object class.
+ * This class test functionality of methods of UserSystem Data Access Object
+ * class.
  *
  * @author Martin Zboril
  */
@@ -58,7 +59,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
         userDao.getById(null);
     }
-    
+
     @Test
     public void getByNameTest() {
         UserSystem user = createUser("Tyrion");
@@ -83,12 +84,12 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
         userDao.getByName(null);
     }
-    
+
     @Test(expectedExceptions = NullPointerException.class)
     public void createNullUserTest() {//       
         userDao.create(null);
     }
-        
+
     @Test
     public void deleteUserTest() {
         UserSystem user = createUser("Jamie Lannister");
@@ -120,7 +121,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
     public void deleteNullUserTest() {
         userDao.delete(null);
     }
-    
+
     @Test
     public void updateUserTest() {
         UserSystem user = createUser("Jamie Lannister");
@@ -197,5 +198,5 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         user.setType(UserType.ORDINARY);
         user.setUserName("nick " + name);
         return user;
-    }        
+    }
 }

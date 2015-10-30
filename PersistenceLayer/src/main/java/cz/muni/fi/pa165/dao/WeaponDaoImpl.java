@@ -1,4 +1,3 @@
-
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Weapon;
@@ -11,23 +10,28 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- * This class represents an implementation of Data Access Object of Weapon Entity.
+ * This class represents an implementation of Data Access Object of Weapon
+ * Entity.
+ *
  * @author Pavel Veselý <448290@mail.muni.cz>
  */
 @Repository
 public class WeaponDaoImpl implements WeaponDao {
+
     @PersistenceContext
     private EntityManager em;
-    
+
     public Weapon getById(Long id) {
-        if (id == null)
+        if (id == null) {
             throw new NullPointerException("Argument id is null");
+        }
         return em.find(Weapon.class, id);
     }
 
     public Weapon getByName(String name) {
-        if (name == null)
+        if (name == null) {
             throw new NullPointerException("Argument name is null");
+        }
         TypedQuery<Weapon> query = em.createQuery("SELECT weapn FROM Weapon AS weapn WHERE weapn.name=:nam", Weapon.class).setParameter("nam", name);
         try {
             return query.getSingleResult();
@@ -42,22 +46,24 @@ public class WeaponDaoImpl implements WeaponDao {
     }
 
     public void create(Weapon weapon) {
-        if (weapon == null)
+        if (weapon == null) {
             throw new NullPointerException("Argument weapon is null");
+        }
         em.persist(weapon);
     }
 
     public void update(Weapon weapon) {
-        if (weapon == null)
+        if (weapon == null) {
             throw new NullPointerException("Argument weapon is null");
+        }
         em.merge(weapon);
     }
 
     public void delete(Weapon weapon) {
-        
-        if (weapon == null)
+
+        if (weapon == null) {
             throw new NullPointerException("Argument weapon is null");
+        }
         em.remove(weapon);
     }
-    
 }
