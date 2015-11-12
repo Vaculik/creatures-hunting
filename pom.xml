@@ -8,7 +8,8 @@
     <name>CreaturesHunting</name>
     <modules>
         <module>PersistenceLayer</module>
-    </modules>
+    <module>ServiceLayer</module>
+  </modules>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
