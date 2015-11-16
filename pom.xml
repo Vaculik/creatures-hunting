@@ -9,6 +9,7 @@
     <modules>
         <module>PersistenceLayer</module>
     <module>ServiceLayer</module>
+    <module>ApiLayer</module>
   </modules>
     <dependencies>
         <dependency>
