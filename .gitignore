@@ -17,3 +17,5 @@ target/
 hs_err_pid*
 /PersistenceLayer/target/
 /ServiceLayer/target/
+/ApiLayer/target/
+
