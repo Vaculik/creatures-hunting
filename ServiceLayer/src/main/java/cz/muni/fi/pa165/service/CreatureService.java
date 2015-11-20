@@ -2,12 +2,14 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by vaculik on 20.11.15.
  */
+@Service
 public interface CreatureService {
 
     /**
@@ -30,9 +32,8 @@ public interface CreatureService {
      * Create the Creature entity.
      *
      * @param creature the Creature to be created
-     * @return id of the created Creature
      */
-    public Long createCreature(Creature creature);
+    public void createCreature(Creature creature);
 
     /**
      * Delete the Creature entity.
@@ -45,9 +46,8 @@ public interface CreatureService {
      * Update the Creature entity.
      *
      * @param creature the Creature to be updated
-     * @return id of the updated Creature
      */
-    public Long updateCreature(Creature creature);
+    public void updateCreature(Creature creature);
 
     /**
      * Find all Creature entities.
