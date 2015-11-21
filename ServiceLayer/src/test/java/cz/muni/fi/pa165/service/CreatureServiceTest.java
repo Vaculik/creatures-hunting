@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
@@ -33,6 +34,16 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     @InjectMocks
     private CreatureService creatureService;
 
+    private List<Creature> creatures;
+    private List<Creature> actual;
+    private List<Creature> expected;
+
+    @BeforeTest
+    public void init() {
+        creatures = new LinkedList<>();
+        when(creatureDao.findAll()).thenReturn(creatures);
+        expected = new LinkedList<>();
+    }
 
     @BeforeClass
     public void setup() throws ServiceException {
@@ -41,20 +52,17 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getCreaturesOfTypeTest() {
-        List<Creature> creatures = new LinkedList<>();
         Creature vampire1 = createCreature(1, 1, CreatureType.VAMPIRE);
         Creature vampire2 = createCreature(1, 2, CreatureType.VAMPIRE);
         Creature beast = createCreature(1, 3, CreatureType.BEAST);
         creatures.add(vampire1);
         creatures.add(vampire2);
         creatures.add(beast);
-        when(creatureDao.findAll()).thenReturn(creatures);
 
         // vampire type test
-        List<Creature> actual = creatureService.getCreaturesOfType(CreatureType.VAMPIRE);
+        actual = creatureService.getCreaturesOfType(CreatureType.VAMPIRE);
         Assert.assertEquals(actual.size(), 2);
 
-        List<Creature> expected = new LinkedList<>();
         expected.add(vampire1);
         expected.add(vampire2);
         Assert.assertEquals(actual, expected);
@@ -70,6 +78,10 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         // undead type test
         actual = creatureService.getCreaturesOfType(CreatureType.UNDEAD);
         Assert.assertEquals(actual.size(), 0);
+    }
+
+    @Test
+    public void getCreaturesWithMaxHeightTest() {
     }
 
     private Creature createCreature(Integer height, Integer weight, CreatureType type) {
