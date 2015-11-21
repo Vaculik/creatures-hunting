@@ -4,6 +4,7 @@
  */
 package cz.muni.fi.pa165.dao;
 
+import cz.muni.fi.pa165.DatabaseCreatureException;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.UserSystem;
 
@@ -36,7 +37,7 @@ public class AreaDaoImpl implements AreaDao {
         try {
             em.persist(area);
         } catch (Exception ex) {
-            throw new NoResultException("Error while creating area");
+            throw new DatabaseCreatureException("Error while creating area");
         }
     }
 
@@ -48,7 +49,7 @@ public class AreaDaoImpl implements AreaDao {
         try {
             em.remove(area);
         } catch (Exception ex) {
-            throw new NoResultException("Error while deleting area.  Error: " + ex.getMessage());
+            throw new DatabaseCreatureException("Error while deleting area.  Error: " + ex.getMessage());
         }
     }
 
@@ -60,7 +61,7 @@ public class AreaDaoImpl implements AreaDao {
         try {
             em.merge(area);
         } catch (Exception ex) {
-            throw new NoResultException("Error while updating area. Error: " + ex.getMessage());
+            throw new DatabaseCreatureException("Error while updating area. Error: " + ex.getMessage());
         }
 
     }
@@ -71,7 +72,7 @@ public class AreaDaoImpl implements AreaDao {
             TypedQuery<Area> qr = em.createQuery("SELECT ar FROM Area AS ar", Area.class);
             return qr.getResultList();
         } catch (Exception ex) {
-            throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
+            throw new DatabaseCreatureException("Error while getting areas. Error: " + ex.getMessage());
         }
     }
 

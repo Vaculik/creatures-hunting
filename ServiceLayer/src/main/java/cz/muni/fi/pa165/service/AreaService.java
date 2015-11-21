@@ -4,28 +4,68 @@
  */
 package cz.muni.fi.pa165.service;
 
-
-import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
- *
- * @author zbora
+ * This class is an interface for Service Layer of Area object.
+ * 
+ * @author Martin Zboril
  */
 
 @Service
 public interface AreaService { 
+    
+    /**
+     * This method creates an area
+     *
+     * @param area Area to be created
+     */
     void createArea(Area area);
+    
+    /**
+     * This method deletes an area.
+     *
+     * @param area AreaDTO to be deleted
+     */
     void deleteArea(Area area);
+    
+    /**
+     * This method updates an area.
+     *
+     * @param area AreaDTO to be updated
+     */
     void updateArea(Area area);
+    
+     /**
+     * This method finds area by its id
+     * @param id specific number (identification) which is unique for each area
+     * @return Area with specific id
+     */
     Area getAreaById(Long id);
+    
+    /**
+     * This method finds area by its name
+     * @param name string-name of specific area
+     * @return area with specific name
+     */
     Area getAreaByame(String name);
+    
+    /**
+     * This method finds all areas in a database
+     * @return list of all areas in a database
+     */
     List<Area> findAllAreas();    
     
+    
+    /**
+     * This method returns areas and theirs amount of creatures
+     * @return Map of Areas and theirs amount of creatures
+     */
     public Map<Area,Integer> getAreasWithAmountCreatures();
     
     /**
@@ -33,8 +73,22 @@ public interface AreaService {
      * @param ar Area from which creatures are taken
      * @return list of creatures which occur in specific Area
      */
-    public List<Area> getCreaturesOfArea(Area ar);
     
+    /**
+     * This method moves the creature from one area to another area
+     * @param cr creature to be moved
+     * @param fromAr area to be moved from
+     * @param toAr area to be moved to
+     * @return moving was successful
+     */
+    public boolean moveCreature(Creature cr, Area fromAr, Area toAr);
     
-    
+    /**
+     * This method compares two areas to common creature
+     * @param ar1 first area which is compared
+     * @param ar2 second area which is compared
+     * @return set of creatures which are common to the specific areas
+     */
+    public Set<Creature> commonCreatures(Area ar1, Area ar2);
+        
 }

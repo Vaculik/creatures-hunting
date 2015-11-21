@@ -6,18 +6,35 @@ package cz.muni.fi.pa165.facade;
 
 
 import cz.muni.fi.pa165.dto.AreaDTO;
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
 
 /**
- *
+ * This class is an interface for Area Facade (Service layer)
+ * 
  * @author Martin Zboril
  */
 public interface AreaFacade {
     
-    Long createArea(AreaDTO area);
-    Long deleteArea(Long areaId);
-    Long updateArea(AreaDTO area);
+    /**
+     * This method creates an area.
+     *
+     * @param area AreaDTO to be created
+     */
+    public Long createArea(AreaDTO area);
+    
+    /**
+     * This method deletes an area.
+     *
+     * @param area AreaDTO to be deleted
+     */
+    public void deleteArea(Long areaId);
+    
+    /**
+     * This method updates an area.
+     *
+     * @param area AreaDTO to be updated
+     */
+    public Long updateArea(AreaDTO area);
     
     
     /**
@@ -106,5 +123,16 @@ public interface AreaFacade {
      * @return 
      */
     public boolean containAreaCreature(Long areaId, Long creatureId);
+    
+    
+    /**
+     * This method moves the creature from one area to another area
+     * @param creatureId creature to be moved
+     * @param fromAreaId area to be moved from
+     * @param toAreaId area to be moved to
+     * @return moving was successful
+     */
+    public boolean moveCreature(Long creatureId, Long fromAreaId, Long toAreaId);    
+    
 
 }

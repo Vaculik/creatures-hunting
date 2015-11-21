@@ -22,7 +22,7 @@ public class AreaFacadeImpl implements AreaFacade{
     }
 
     @Override
-    public Long deleteArea(Long areaId) {
+    public void deleteArea(Long areaId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -96,7 +96,9 @@ public class AreaFacadeImpl implements AreaFacade{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
-    
+    @Override
+    public boolean moveCreature(Long creatureId, Long fromAreaId, Long toAreaId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }   
+        
 }

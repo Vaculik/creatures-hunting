@@ -55,6 +55,10 @@ public class AreaDTO {
         creatures.add(creature);
     }        
     
+    public void removeCreature(CreatureDTO creature){
+        creatures.remove(creature);
+    }
+    
     @Override
     public int hashCode() {
         final int prime = 31;

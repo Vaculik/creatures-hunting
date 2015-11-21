@@ -85,6 +85,10 @@ public class Area {
     public void addCreature(Creature creature) {
         creatures.add(creature);
     }
+    
+    public void removeCreature(Creature creature) {
+        creatures.remove(creature);
+    }
 
     @Override
     public int hashCode() {

@@ -10,7 +10,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.entity.Area;
+import cz.muni.fi.pa165.entity.Creature;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -53,13 +57,42 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public List<Area> getCreaturesOfArea(Area ar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }    
+    public Map<Area, Integer> getAreasWithAmountCreatures() {
+        Map<Area, Integer> result = new HashMap<Area, Integer>();
+       
+        for(Area ar : areaDao.findAll()){
+            result.put(ar, new Integer(ar.getCreatures().size()));
+        }                
+        return result;
+    }        
+    
+    @Override
+    public boolean moveCreature(Creature cr, Area fromAr, Area toAr){
+        if(cr == null || fromAr == null || toAr == null){
+            throw new IllegalArgumentException("Creature or one of the Areas is null");
+        }
+        if(!fromAr.getCreatures().contains(cr)){
+            throw new AreaServiceException("The area does not contain the creature");
+        }
+        
+        fromAr.removeCreature(cr);
+        toAr.addCreature(cr);     
+        return true;
+    }
 
     @Override
-    public Map<Area, Integer> getAreasWithAmountCreatures() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Set<Creature> commonCreatures(Area ar1, Area ar2) {
+        if(ar1 == null || ar2 == null){
+            throw new IllegalArgumentException("One of the Areas is null");
+        }
+        Set<Creature> result = new HashSet<Creature>();
+        
+        for(Creature cr : ar1.getCreatures()){
+            if(ar2.getCreatures().contains(cr)){
+                result.add(cr);
+            }
+        }
+        return result;
     }
     
     
