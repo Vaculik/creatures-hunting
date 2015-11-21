@@ -8,7 +8,7 @@ import java.util.List;
  */
 public interface EntityMapper {
 
-    public <T> List<T> map(Collection<?> objectsToMap, Class<T> clazz);
+    <T> List<T> map(Collection<?> objectsToMap, Class<T> clazz);
 
-    public <T> T map(Object objectToMap, Class<T> clazz);
+    <T> T map(Object objectToMap, Class<T> clazz);
 }

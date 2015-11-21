@@ -46,7 +46,7 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @BeforeClass
-    public void setup() throws ServiceException {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
