@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.service;
 
-import cz.muni.fi.pa165.ServiceApplicationContext;
+import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dao.CreatureDao;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
