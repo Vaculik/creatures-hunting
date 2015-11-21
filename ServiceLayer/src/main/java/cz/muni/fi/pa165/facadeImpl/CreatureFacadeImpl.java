@@ -38,7 +38,9 @@ public class CreatureFacadeImpl implements CreatureFacade {
 
     @Override
     public Long createCreature(CreatureDTO creatureDTO) {
-        return null;
+        Creature newCreature = entityMapper.map(creatureDTO, Creature.class);
+        creatureService.createCreature(newCreature);
+        return newCreature.getId();
     }
 
     @Override
@@ -47,29 +49,22 @@ public class CreatureFacadeImpl implements CreatureFacade {
     }
 
     @Override
-    public Long updateCreature(CreatureDTO creatureDTO) {
-        Creature creature = entityMapper.map(creatureDTO, Creature.class);
-        creatureService.updateCreature(creature);
-        return creature.getId();
-    }
-
-    @Override
     public List<CreatureDTO> getAllCreatures() {
-        return null;
+        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
     }
 
     @Override
     public List<CreatureDTO> getCreaturesOfType(CreatureType type) {
-        return null;
+        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
     }
 
     @Override
     public List<CreatureDTO> getCreaturesWithMaxHeight() {
-        return null;
+        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
     }
 
     @Override
     public List<CreatureDTO> getCreaturesWithMaxWeight() {
-        return null;
+        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
     }
 }

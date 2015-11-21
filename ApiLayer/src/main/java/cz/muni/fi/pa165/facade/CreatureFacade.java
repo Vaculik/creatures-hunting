@@ -42,14 +42,6 @@ public interface CreatureFacade {
     public void deleteCreature(CreatureDTO creatureDTO);
 
     /**
-     * Update the CreatureDTO.
-     *
-     * @param creatureDTO the CreatureDTO to be updated
-     * @return id of the updated CreatureDTO
-     */
-    public Long updateCreature(CreatureDTO creatureDTO);
-
-    /**
      * Find all CreatureDTOs.
      *
      * @return list of the results
