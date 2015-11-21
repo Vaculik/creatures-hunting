@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
@@ -34,15 +34,15 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     @InjectMocks
     private CreatureService creatureService;
 
-    private List<Creature> creatures;
+    private List<Creature> creatures = new LinkedList<>();
     private List<Creature> actual;
-    private List<Creature> expected;
+    private List<Creature> expected = new LinkedList<>();
 
-    @BeforeTest
+    @BeforeMethod
     public void init() {
-        creatures = new LinkedList<>();
+        creatures.clear();
+        expected.clear();
         when(creatureDao.findAll()).thenReturn(creatures);
-        expected = new LinkedList<>();
     }
 
     @BeforeClass
@@ -82,6 +82,66 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getCreaturesWithMaxHeightTest() {
+        // no creatures test
+        actual = creatureService.getCreaturesWithMaxHeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        // creature with null height test
+        creatures.add(createCreature(null, 1, CreatureType.BEAST));
+        actual = creatureService.getCreaturesWithMaxHeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        // single creature with max height test
+        Creature creatureWithMaxHeight = createCreature(1, 1, CreatureType.UNDEAD);
+        creatures.add(creatureWithMaxHeight);
+        expected.add(creatureWithMaxHeight);
+        actual = creatureService.getCreaturesWithMaxHeight();
+        Assert.assertEquals(actual.size(), 1);
+        Assert.assertEquals(actual, expected);
+
+        // multiple creatures with max height test
+        expected.clear();
+        creatureWithMaxHeight = createCreature(2,1,CreatureType.UNDEAD);
+        creatures.add(creatureWithMaxHeight);
+        expected.add(creatureWithMaxHeight);
+        creatureWithMaxHeight = createCreature(2,2,CreatureType.BEAST);
+        creatures.add(creatureWithMaxHeight);
+        expected.add(creatureWithMaxHeight);
+        actual = creatureService.getCreaturesWithMaxHeight();
+        Assert.assertEquals(actual.size(), 2);
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void getCreaturesWithMaxWeightTest() {
+        // no creatures test
+        actual = creatureService.getCreaturesWithMaxWeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        // creature with null weight test
+        creatures.add(createCreature(1, null, CreatureType.VAMPIRE));
+        actual = creatureService.getCreaturesWithMaxWeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        // single creature with max weight test
+        Creature creatureWithMaxWeight = createCreature(1, 1, CreatureType.BEAST);
+        creatures.add(creatureWithMaxWeight);
+        expected.add(creatureWithMaxWeight);
+        actual = creatureService.getCreaturesWithMaxWeight();
+        Assert.assertEquals(actual.size(), 1);
+        Assert.assertEquals(actual, expected);
+
+        // multiple creatures with max weight test
+        expected.clear();
+        creatureWithMaxWeight = createCreature(1,2,CreatureType.BEAST);
+        creatures.add(creatureWithMaxWeight);
+        expected.add(creatureWithMaxWeight);
+        creatureWithMaxWeight = createCreature(2,2,CreatureType.UNDEAD);
+        creatures.add(creatureWithMaxWeight);
+        expected.add(creatureWithMaxWeight);
+        actual = creatureService.getCreaturesWithMaxWeight();
+        Assert.assertEquals(actual.size(), 2);
+        Assert.assertEquals(actual, expected);
     }
 
     private Creature createCreature(Integer height, Integer weight, CreatureType type) {

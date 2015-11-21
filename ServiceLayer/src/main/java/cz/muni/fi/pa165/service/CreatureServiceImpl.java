@@ -92,7 +92,7 @@ public class CreatureServiceImpl implements CreatureService {
         Integer weight;
 
         for (Creature creature : creatures) {
-            weight = creature.getHeight();
+            weight = creature.getWeight();
             if (weight == null) {
                 continue;
             }
