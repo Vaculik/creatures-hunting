@@ -15,7 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by vaculik on 21.11.15.
+ * Tests for mapping operations of the EntityMapper interface.
+ *
+ * @author Karel Vaculik
  */
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class EntityMapperTest extends AbstractTestNGSpringContextTests {

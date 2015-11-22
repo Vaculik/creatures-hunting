@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by vaculik on 20.11.15.
+ * The interface represents service layer operations on objects of the class Creature.
+ *
+ * @author Karel Vaculik
  */
 @Service
 public interface CreatureService {

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * Created by vaculik on 21.11.15.
+ * @author Karel Vaculik
  */
 @Configuration
 @Import(InMemoryDatabaseApplicationContext.class)

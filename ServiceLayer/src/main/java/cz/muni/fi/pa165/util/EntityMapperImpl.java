@@ -9,7 +9,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by vaculik on 21.11.15.
+ * The implementation of the EntityMapper interface.
+ *
+ * @author Karel Vaculik
  */
 @Service
 public class EntityMapperImpl implements EntityMapper {

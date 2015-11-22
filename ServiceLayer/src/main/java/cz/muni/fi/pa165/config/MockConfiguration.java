@@ -18,7 +18,9 @@ import org.springframework.context.annotation.Primary;
 import static org.mockito.Mockito.mock;
 
 /**
- * Created by vaculik on 21.11.15.
+ * The additional configuration of mock objects. This configuration is primarily for tests on facade layer.
+ *
+ * @author Karel Vaculik
  */
 @Configuration
 @ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class, UserSystemServiceImpl.class, 

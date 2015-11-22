@@ -10,7 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by vaculik on 20.11.15.
+ * The implementation of the CreatureService interface.
+ *
+ * @author Karel Vaculik
  */
 @Service
 public class CreatureServiceImpl implements CreatureService {

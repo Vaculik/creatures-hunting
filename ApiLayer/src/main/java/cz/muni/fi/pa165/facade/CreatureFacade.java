@@ -6,7 +6,9 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import java.util.List;
 
 /**
- * Created by vaculik on 20.11.15.
+ * The interface represents operations on transfer objects of the class CreatureDTO.
+ *
+ * @author Karel Vaculik
  */
 public interface CreatureFacade {
 

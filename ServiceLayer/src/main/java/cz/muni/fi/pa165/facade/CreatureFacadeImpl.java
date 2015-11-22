@@ -12,7 +12,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * Created by vaculik on 20.11.15.
+ * The implementation of the CreatureFacade interface.
+ *
+ * @author Karel Vaculik
  */
 @Service
 @Transactional
