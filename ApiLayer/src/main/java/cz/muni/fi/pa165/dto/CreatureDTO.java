@@ -4,7 +4,9 @@ package cz.muni.fi.pa165.dto;
 import cz.muni.fi.pa165.enums.CreatureType;
 
 /**
- * Created by vaculik on 20.11.15.
+ * Data transfer object of the Creature entity.
+ *
+ * @author Karel Vaculik
  */
 public class CreatureDTO {
 

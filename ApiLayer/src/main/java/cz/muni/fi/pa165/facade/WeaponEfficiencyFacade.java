@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.WeaponDTO;
+import cz.muni.fi.pa165.dto.WeaponEfficiencyCreateDTO;
 import cz.muni.fi.pa165.dto.WeaponEfficiencyDTO;
 
 import java.util.List;
@@ -24,10 +25,10 @@ public interface WeaponEfficiencyFacade {
     /**
      * Create the WeaponEfficiencyDTO.
      *
-     * @param weaponEfficiencyDTO the WeaponEfficiencyDTO to be created
+     * @param weaponEfficiencyCreateDTO the WeaponEfficiencyDTO to be created
      * @return id of the created WeaponEfficiencyDTO
      */
-    Long createWeaponEfficiency(WeaponEfficiencyDTO weaponEfficiencyDTO);
+    Long createWeaponEfficiency(WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO);
 
     /**
      * Delete the WeaponEfficiencyDTO.

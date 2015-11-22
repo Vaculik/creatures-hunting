@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.dto;
 
 /**
- * Created by vaculik on 22.11.15.
+ * Data transfer object of the WeaponEfficiency entity.
+ *
+ * @author Karel Vaculik
  */
 public class WeaponEfficiencyDTO {
 
