@@ -7,6 +7,8 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.AreaDao;
 import java.util.List;
+
+import cz.muni.fi.pa165.service.exception.AreaServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.entity.Area;
