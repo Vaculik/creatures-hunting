@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Import;
 public class ServiceApplicationContext {
 
     @Bean
-    public Mapper dozer(){
+    public Mapper mapper(){
         DozerBeanMapper dozer = new DozerBeanMapper();
         return dozer;
     }
