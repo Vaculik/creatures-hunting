@@ -26,9 +26,8 @@ public interface WeaponEfficiencyService {
      * Create the WeaponEfficiency.
      *
      * @param weaponEfficiency the WeaponEfficiency to be created
-     * @return id of the created WeaponEfficiency
      */
-    Long createWeaponEfficiency(WeaponEfficiency weaponEfficiency);
+    void createWeaponEfficiency(WeaponEfficiency weaponEfficiency);
 
     /**
      * Delete the WeaponEfficiency.
