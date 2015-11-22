@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.facadeImpl;
+package cz.muni.fi.pa165.facade;
 
 import java.util.List;
 
@@ -7,14 +7,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
-import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
-import cz.muni.fi.pa165.facade.UserSystemFacade;
-import cz.muni.fi.pa165.service.CreatureService;
 import cz.muni.fi.pa165.service.UserSystemService;
 import cz.muni.fi.pa165.util.EntityMapper;
 

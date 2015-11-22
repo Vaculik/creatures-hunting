@@ -1,9 +1,8 @@
-package cz.muni.fi.pa165.facadeImpl;
+package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
-import cz.muni.fi.pa165.facade.CreatureFacade;
 import cz.muni.fi.pa165.service.CreatureService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,16 +53,16 @@ public class CreatureFacadeImpl implements CreatureFacade {
 
     @Override
     public List<CreatureDTO> getCreaturesOfType(CreatureType type) {
-        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
+        return entityMapper.map(creatureService.getCreaturesOfType(type), CreatureDTO.class);
     }
 
     @Override
     public List<CreatureDTO> getCreaturesWithMaxHeight() {
-        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
+        return entityMapper.map(creatureService.getCreaturesWithMaxHeight(), CreatureDTO.class);
     }
 
     @Override
     public List<CreatureDTO> getCreaturesWithMaxWeight() {
-        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
+        return entityMapper.map(creatureService.getCreaturesWithMaxWeight(), CreatureDTO.class);
     }
 }

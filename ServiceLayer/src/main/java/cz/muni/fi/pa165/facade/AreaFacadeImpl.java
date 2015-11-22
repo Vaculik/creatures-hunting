@@ -2,11 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.muni.fi.pa165.facadeImpl;
+package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.AreaDTO;
-import cz.muni.fi.pa165.dto.CreatureDTO;
-import cz.muni.fi.pa165.facade.AreaFacade;
+
 import java.util.List;
 
 

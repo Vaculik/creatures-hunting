@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.config;
 
 import cz.muni.fi.pa165.InMemoryDatabaseApplicationContext;
-import cz.muni.fi.pa165.facadeImpl.CreatureFacadeImpl;
-import cz.muni.fi.pa165.facadeImpl.UserSystemFacadeImpl;
+import cz.muni.fi.pa165.facade.CreatureFacadeImpl;
+import cz.muni.fi.pa165.facade.UserSystemFacadeImpl;
 import cz.muni.fi.pa165.service.CreatureServiceImpl;
 import cz.muni.fi.pa165.service.UserSystemServiceImpl;
 import cz.muni.fi.pa165.util.EntityMapperImpl;
