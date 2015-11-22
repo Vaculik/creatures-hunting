@@ -1,40 +1,43 @@
-package cz.muni.fi.pa165.facade;
+package cz.muni.fi.pa165.service;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.dto.UserSystemDTO;
+import org.springframework.stereotype.Service;
+
+import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
-public interface UserSystemFacade {
+@Service
+public interface UserSystemService {
 	
     /**
      * This method creates a user.
      *
-     * @param user UserSystemDTO to be created
+     * @param user UserSystem to be created
      */
-    public void createUser(UserSystemDTO user);
+    public void createUser(UserSystem user);
     
     /**
      * This method deletes a user.
      *
      * @param area user to be deleted
      */
-    public void deleteUser(UserSystemDTO user);
+    public void deleteUser(UserSystem user);
     
     /**
      * This method updates a user.
      *
-     * @param area UserSystemDTO to be updated
+     * @param area UserSystem to be updated
      */
-    public void updateUser(UserSystemDTO user);
+    public void updateUser(UserSystem user);
     
     /**
      * Find all Users.
      *
      * @return list of the results
      */
-    public List<UserSystemDTO> getAllUsers();
+    public List<UserSystem> getAllUsers();
 
     /**
      * Find all users of given type.
@@ -42,7 +45,7 @@ public interface UserSystemFacade {
      * @param type the type
      * @return list of the results
      */
-    public List<UserSystemDTO> getUsersOfType(UserType type);
+    public List<UserSystem> getUsersOfType(UserType type);
     
     /**
      * Find all users of given sex.
@@ -50,15 +53,15 @@ public interface UserSystemFacade {
      * @param type the type
      * @return list of the results
      */
-    public List<UserSystemDTO> getUsersOfSex(SexType sex);
+    public List<UserSystem> getUsersOfSex(SexType sex);
     
     /**
      * Find a User by id.
      *
      * @param id id of the UserSystem
-     * @return the found UserSystemDTO or null if doesn't exist
+     * @return the found UserSystem or null if doesn't exist
      */
-    public UserSystemDTO getUserById(Long id);
+    public UserSystem getUserById(Long id);
 
     /**
      * Find a User by name.
@@ -66,5 +69,5 @@ public interface UserSystemFacade {
      * @param name name of the UserSystem
      * @return the found UserSystemDTO or null if doesn't exist
      */
-    public UserSystemDTO getUserByName(String name);
+    public UserSystem getUserByName(String name);
 }

@@ -25,7 +25,6 @@ public class CreatureFacadeImpl implements CreatureFacade {
     @Autowired
     private EntityMapper entityMapper;
 
-
     @Override
     public CreatureDTO getCreatureById(Long id) {
         return entityMapper.map(creatureService.getCreatureById(id), CreatureDTO.class);
