@@ -6,7 +6,7 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import java.util.List;
 
 /**
- * The interface represents operations on transfer objects of the class CreatureDTO.
+ * The interface represents operations on a transfer object of the class CreatureDTO.
  *
  * @author Karel Vaculik
  */

@@ -87,6 +87,17 @@ public class CreatureDTO {
         result = 31 * result + (getType() != null ? getType().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "CreatureDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", type=" + type +
+                '}';
+    }
 }
 
 
