@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.entity.Weapon;
 import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import cz.muni.fi.pa165.service.CreatureService;
 import cz.muni.fi.pa165.service.WeaponEfficiencyService;
+import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,8 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
     @Autowired
     private CreatureService creatureService;
 
-//    @Autowired
-//    private WeaponService weaponService;
+    @Autowired
+    private WeaponService weaponService;
 
     @Override
     public WeaponEfficiencyDTO getWeaponEfficiencyById(Long id) {
@@ -48,8 +49,8 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
         newWeaponEfficiency.setEfficiency(weaponEfficiencyCreateDTO.getEfficiency());
         Creature creature = creatureService.getCreatureById(weaponEfficiencyCreateDTO.getCreatureId());
         newWeaponEfficiency.setCreature(creature);
-//        Weapon weapon = weaponService.getWeaponById(weaponEfficiencyCreateDTO.getWeaponId());
-//        newWeaponEfficiency.setWeapon(weapon);
+        Weapon weapon = weaponService.getWeaponById(weaponEfficiencyCreateDTO.getWeaponId());
+        newWeaponEfficiency.setWeapon(weapon);
         weaponEfficiencyService.createWeaponEfficiency(newWeaponEfficiency);
         return newWeaponEfficiency.getId();
     }

@@ -20,7 +20,7 @@ public interface CreatureService {
      * @param id id of the Creature
      * @return the found Creature or null if doesn't exist
      */
-    public Creature getCreatureById(Long id);
+    Creature getCreatureById(Long id);
 
     /**
      * Find a Creature entity by name.
@@ -28,35 +28,35 @@ public interface CreatureService {
      * @param name name of the Creature
      * @return the found Creature or null if doesn't exist
      */
-    public Creature getCreatureByName(String name);
+    Creature getCreatureByName(String name);
 
     /**
      * Create the Creature entity.
      *
      * @param creature the Creature to be created
      */
-    public void createCreature(Creature creature);
+    void createCreature(Creature creature);
 
     /**
      * Delete the Creature entity.
      *
      * @param creature the Creature to be deleted
      */
-    public void deleteCreature(Creature creature);
+    void deleteCreature(Creature creature);
 
     /**
      * Update the Creature entity.
      *
      * @param creature the Creature to be updated
      */
-    public void updateCreature(Creature creature);
+    void updateCreature(Creature creature);
 
     /**
      * Find all Creature entities.
      *
      * @return list of the results
      */
-    public List<Creature> getAllCreatures();
+    List<Creature> getAllCreatures();
 
     /**
      * Find all Creature entities of a given type.
@@ -64,19 +64,19 @@ public interface CreatureService {
      * @param type the type
      * @return list of the results
      */
-    public List<Creature> getCreaturesOfType(CreatureType type);
+    List<Creature> getCreaturesOfType(CreatureType type);
 
     /**
      * Find all Creature entities with the biggest height.
      *
      * @return list of the results
      */
-    public List<Creature> getCreaturesWithMaxHeight();
+    List<Creature> getCreaturesWithMaxHeight();
 
     /**
      * Find all Creature entities with the biggest weight.
      *
      * @return list of the results
      */
-    public List<Creature> getCreaturesWithMaxWeight();
+    List<Creature> getCreaturesWithMaxWeight();
 }

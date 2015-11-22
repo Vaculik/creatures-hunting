@@ -30,6 +30,13 @@ public interface WeaponEfficiencyService {
     void createWeaponEfficiency(WeaponEfficiency weaponEfficiency);
 
     /**
+     * Update the WeaponEfficiency entity.
+     *
+     * @param weaponEfficiency the WeaponEfficiency to be updated
+     */
+    void updateWeaponEfficiency(WeaponEfficiency weaponEfficiency);
+
+    /**
      * Delete the WeaponEfficiency.
      *
      * @param weaponEfficiency the WeaponEfficiency to be deleted

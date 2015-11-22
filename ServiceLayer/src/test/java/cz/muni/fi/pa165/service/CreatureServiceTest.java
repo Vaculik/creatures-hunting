@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dao.CreatureDao;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
-import org.hibernate.service.spi.ServiceException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -34,20 +33,50 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     @InjectMocks
     private CreatureService creatureService;
 
-    private List<Creature> creatures = new LinkedList<>();
+    private List<Creature> creatures;
     private List<Creature> actual;
-    private List<Creature> expected = new LinkedList<>();
+    private List<Creature> expected;
 
     @BeforeMethod
     public void init() {
-        creatures.clear();
-        expected.clear();
+        creatures = new LinkedList<>();
+        expected = new LinkedList<>();
         when(creatureDao.findAll()).thenReturn(creatures);
     }
 
     @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void getCreatureByIdTest() {
+        // TODO
+    }
+
+    @Test
+    public void getCreatureByNameTest() {
+        // TODO
+    }
+
+    @Test
+    public void createCreatureTest() {
+        // TODO
+    }
+
+    @Test
+    public void deleteCreatureTest() {
+        // TODO
+    }
+
+    @Test
+    public void updateCreatureTest() {
+        // TODO
+    }
+
+    @Test
+    public void getAllCreaturesTest() {
+        // TODO
     }
 
     @Test

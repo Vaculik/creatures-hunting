@@ -33,6 +33,11 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
     }
 
     @Override
+    public void updateWeaponEfficiency(WeaponEfficiency weaponEfficiency) {
+        weaponEfficiencyDao.update(weaponEfficiency);
+    }
+
+    @Override
     public void deleteWeaponEfficiency(WeaponEfficiency weaponEfficiency) {
         weaponEfficiencyDao.delete(weaponEfficiency);
     }
