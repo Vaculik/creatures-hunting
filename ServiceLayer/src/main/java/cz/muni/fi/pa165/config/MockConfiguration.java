@@ -32,6 +32,18 @@ public class MockConfiguration {
         return mock(AreaService.class);
     }
 
+//    @Bean
+//    @Primary
+//    public UserService mockUserService() {
+//        return mock(UserService.class);
+//    }
+//
+//    @Bean
+//    @Primary
+//    public WeaponService mockWeaponService() {
+//        return mock(WeaponService.class);
+//    }
+
     @Bean
     @Primary
     public EntityMapper mockEntityMapper() {
