@@ -22,6 +22,8 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 /**
+ * Tests for all methods of the WeaponEfficiencyService interface.
+ *
  * @author Karel Vaculik
  */
 @ContextConfiguration(classes = ServiceApplicationContext.class)
@@ -37,8 +39,6 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
     private WeaponEfficiency weaponEfficiency;
 
     private List<WeaponEfficiency> weaponEfficiencies;
-    private List<WeaponEfficiency> expected;
-    private List<WeaponEfficiency> actual;
 
 
     @BeforeMethod
@@ -46,7 +46,6 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
         reset(weaponEfficiencyDao);
         weaponEfficiency = createWeaponEfficiency(1);
         weaponEfficiencies = new LinkedList<>();
-        expected = new LinkedList<>();
     }
 
     @BeforeClass
@@ -77,7 +76,10 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
 
     @Test
     public void updateWeaponEfficiencyTest() {
-        // TODO
+        doNothing().when(weaponEfficiencyDao).update(weaponEfficiency);
+
+        weaponEfficiencyService.updateWeaponEfficiency(weaponEfficiency);
+        verify(weaponEfficiencyDao).update(weaponEfficiency);
     }
 
     @Test
@@ -94,7 +96,7 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
 
         when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
 
-        actual = weaponEfficiencyService.findAllWeaponEfficiencies();
+        List<WeaponEfficiency> actual = weaponEfficiencyService.findAllWeaponEfficiencies();
         Assert.assertEquals(actual.size(), 1);
         Assert.assertEquals(actual, weaponEfficiencies);
 
@@ -102,13 +104,141 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
     }
 
     @Test
+    public void findMostEffectiveWeaponsAtCreatureNullCreatureTest() {
+        weaponEfficiencies.add(weaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Weapon> actual = weaponEfficiencyService.findMostEffectiveWeaponsAtCreature(null);
+        Assert.assertEquals(actual.size(), 0);
+    }
+
+    @Test
+    public void findMostEffectiveWeaponsAtCreatureEmptyResultsTest() {
+        Creature creature = new Creature();
+        Creature inputCreature = new Creature();
+        creature.setName("different-creature");
+        inputCreature.setName("input-creature");
+        weaponEfficiency.setCreature(creature);
+        weaponEfficiencies.add(weaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Weapon> actual = weaponEfficiencyService.findMostEffectiveWeaponsAtCreature(inputCreature);
+        Assert.assertEquals(actual.size(), 0);
+        verify(weaponEfficiencyDao).findAll();
+    }
+
+    @Test
     public void findMostEffectiveWeaponsAtCreatureTest() {
-        // TODO
+        Creature creature = new Creature();
+        creature.setName("weapon-eff-creature");
+        Weapon resultWeapon1 = new Weapon();
+        resultWeapon1.setName("result-weapon1");
+        Weapon resultWeapon2 = new Weapon();
+        resultWeapon2.setName("result-weapon2");
+        Weapon weapon = new Weapon();
+        weapon.setName("not-efficient-weapon");
+
+        WeaponEfficiency matchingWeaponEfficiency1 = new WeaponEfficiency();
+        matchingWeaponEfficiency1.setEfficiency(2);
+        matchingWeaponEfficiency1.setCreature(creature);
+        matchingWeaponEfficiency1.setWeapon(resultWeapon1);
+
+        WeaponEfficiency matchingWeaponEfficiency2 = new WeaponEfficiency();
+        matchingWeaponEfficiency2.setEfficiency(2);
+        matchingWeaponEfficiency2.setCreature(creature);
+        matchingWeaponEfficiency2.setWeapon(resultWeapon2);
+
+        WeaponEfficiency weakWeaponEfficiency = new WeaponEfficiency();
+        weakWeaponEfficiency.setEfficiency(1);
+        weakWeaponEfficiency.setCreature(creature);
+        weakWeaponEfficiency.setWeapon(weapon);
+
+        weaponEfficiencies.add(weaponEfficiency);
+        weaponEfficiencies.add(matchingWeaponEfficiency1);
+        weaponEfficiencies.add(matchingWeaponEfficiency2);
+        weaponEfficiencies.add(weakWeaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Weapon> actual = weaponEfficiencyService.findMostEffectiveWeaponsAtCreature(creature);
+        List<Weapon> expected = new LinkedList<>();
+        expected.add(resultWeapon1);
+        expected.add(resultWeapon2);
+
+        Assert.assertEquals(actual.size(), 2);
+        Assert.assertEquals(actual, expected);
+        verify(weaponEfficiencyDao).findAll();
+    }
+
+    @Test
+    public void findMostVulnerableCreaturesToWeaponNullWeaponTest() {
+        weaponEfficiencies.add(weaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Creature> actual = weaponEfficiencyService.findMostVulnerableCreaturesToWeapon(null);
+        Assert.assertEquals(actual.size(), 0);
+    }
+
+    @Test
+    public void findMostVulnerableCreatureToWeaponEmptyResultsTest() {
+        Weapon weapon = new Weapon();
+        Weapon inputWeapon = new Weapon();
+        weapon.setName("different-weapon");
+        inputWeapon.setName("input-weapon");
+        weaponEfficiency.setWeapon(weapon);
+        weaponEfficiencies.add(weaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Creature> actual = weaponEfficiencyService.findMostVulnerableCreaturesToWeapon(inputWeapon);
+        Assert.assertEquals(actual.size(), 0);
+        verify(weaponEfficiencyDao).findAll();
     }
 
     @Test
     public void findMostVulnerableCreaturesToWeaponTest() {
-        // TODO
+        Creature vulnerableCreature1 = new Creature();
+        vulnerableCreature1.setName("vulnerable-creature1");
+        Creature vulnerableCreature2 = new Creature();
+        vulnerableCreature2.setName("vulnerable-creature2");
+        Creature resilientCreature = new Creature();
+        resilientCreature.setName("resilient-creature");
+        Weapon weapon = new Weapon();
+        weapon.setName("input-weapon");
+
+        WeaponEfficiency matchingWeaponEfficiency1 = new WeaponEfficiency();
+        matchingWeaponEfficiency1.setEfficiency(2);
+        matchingWeaponEfficiency1.setCreature(vulnerableCreature1);
+        matchingWeaponEfficiency1.setWeapon(weapon);
+
+        WeaponEfficiency matchingWeaponEfficiency2 = new WeaponEfficiency();
+        matchingWeaponEfficiency2.setEfficiency(2);
+        matchingWeaponEfficiency2.setCreature(vulnerableCreature2);
+        matchingWeaponEfficiency2.setWeapon(weapon);
+
+        WeaponEfficiency weakWeaponEfficiency = new WeaponEfficiency();
+        weakWeaponEfficiency.setEfficiency(1);
+        weakWeaponEfficiency.setCreature(resilientCreature);
+        weakWeaponEfficiency.setWeapon(weapon);
+
+        weaponEfficiencies.add(weaponEfficiency);
+        weaponEfficiencies.add(matchingWeaponEfficiency1);
+        weaponEfficiencies.add(matchingWeaponEfficiency2);
+        weaponEfficiencies.add(weakWeaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<Creature> actual = weaponEfficiencyService.findMostVulnerableCreaturesToWeapon(weapon);
+        List<Creature> expected = new LinkedList<>();
+        expected.add(vulnerableCreature1);
+        expected.add(vulnerableCreature2);
+
+        Assert.assertEquals(actual.size(), 2);
+        Assert.assertEquals(actual, expected);
+        verify(weaponEfficiencyDao).findAll();
     }
 
     private WeaponEfficiency createWeaponEfficiency(Integer efficiency) {

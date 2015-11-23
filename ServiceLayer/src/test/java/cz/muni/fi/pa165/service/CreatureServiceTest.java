@@ -21,7 +21,9 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 
 /**
- * Created by vaculik on 21.11.15.
+ * Tests for all methods of the CreatureService interface.
+ *
+ * @author Karel Vaculik
  */
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
