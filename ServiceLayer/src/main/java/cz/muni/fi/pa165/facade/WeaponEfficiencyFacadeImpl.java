@@ -47,10 +47,13 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
     public Long createWeaponEfficiency(WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO) {
         WeaponEfficiency newWeaponEfficiency = new WeaponEfficiency();
         newWeaponEfficiency.setEfficiency(weaponEfficiencyCreateDTO.getEfficiency());
+
         Creature creature = creatureService.getCreatureById(weaponEfficiencyCreateDTO.getCreatureId());
         newWeaponEfficiency.setCreature(creature);
+
         Weapon weapon = weaponService.getWeaponById(weaponEfficiencyCreateDTO.getWeaponId());
         newWeaponEfficiency.setWeapon(weapon);
+
         weaponEfficiencyService.createWeaponEfficiency(newWeaponEfficiency);
         return newWeaponEfficiency.getId();
     }

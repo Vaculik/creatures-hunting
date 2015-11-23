@@ -63,6 +63,7 @@ public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
     public void getCreatureByIdTest() {
         Long id = 1l;
         creature.setId(id);
+        creatureDTO.setId(id);
 
         when(entityMapper.map(creature, CreatureDTO.class)).thenReturn(creatureDTO);
         when(creatureService.getCreatureById(id)).thenReturn(creature);
