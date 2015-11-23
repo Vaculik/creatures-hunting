@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public Area getAreaByame(String name) {
+    public Area getAreaByName(String name) {
         return areaDao.getByName(name);
     }
 
@@ -58,16 +59,6 @@ public class AreaServiceImpl implements AreaService{
         return areaDao.findAll();
     }
 
-    @Override
-    public Map<Area, Integer> getAreasWithAmountCreatures() {
-        Map<Area, Integer> result = new HashMap<Area, Integer>();
-       
-        for(Area ar : areaDao.findAll()){
-            result.put(ar, new Integer(ar.getCreatures().size()));
-        }                
-        return result;
-    }        
-    
     @Override
     public boolean moveCreature(Creature cr, Area fromAr, Area toAr){
         if(cr == null || fromAr == null || toAr == null){
@@ -83,17 +74,58 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public Set<Creature> commonCreatures(Area ar1, Area ar2) {
-        if(ar1 == null || ar2 == null){
-            throw new IllegalArgumentException("One of the Areas is null");
-        }
-        Set<Creature> result = new HashSet<Creature>();
-        
-        for(Creature cr : ar1.getCreatures()){
-            if(ar2.getCreatures().contains(cr)){
-                result.add(cr);
+    public List<Area> getAreasWithNoCreature() {
+        List<Area> result = new ArrayList<>();
+       
+        for(Area ar : areaDao.findAll()){
+            if(ar.getCreatures().isEmpty()){
+                result.add(ar);
             }
-        }
+        }                
+        return result;
+    }
+
+    @Override
+    public List<Area> getAreasWithAnyCreature() {
+        List<Area> result = new ArrayList<>();
+       
+        for(Area ar : areaDao.findAll()){
+            if(!ar.getCreatures().isEmpty()){
+                result.add(ar);
+            }
+        }                
+        return result;
+    }
+
+    @Override
+    public List<Area> getAreasMostCreatures() {
+        List<Area> result = new ArrayList<>();
+        Integer tmpSize = Integer.MIN_VALUE;
+        for(Area ar : areaDao.findAll()){
+            if(ar.getCreatures().size()==tmpSize){                    
+                result.add(ar);
+            }
+            if(ar.getCreatures().size()>tmpSize){                    
+                result.clear();
+                result.add(ar);
+            }
+        }                
+        return result;
+    }
+
+    @Override
+    public List<Area> getAreasFewestCreatures() {
+        List<Area> result = new ArrayList<>();
+        Integer tmpSize = Integer.MAX_VALUE;
+        for(Area ar : areaDao.findAll()){
+            if(ar.getCreatures().size()==tmpSize){                    
+                result.add(ar);
+            }
+            if(ar.getCreatures().size()<tmpSize){                    
+                result.clear();
+                result.add(ar);
+            }
+        }                
         return result;
     }
     

@@ -53,27 +53,14 @@ public interface AreaService {
      * @param name string-name of specific area
      * @return area with specific name
      */
-    Area getAreaByame(String name);
+    Area getAreaByName(String name);
     
     /**
      * This method finds all areas in a database
      * @return list of all areas in a database
      */
     List<Area> findAllAreas();    
-    
-    
-    /**
-     * This method returns areas and theirs amount of creatures
-     * @return Map of Areas and theirs amount of creatures
-     */
-    public Map<Area,Integer> getAreasWithAmountCreatures();
-    
-    /**
-     * This method gets creatures of specific Area
-     * @param ar Area from which creatures are taken
-     * @return list of creatures which occur in specific Area
-     */
-    
+       
     /**
      * This method moves the creature from one area to another area
      * @param cr creature to be moved
@@ -82,13 +69,29 @@ public interface AreaService {
      * @return moving was successful
      */
     public boolean moveCreature(Creature cr, Area fromAr, Area toAr);
+
+        
+     /**
+     * This method gets areas with no creature in
+     * @return list of all areas in a database where is no creature
+     */
+    public List<Area> getAreasWithNoCreature();
     
     /**
-     * This method compares two areas to common creature
-     * @param ar1 first area which is compared
-     * @param ar2 second area which is compared
-     * @return set of creatures which are common to the specific areas
+     * This method gets areas with any creature in
+     * @return list of all areas in a database where is any creature
      */
-    public Set<Creature> commonCreatures(Area ar1, Area ar2);
-        
+    public List<Area> getAreasWithAnyCreature();
+    
+    /**
+     * This method gets areas where is the highest amount of creatures
+     * @return list of areas in a database where is the highest number of creatures
+     */
+    public List<Area> getAreasMostCreatures();
+    
+    /**
+     * This method gets areas where is the lowest amount of creatures
+     * @return list of areas in a database where is the lowest number of creatures
+     */
+    public List<Area> getAreasFewestCreatures();
 }
