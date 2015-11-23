@@ -50,7 +50,7 @@ public class CreatureFacadeImpl implements CreatureFacade {
 
     @Override
     public List<CreatureDTO> getAllCreatures() {
-        return entityMapper.map(creatureService.getAllCreatures(), CreatureDTO.class);
+        return entityMapper.map(creatureService.findAllCreatures(), CreatureDTO.class);
     }
 
     @Override

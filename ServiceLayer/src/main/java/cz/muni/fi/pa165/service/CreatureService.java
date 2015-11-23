@@ -56,7 +56,7 @@ public interface CreatureService {
      *
      * @return list of the results
      */
-    List<Creature> getAllCreatures();
+    List<Creature> findAllCreatures();
 
     /**
      * Find all Creature entities of a given type.

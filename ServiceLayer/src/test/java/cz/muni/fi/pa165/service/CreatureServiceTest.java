@@ -18,7 +18,7 @@ import org.testng.annotations.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for all methods of the CreatureService interface.
@@ -36,14 +36,15 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     private CreatureService creatureService;
 
     private List<Creature> creatures;
-    private List<Creature> actual;
-    private List<Creature> expected;
+
+    private Creature creature;
+
 
     @BeforeMethod
     public void init() {
+        creature = createCreature(1, 1, CreatureType.BEAST);
         creatures = new LinkedList<>();
-        expected = new LinkedList<>();
-        when(creatureDao.findAll()).thenReturn(creatures);
+        reset(creatureDao);
     }
 
     @BeforeClass
@@ -53,32 +54,72 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getCreatureByIdTest() {
-        // TODO
+        Long id = 1l;
+        Long wrongId = 0l;
+        creature.setId(id);
+
+        when(creatureDao.getById(id)).thenReturn(creature);
+
+        Assert.assertEquals(creatureService.getCreatureById(id), creature);
+        Assert.assertNull(creatureService.getCreatureById(wrongId));
+
+        verify(creatureDao).getById(id);
+        verify(creatureDao).getById(wrongId);
     }
 
     @Test
     public void getCreatureByNameTest() {
-        // TODO
+        String name = "creature";
+        String wrongName = "wrong-name";
+        creature.setName(name);
+
+        when(creatureDao.getByName(name)).thenReturn(creature);
+
+        Assert.assertEquals(creatureService.getCreatureByName(name), creature);
+        Assert.assertNull(creatureService.getCreatureByName(wrongName));
+
+        verify(creatureDao).getByName(name);
+        verify(creatureDao).getByName(wrongName);
     }
 
     @Test
     public void createCreatureTest() {
-        // TODO
+        doNothing().when(creatureDao).create(creature);
+
+        creatureService.createCreature(creature);
+
+        verify(creatureDao).create(creature);
     }
 
     @Test
     public void deleteCreatureTest() {
-        // TODO
+        doNothing().when(creatureDao).delete(creature);
+
+        creatureService.deleteCreature(creature);
+
+        verify(creatureDao).delete(creature);
     }
 
     @Test
     public void updateCreatureTest() {
-        // TODO
+        doNothing().when(creatureDao).update(creature);
+
+        creatureService.updateCreature(creature);
+
+        verify(creatureDao).update(creature);
     }
 
     @Test
-    public void getAllCreaturesTest() {
-        // TODO
+    public void findAllCreaturesTest() {
+        creatures.add(creature);
+
+        when(creatureDao.findAll()).thenReturn(creatures);
+
+        List<Creature> actual = creatureService.findAllCreatures();
+        Assert.assertEquals(actual.size(), 1);
+        Assert.assertEquals(actual, creatures);
+
+        verify(creatureDao).findAll();
     }
 
     @Test
@@ -90,13 +131,18 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         creatures.add(vampire2);
         creatures.add(beast);
 
+        when(creatureDao.findAll()).thenReturn(creatures);
+
         // vampire type test
-        actual = creatureService.getCreaturesOfType(CreatureType.VAMPIRE);
+        List<Creature> actual = creatureService.getCreaturesOfType(CreatureType.VAMPIRE);
+        List<Creature> expected = new LinkedList<>();
         Assert.assertEquals(actual.size(), 2);
 
         expected.add(vampire1);
         expected.add(vampire2);
         Assert.assertEquals(actual, expected);
+
+        verify(creatureDao).findAll();
 
         // beast type test
         actual = creatureService.getCreaturesOfType(CreatureType.BEAST);
@@ -106,74 +152,82 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         expected.add(beast);
         Assert.assertEquals(actual, expected);
 
+        verify(creatureDao, times(2)).findAll();
+
         // undead type test
         actual = creatureService.getCreaturesOfType(CreatureType.UNDEAD);
         Assert.assertEquals(actual.size(), 0);
+
+        verify(creatureDao, times(3)).findAll();
     }
 
     @Test
+    public void getCreaturesWithMaxHeightNoCreaturesTest() {
+        when(creatureDao.findAll()).thenReturn(creatures);
+
+        List<Creature> actual = creatureService.getCreaturesWithMaxHeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        verify(creatureDao).findAll();
+    }
+
+
+    @Test
     public void getCreaturesWithMaxHeightTest() {
-        // no creatures test
-        actual = creatureService.getCreaturesWithMaxHeight();
-        Assert.assertEquals(actual.size(), 0);
+        Creature smallCreature = createCreature(1,1,CreatureType.VAMPIRE);
+        Creature creatureWithMaxHeight1 = createCreature(2, 1, CreatureType.UNDEAD);
+        Creature creatureWithMaxHeight2 = createCreature(2, 2, CreatureType.BEAST);
 
-        // creature with null height test
-        creatures.add(createCreature(null, 1, CreatureType.BEAST));
-        actual = creatureService.getCreaturesWithMaxHeight();
-        Assert.assertEquals(actual.size(), 0);
+        creatures.add(creatureWithMaxHeight1);
+        creatures.add(creatureWithMaxHeight2);
+        creatures.add(smallCreature);
 
-        // single creature with max height test
-        Creature creatureWithMaxHeight = createCreature(1, 1, CreatureType.UNDEAD);
-        creatures.add(creatureWithMaxHeight);
-        expected.add(creatureWithMaxHeight);
-        actual = creatureService.getCreaturesWithMaxHeight();
-        Assert.assertEquals(actual.size(), 1);
-        Assert.assertEquals(actual, expected);
+        when(creatureDao.findAll()).thenReturn(creatures);
 
-        // multiple creatures with max height test
-        expected.clear();
-        creatureWithMaxHeight = createCreature(2,1,CreatureType.UNDEAD);
-        creatures.add(creatureWithMaxHeight);
-        expected.add(creatureWithMaxHeight);
-        creatureWithMaxHeight = createCreature(2,2,CreatureType.BEAST);
-        creatures.add(creatureWithMaxHeight);
-        expected.add(creatureWithMaxHeight);
-        actual = creatureService.getCreaturesWithMaxHeight();
+        List<Creature> actual = creatureService.getCreaturesWithMaxHeight();
+        List<Creature> expected = new LinkedList<>();
+        expected.add(creatureWithMaxHeight1);
+        expected.add(creatureWithMaxHeight2);
+
         Assert.assertEquals(actual.size(), 2);
         Assert.assertEquals(actual, expected);
+
+        verify(creatureDao).findAll();
+    }
+
+    @Test
+    public void getCreaturesWithMaxWeightNoCreaturesTest() {
+        when(creatureDao.findAll()).thenReturn(creatures);
+
+        List<Creature> actual = creatureService.getCreaturesWithMaxWeight();
+        Assert.assertEquals(actual.size(), 0);
+
+        verify(creatureDao).findAll();
     }
 
     @Test
     public void getCreaturesWithMaxWeightTest() {
-        // no creatures test
-        actual = creatureService.getCreaturesWithMaxWeight();
-        Assert.assertEquals(actual.size(), 0);
+        Creature smallCreature = createCreature(1,1,CreatureType.VAMPIRE);
+        Creature creatureWithMaxWeight1 = createCreature(2, 2, CreatureType.UNDEAD);
+        Creature creatureWithMaxWeight2 = createCreature(1, 2, CreatureType.BEAST);
 
-        // creature with null weight test
-        creatures.add(createCreature(1, null, CreatureType.VAMPIRE));
-        actual = creatureService.getCreaturesWithMaxWeight();
-        Assert.assertEquals(actual.size(), 0);
+        creatures.add(creatureWithMaxWeight1);
+        creatures.add(creatureWithMaxWeight2);
+        creatures.add(smallCreature);
 
-        // single creature with max weight test
-        Creature creatureWithMaxWeight = createCreature(1, 1, CreatureType.BEAST);
-        creatures.add(creatureWithMaxWeight);
-        expected.add(creatureWithMaxWeight);
-        actual = creatureService.getCreaturesWithMaxWeight();
-        Assert.assertEquals(actual.size(), 1);
-        Assert.assertEquals(actual, expected);
+        when(creatureDao.findAll()).thenReturn(creatures);
 
-        // multiple creatures with max weight test
-        expected.clear();
-        creatureWithMaxWeight = createCreature(1,2,CreatureType.BEAST);
-        creatures.add(creatureWithMaxWeight);
-        expected.add(creatureWithMaxWeight);
-        creatureWithMaxWeight = createCreature(2,2,CreatureType.UNDEAD);
-        creatures.add(creatureWithMaxWeight);
-        expected.add(creatureWithMaxWeight);
-        actual = creatureService.getCreaturesWithMaxWeight();
+        List<Creature> actual = creatureService.getCreaturesWithMaxWeight();
+        List<Creature> expected = new LinkedList<>();
+        expected.add(creatureWithMaxWeight1);
+        expected.add(creatureWithMaxWeight2);
+
         Assert.assertEquals(actual.size(), 2);
         Assert.assertEquals(actual, expected);
+
+        verify(creatureDao).findAll();
     }
+
 
     private Creature createCreature(Integer height, Integer weight, CreatureType type) {
         Creature c = new Creature();

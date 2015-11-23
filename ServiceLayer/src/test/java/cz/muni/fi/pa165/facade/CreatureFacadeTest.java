@@ -127,12 +127,12 @@ public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
         creatureDTOs.add(creatureDTO);
 
         when(entityMapper.map(creatures, CreatureDTO.class)).thenReturn(creatureDTOs);
-        when(creatureService.getAllCreatures()).thenReturn(creatures);
+        when(creatureService.findAllCreatures()).thenReturn(creatures);
 
         Assert.assertEquals(creatureFacade.getAllCreatures(), creatureDTOs);
 
         verify(entityMapper).map(creatures, CreatureDTO.class);
-        verify(creatureService).getAllCreatures();
+        verify(creatureService).findAllCreatures();
     }
 
 
