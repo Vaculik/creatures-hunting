@@ -13,19 +13,19 @@ import cz.muni.fi.pa165.service.CreatureService;
 import cz.muni.fi.pa165.service.WeaponEfficiencyService;
 import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.util.EntityMapper;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.IObjectFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.ObjectFactory;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
@@ -38,10 +38,9 @@ import static org.mockito.Mockito.*;
  *
  * @author Karel Vaculik
  */
-@RunWith(PowerMockRunner.class)
 @PrepareForTest(WeaponEfficiencyFacade.class)
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
-public class WeaponEfficiencyFacadeTest extends AbstractTestNGSpringContextTests {
+public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private WeaponEfficiencyService weaponEfficiencyService;
@@ -61,7 +60,6 @@ public class WeaponEfficiencyFacadeTest extends AbstractTestNGSpringContextTests
     private WeaponEfficiency weaponEfficiency;
     private WeaponEfficiencyDTO weaponEfficiencyDTO;
 
-
     @BeforeMethod
     public void initSingleTest() {
         reset(weaponEfficiencyService, creatureService, weaponService, entityMapper);
@@ -73,6 +71,13 @@ public class WeaponEfficiencyFacadeTest extends AbstractTestNGSpringContextTests
     public void setupMocks() {
         MockitoAnnotations.initMocks(this);
     }
+
+//    Doens't work and don't know why, probably because of the application contexts
+
+//    @ObjectFactory
+//    public IObjectFactory getObjectFactory() {
+//        return new org.powermock.modules.testng.PowerMockObjectFactory();
+//    }
 
     @Test
     public void getWeaponEfficiencyByIdTest() {
@@ -92,52 +97,81 @@ public class WeaponEfficiencyFacadeTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void createWeaponEfficiencyTest() {
-        final Long id = 1l;
         Long creatureId = 1l;
         Long weaponId = 1l;
-        final WeaponEfficiency newWeaponEfficiency = new WeaponEfficiency();
-
-        WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO = new WeaponEfficiencyCreateDTO();
-        weaponEfficiencyCreateDTO.setEfficiency(1);
-        weaponEfficiencyCreateDTO.setCreatureId(creatureId);
-        weaponEfficiencyCreateDTO.setWeaponId(weaponId);
 
         Weapon weapon = new Weapon();
         weapon.setId(weaponId);
         Creature creature = new Creature();
         creature.setId(creatureId);
 
-//        newWeaponEfficiency.setWeapon(weapon);
-//        newWeaponEfficiency.setCreature(creature);
+        WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO = new WeaponEfficiencyCreateDTO();
+        weaponEfficiencyCreateDTO.setEfficiency(1);
+        weaponEfficiencyCreateDTO.setCreatureId(creatureId);
+        weaponEfficiencyCreateDTO.setWeaponId(weaponId);
 
         when(creatureService.getCreatureById(creatureId)).thenReturn(creature);
         when(weaponService.getWeaponById(weaponId)).thenReturn(weapon);
-        // TODO: resolve problem of mocking creation of new WeaponEfficiency
-        try {
-            PowerMockito.whenNew(WeaponEfficiency.class).withNoArguments().thenReturn(newWeaponEfficiency);
-        } catch (Exception e) {
-            Assert.fail("Exception thrown when trying to mock creation of new WeaponEfficiency object with no arguments.");
-        }
-        doAnswer(new Answer() {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                newWeaponEfficiency.setId(id);
-                return null;
-            }
-        }).when(weaponEfficiencyService).createWeaponEfficiency(newWeaponEfficiency);
+        doNothing().when(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
 
         weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO);
-        //Assert.assertEquals(weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO), id);
 
         verify(creatureService).getCreatureById(creatureId);
         verify(weaponService).getWeaponById(weaponId);
         verify(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
-        try {
-            PowerMockito.verifyNew(WeaponEfficiency.class).withNoArguments();
-        } catch (Exception e) {
-            Assert.fail("Exception thrown when verifying creation of new WeaponEfficiency object with no arguments.");
-        }
     }
+
+
+//    PowerMock version of a test for creation a new WeaponEfficiency object
+
+//    @Test
+//    public void createWeaponEfficiencyTest() {
+//        final Long id = 1l;
+//        Long creatureId = 1l;
+//        Long weaponId = 1l;
+//        final WeaponEfficiency newWeaponEfficiency = new WeaponEfficiency();
+//
+//        WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO = new WeaponEfficiencyCreateDTO();
+//        weaponEfficiencyCreateDTO.setEfficiency(1);
+//        weaponEfficiencyCreateDTO.setCreatureId(creatureId);
+//        weaponEfficiencyCreateDTO.setWeaponId(weaponId);
+//
+//        Weapon weapon = new Weapon();
+//        weapon.setId(weaponId);
+//        Creature creature = new Creature();
+//        creature.setId(creatureId);
+//
+////        newWeaponEfficiency.setWeapon(weapon);
+////        newWeaponEfficiency.setCreature(creature);
+//
+//        when(creatureService.getCreatureById(creatureId)).thenReturn(creature);
+//        when(weaponService.getWeaponById(weaponId)).thenReturn(weapon);
+//        // TODO: resolve problem of mocking creation of new WeaponEfficiency
+//        try {
+//            PowerMockito.whenNew(WeaponEfficiency.class).withNoArguments().thenReturn(newWeaponEfficiency);
+//        } catch (Exception e) {
+//            Assert.fail("Exception thrown when trying to mock creation of new WeaponEfficiency object with no arguments.");
+//        }
+//        doAnswer(new Answer() {
+//            @Override
+//            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+//                newWeaponEfficiency.setId(id);
+//                return null;
+//            }
+//        }).when(weaponEfficiencyService).createWeaponEfficiency(newWeaponEfficiency);
+//
+//        weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO);
+//        //Assert.assertEquals(weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO), id);
+//
+//        verify(creatureService).getCreatureById(creatureId);
+//        verify(weaponService).getWeaponById(weaponId);
+//        verify(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
+//        try {
+//            PowerMockito.verifyNew(WeaponEfficiency.class).withNoArguments();
+//        } catch (Exception e) {
+//            Assert.fail("Exception thrown when verifying creation of new WeaponEfficiency object with no arguments.");
+//        }
+//    }
 
     @Test
     public void deleteWeaponEfficiencyTest() {
@@ -163,6 +197,42 @@ public class WeaponEfficiencyFacadeTest extends AbstractTestNGSpringContextTests
 
         verify(entityMapper).map(weaponEfficiencies, WeaponEfficiencyDTO.class);
         verify(weaponEfficiencyService).findAllWeaponEfficiencies();
+    }
+
+    @Test
+    public void findMostEffectiveWeaponsAtCreatureTest() {
+        CreatureDTO creatureDTO = new CreatureDTO();
+        Creature creature = new Creature();
+        List<Weapon> weapons = new LinkedList<>();
+        List<WeaponDTO> weaponDTOs = new LinkedList<>();
+
+        when(entityMapper.map(creatureDTO, Creature.class)).thenReturn(creature);
+        when(entityMapper.map(weapons, WeaponDTO.class)).thenReturn(weaponDTOs);
+        when(weaponEfficiencyService.findMostEffectiveWeaponsAtCreature(creature)).thenReturn(weapons);
+
+        Assert.assertEquals(weaponEfficiencyFacade.findMostEffectiveWeaponsAtCreature(creatureDTO), weaponDTOs);
+
+        verify(entityMapper).map(creatureDTO, Creature.class);
+        verify(entityMapper).map(weapons, WeaponDTO.class);
+        verify(weaponEfficiencyService).findMostEffectiveWeaponsAtCreature(creature);
+    }
+
+    @Test
+    public void findMostVulnerableCreaturesToWeapon() {
+        WeaponDTO weaponDTO = new WeaponDTO();
+        Weapon weapon = new Weapon();
+        List<Creature> creatures = new LinkedList<>();
+        List<CreatureDTO> creatureDTOs = new LinkedList<>();
+
+        when(entityMapper.map(weaponDTO, Weapon.class)).thenReturn(weapon);
+        when(entityMapper.map(creatures, CreatureDTO.class)).thenReturn(creatureDTOs);
+        when(weaponEfficiencyService.findMostVulnerableCreaturesToWeapon(weapon)).thenReturn(creatures);
+
+        Assert.assertEquals(weaponEfficiencyFacade.findMostVulnerableCreaturesToWeapon(weaponDTO), creatureDTOs);
+
+        verify(entityMapper).map(weaponDTO, Weapon.class);
+        verify(entityMapper).map(creatures, CreatureDTO.class);
+        verify(weaponEfficiencyService).findMostVulnerableCreaturesToWeapon(weapon);
     }
 
     private WeaponEfficiency createWeaponEfficiency() {

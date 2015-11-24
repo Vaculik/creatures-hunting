@@ -12,7 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * @author Karel Vaculik
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
-public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
+public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private CreatureService creatureService;
