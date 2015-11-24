@@ -40,6 +40,10 @@ public class Weapon {
         return this.id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return this.name;
     }

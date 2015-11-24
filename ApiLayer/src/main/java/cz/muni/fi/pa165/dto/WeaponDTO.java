@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Data transfer object of the Weapon entity.
  *
- * @author Pavel VeselÃ½ <448290@mail.muni.cz>
+ * @author Pavel Veselý <448290@mail.muni.cz>
  */
 public class WeaponDTO {
     private Long id;
@@ -17,6 +17,9 @@ public class WeaponDTO {
     private AmmoType ammoType;
     private String description;
     
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getId() {
         return this.id;
     }

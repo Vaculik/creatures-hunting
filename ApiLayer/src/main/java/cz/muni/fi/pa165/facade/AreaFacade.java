@@ -6,6 +6,7 @@ package cz.muni.fi.pa165.facade;
 
 
 import cz.muni.fi.pa165.dto.AreaDTO;
+import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public interface AreaFacade {
      * This method creates an area.
      *
      * @param area AreaDTO to be created
+     * @return id of an area which was created
      */
     public Long createArea(AreaDTO area);
     
@@ -27,7 +29,7 @@ public interface AreaFacade {
      *
      * @param area AreaDTO to be deleted
      */
-    public void deleteArea(Long areaId);
+    public void deleteArea(AreaDTO area);
     
     /**
      * This method updates an area.
@@ -75,10 +77,10 @@ public interface AreaFacade {
     
     /**
      * This method gets creatures of specific Area
-     * @param ar Area from which creatures are taken
+     * @param id id of Area from which creatures are taken
      * @return list of creatures which occur in specific Area
      */
-    public List<AreaDTO> getCreaturesOfArea(AreaDTO ar);
+    public List<CreatureDTO> getCreaturesOfAreaById(Long id);
     
     /**
      * This method gets an amount of creatures of specific area
@@ -103,36 +105,35 @@ public interface AreaFacade {
     
     /**
      * This method adds a creature to an area
-     * @param ar an area where to add
-     * @param cr a creature which to add
+     * @param area an area where to add
+     * @param creature a creature which to add
      */
-    public void addCreature(Long areaId, Long creatureId);
+    public void addCreature(AreaDTO area, CreatureDTO creature);
     
     /**
      * This method removes a creature from an area
-     * @param ar an area where to remove from
-     * @param cr a creature which to remove
+     * @param area an area where to remove from
+     * @param creature a creature which to remove
      * @return removing was successful
      */
-    public boolean removeCreature(Long areaId, Long creatureId);
+    public void removeCreature(AreaDTO area, CreatureDTO creature);
              
     /**
      * This method checks if an area contains a creature
-     * @param ar an area where to check it
-     * @param cr a creature which to check
+     * @param area an area where to check it
+     * @param creature a creature which to check
      * @return 
      */
-    public boolean containAreaCreature(Long areaId, Long creatureId);
+    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature);
     
     
     /**
      * This method moves the creature from one area to another area
-     * @param creatureId creature to be moved
-     * @param fromAreaId area to be moved from
-     * @param toAreaId area to be moved to
+     * @param creature creature to be moved
+     * @param fromArea area to be moved from
+     * @param toArea area to be moved to
      * @return moving was successful
      */
-    public boolean moveCreature(Long creatureId, Long fromAreaId, Long toAreaId);    
+    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea);    
     
-
 }

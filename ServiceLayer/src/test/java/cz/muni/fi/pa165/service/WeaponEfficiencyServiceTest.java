@@ -56,14 +56,16 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
     @Test
     public void getWeaponEfficiencyByIdTest() {
         Long id = 1l;
+        Long wrongId = 0l;
         weaponEfficiency.setId(id);
 
         when(weaponEfficiencyDao.getById(id)).thenReturn(weaponEfficiency);
 
         Assert.assertEquals(weaponEfficiencyService.getWeaponEfficiencyById(id), weaponEfficiency);
-        Assert.assertNull(weaponEfficiencyService.getWeaponEfficiencyById(0l));
+        Assert.assertNull(weaponEfficiencyService.getWeaponEfficiencyById(wrongId));
 
         verify(weaponEfficiencyDao).getById(id);
+        verify(weaponEfficiencyDao).getById(wrongId);
     }
 
     @Test

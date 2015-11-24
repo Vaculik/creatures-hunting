@@ -1,13 +1,7 @@
 package cz.muni.fi.pa165.config;
 
-import cz.muni.fi.pa165.facade.CreatureFacadeImpl;
-import cz.muni.fi.pa165.facade.UserSystemFacadeImpl;
-import cz.muni.fi.pa165.facade.WeaponFacadeImpl;
-import cz.muni.fi.pa165.service.AreaService;
-import cz.muni.fi.pa165.service.CreatureService;
-import cz.muni.fi.pa165.service.CreatureServiceImpl;
-import cz.muni.fi.pa165.service.UserSystemService;
-import cz.muni.fi.pa165.service.UserSystemServiceImpl;
+import cz.muni.fi.pa165.facade.*;
+import cz.muni.fi.pa165.service.*;
 import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.service.WeaponServiceImpl;
 import cz.muni.fi.pa165.util.EntityMapper;
@@ -53,6 +47,12 @@ public class MockConfiguration {
     @Primary
     public WeaponService mockWeaponService() {
         return mock(WeaponService.class);
+    }
+
+    @Bean
+    @Primary
+    public WeaponEfficiencyService mockWeaponEfficiencyService() {
+        return mock(WeaponEfficiencyService.class);
     }
 
     @Bean
