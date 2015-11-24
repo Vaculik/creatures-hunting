@@ -12,7 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * @author Karel Vaculik
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
-public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
+public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
     private CreatureService creatureService;
@@ -63,6 +63,7 @@ public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
     public void getCreatureByIdTest() {
         Long id = 1l;
         creature.setId(id);
+        creatureDTO.setId(id);
 
         when(entityMapper.map(creature, CreatureDTO.class)).thenReturn(creatureDTO);
         when(creatureService.getCreatureById(id)).thenReturn(creature);
@@ -127,12 +128,12 @@ public class CreatureFacadeTest extends AbstractTestNGSpringContextTests {
         creatureDTOs.add(creatureDTO);
 
         when(entityMapper.map(creatures, CreatureDTO.class)).thenReturn(creatureDTOs);
-        when(creatureService.getAllCreatures()).thenReturn(creatures);
+        when(creatureService.findAllCreatures()).thenReturn(creatures);
 
         Assert.assertEquals(creatureFacade.getAllCreatures(), creatureDTOs);
 
         verify(entityMapper).map(creatures, CreatureDTO.class);
-        verify(creatureService).getAllCreatures();
+        verify(creatureService).findAllCreatures();
     }
 
 

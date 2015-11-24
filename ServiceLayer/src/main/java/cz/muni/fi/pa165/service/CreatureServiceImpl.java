@@ -46,7 +46,7 @@ public class CreatureServiceImpl implements CreatureService {
     }
 
     @Override
-    public List<Creature> getAllCreatures() {
+    public List<Creature> findAllCreatures() {
         return creatureDao.findAll();
     }
 
