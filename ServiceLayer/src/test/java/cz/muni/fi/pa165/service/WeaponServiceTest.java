@@ -10,6 +10,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,15 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     @InjectMocks
     private WeaponService weaponService;
-
+    
+    Weapon weapon;
     List<Weapon> weapons;
     List<Weapon> actual;
     List<Weapon> expected;
 
     @BeforeMethod
-    public void initTest() {
+    public void init() {
+        weapon = createDefaultWeapon("weapon");
         weapons = new LinkedList<>();
         actual = new LinkedList<>();
         expected = new LinkedList<>();
@@ -50,8 +54,79 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
+    
+    @Test
+    public void getWeaponByIdTest() {
+       weapon = createDefaultWeapon("weapon0");
+       Long id = 0l;
+       Long diffId = 10l;
+       weapon.setId(id);
+       
+       when(weaponDao.getById(id)).thenReturn(weapon);
+       
+       Assert.assertEquals(weaponService.getWeaponById(id), weapon);
+       Assert.assertNull(weaponService.getWeaponById(diffId));
+       
+       verify(weaponDao).getById(id);
+       verify(weaponDao).getById(diffId);
+    }
+    
+    @Test
+    public void getWeaponByNameTest() {
+       String name0 = "weapon0";
+       String name1 = "weapon1";
+       weapon = createDefaultWeapon(name0);
+       weapons.add(weapon);
+       
+       when(weaponDao.getByName(name0)).thenReturn(weapon);
+       
+       Assert.assertEquals(weaponService.getWeaponByName(name0), weapon);
+       Assert.assertNull(weaponService.getWeaponByName(name1));
+       
+       verify(weaponDao).getByName(name0);
+       verify(weaponDao).getByName(name1);
+    }
+    
+    @Test
+    public void getAllWeaponsTest() {
+       Weapon weapon0 = createDefaultWeapon("weapon0");
+       Weapon weapon1 = createDefaultWeapon("weapon1");
+       Weapon weapon2 = createDefaultWeapon("weapon2");
+       weapons.add(weapon0);
+       weapons.add(weapon1);
+       weapons.add(weapon2);
+              
+       Assert.assertEquals(weaponService.getAllWeapons(), weapons);
+       
+       verify(weaponDao).findAll();
+    }
+    
+    
+    @Test
+    public void createWeaponTest() {
+        doNothing().when(weaponDao).create(weapon);
+        
+        weaponService.createWeapon(weapon);
+        verify(weaponDao).create(weapon);
+    }
 
-    //TODO test other methods
+    @Test
+    public void updateWeaponTest(Weapon weapon) {
+        doNothing().when(weaponDao).update(weapon);
+        
+        weaponService.updateWeapon(weapon);
+        
+        verify(weaponDao).update(weapon);
+    }
+
+    @Test
+    public void deleteWeaponTest(Weapon weapon) {
+        doNothing().when(weaponDao).delete(weapon);
+        
+        weaponService.deleteWeapon(weapon);
+        
+        verify(weaponDao).delete(weapon);
+    }
     
     @Test
     public void getWeaponsOfTypeTest() {
@@ -81,15 +156,70 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
         expected.clear();
         Assert.assertEquals(actual, expected);
     }
+    
+    @Test
+    public void getWeaponsOfAmmoTypeTest() {
+        // Initialization
+        Weapon pistol0 = createWeapon("pistol0", WeaponType.GUN, 200, AmmoType.BULLET_9MM);
+        Weapon pistol1 = createWeapon("pistol1", WeaponType.GUN, 200, AmmoType.BULLET_9MM);
+        Weapon rifle = createWeapon("rifle", WeaponType.GUN, 500, AmmoType.BULLET_NATO);
+        weapons.add(pistol0);
+        weapons.add(pistol1);
+        weapons.add(rifle);
 
+        // Test BULLET_9MM type
+        actual = weaponService.getWeaponsOfAmmoType(AmmoType.BULLET_9MM);
+        expected.clear();
+        expected.add(pistol0);
+        expected.add(pistol1);
+        Assert.assertEquals(actual, expected);
+        
+        // Test BULLET_NATO type
+        actual = weaponService.getWeaponsOfAmmoType(AmmoType.BULLET_NATO);
+        expected.clear();
+        expected.add(rifle);
+        Assert.assertEquals(actual, expected);
+        
+        // Test BATTERY type - empty
+        actual = weaponService.getWeaponsOfAmmoType(AmmoType.BATTERY);
+        expected.clear();
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Test
+    public void getWeaponsOfRange() {
+        // Initialization
+        Weapon pistol0 = createWeapon("pistol0", WeaponType.GUN, 200, AmmoType.BULLET_9MM);
+        Weapon pistol1 = createWeapon("pistol1", WeaponType.GUN, 200, AmmoType.BULLET_9MM);
+        Weapon rifle = createWeapon("rifle", WeaponType.GUN, 500, AmmoType.BULLET_NATO);
+        Weapon laser = createWeapon("laser", WeaponType.ENERGY, 300, AmmoType.BATTERY);
+        weapons.add(pistol0);
+        weapons.add(pistol1);
+        weapons.add(rifle);
+        weapons.add(laser);
+
+        // Test 0-400
+        actual = weaponService.getWeaponsOfRange(0, 400);
+        expected.clear();
+        expected.add(pistol0);
+        expected.add(pistol1);
+        expected.add(laser);
+        Assert.assertEquals(actual, expected);
+        
+        // Test 250-400
+        actual = weaponService.getWeaponsOfRange(250, 400);
+        expected.clear();
+        expected.add(laser);
+        Assert.assertEquals(actual, expected);
+        
+        // Test 550+ - empty
+        actual = weaponService.getWeaponsOfRange(550, Integer.MAX_VALUE);
+        expected.clear();
+        Assert.assertEquals(actual, expected);
+    }
+    
     private Weapon createDefaultWeapon(String name) {
-        Weapon w = new Weapon();
-        w.setName(name);
-        w.setRange(10);
-        w.setType(WeaponType.GUN);
-        w.setAmmoType(AmmoType.BULLET_9MM);
-        w.setDescription("Default testing weapon");
-        return w;
+        return createWeapon(name, WeaponType.GUN, 200, AmmoType.BULLET_9MM);
     }
 
     private Weapon createWeapon(String name, WeaponType type, int range, AmmoType ammo) {
