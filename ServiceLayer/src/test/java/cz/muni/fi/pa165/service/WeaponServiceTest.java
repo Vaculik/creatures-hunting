@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
@@ -47,6 +48,7 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
         weapons = new LinkedList<>();
         actual = new LinkedList<>();
         expected = new LinkedList<>();
+        reset(weaponDao);
         when(weaponDao.findAll()).thenReturn(weapons);
     }
 
@@ -57,7 +59,6 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
     
     @Test
     public void getWeaponByIdTest() {
-       weapon = createDefaultWeapon("weapon0");
        Long id = 0l;
        Long diffId = 10l;
        weapon.setId(id);
