@@ -112,7 +112,7 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void updateWeaponTest(Weapon weapon) {
+    public void updateWeaponTest() {
         doNothing().when(weaponDao).update(weapon);
         
         weaponService.updateWeapon(weapon);
@@ -121,7 +121,7 @@ public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void deleteWeaponTest(Weapon weapon) {
+    public void deleteWeaponTest() {
         doNothing().when(weaponDao).delete(weapon);
         
         weaponService.deleteWeapon(weapon);
