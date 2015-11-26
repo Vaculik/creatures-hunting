@@ -8,6 +8,7 @@ package cz.muni.fi.pa165.facade;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is an interface for Area Facade (Service layer)
@@ -75,12 +76,6 @@ public interface AreaFacade {
      */
     public List<AreaDTO> getAreasFewestCreatures();
     
-    /**
-     * This method gets creatures of specific Area
-     * @param id id of Area from which creatures are taken
-     * @return list of creatures which occur in specific Area
-     */
-    public List<CreatureDTO> getCreaturesOfAreaById(Long id);
     
     /**
      * This method gets an amount of creatures of specific area
