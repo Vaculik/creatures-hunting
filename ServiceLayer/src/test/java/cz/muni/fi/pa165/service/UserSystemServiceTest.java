@@ -1,7 +1,11 @@
 package cz.muni.fi.pa165.service;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,12 +22,15 @@ import org.testng.annotations.Test;
 
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dao.UserSystemDao;
-import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.UserSystem;
-import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
+/**
+ * Tests for all methods of the UserSystemService interface.
+ *
+ * @author Jakub Miculka
+ */
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
 	
@@ -34,20 +41,88 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
 	    @InjectMocks
 	    private UserSystemService userSystemService;
 
-	    private List<UserSystem> users = new LinkedList<>();
-	    private List<UserSystem> actual;
-	    private List<UserSystem> expected = new LinkedList<>();
+	    private List<UserSystem> users;
+	    private UserSystem user;
+	    
 
 	    @BeforeMethod
 	    public void init() {
-	    	users.clear();
-	        expected.clear();
-	        when(userSystemDao.findAll()).thenReturn(users);
+	    	user = createUser("Boss", SexType.MALE, UserType.ADMIN);
+	    	users = new LinkedList<>();
+	    	reset(userSystemDao);
 	    }
 
 	    @BeforeClass
 	    public void setup() {
 	        MockitoAnnotations.initMocks(this);
+	    }
+	    
+	    @Test
+	    public void getUserByIdTest() {
+	        Long id = 1l;
+	        Long wrongId = 0l;
+	        user.setId(id);
+	        
+	        when(userSystemDao.getById(id)).thenReturn(user);
+
+	        Assert.assertEquals(userSystemService.getUserById(id), user);
+	        Assert.assertNull(userSystemService.getUserById(wrongId));
+	        
+	        verify(userSystemDao).getById(id);
+	        verify(userSystemDao).getById(wrongId);
+	    }
+	    
+	    @Test
+	    public void getUserByNameTest() {
+	    	String name = "Ice-B";
+	        String wrongName = "Doktor z hor";
+	        user.setName(name);
+	        
+	        when(userSystemDao.getByName(name)).thenReturn(user);
+
+	        Assert.assertEquals(userSystemService.getUserByName(name), user);
+	        Assert.assertNull(userSystemService.getUserByName(wrongName));
+	        
+	        verify(userSystemDao).getByName(name);
+	        verify(userSystemDao).getByName(wrongName);
+	    }
+	    
+	    @Test
+	    public void createUserTest() {
+	    	doNothing().when(userSystemDao).create(user);
+	    	userSystemService.createUser(user);
+	    	verify(userSystemDao).create(user);
+	    }
+	    
+	    @Test
+	    public void deleteUserTest() {
+	    	doNothing().when(userSystemDao).delete(user);
+	    	userSystemService.deleteUser(user);
+	    	verify(userSystemDao).delete(user);
+	    }
+	    
+	    @Test
+	    public void updateUserTest() {
+	    	doNothing().when(userSystemDao).update(user);
+	    	userSystemService.updateUser(user);
+	    	verify(userSystemDao).update(user);
+	    }
+	    
+	    @Test
+	    public void getAllUsersTest() {
+	        UserSystem user1 = createUser("Bob Dylan", SexType.MALE, UserType.ORDINARY);
+	        UserSystem user2 = createUser("Bob Marley", SexType.MALE, UserType.ORDINARY);
+	        UserSystem user3 = createUser("Bohus Matus", SexType.MALE, UserType.ADMIN);
+	        users.add(user1);
+	        users.add(user2);
+	        users.add(user3);
+	        
+	        when(userSystemDao.findAll()).thenReturn(users);
+	        List<UserSystem> actual = userSystemService.getAllUsers();
+	        Assert.assertEquals(actual.size(), 3);
+	        Assert.assertEquals(actual, users);
+	        
+	        verify(userSystemDao).findAll();
 	    }
 
 	    @Test
@@ -59,10 +134,13 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
 	        users.add(user2);
 	        users.add(user3);
 
+	        when(userSystemDao.findAll()).thenReturn(users);
+	        
 	        //ordinary user type test
-	        actual = userSystemService.getUsersOfType(UserType.ORDINARY);
+	        List<UserSystem> actual = userSystemService.getUsersOfType(UserType.ORDINARY);
 	        Assert.assertEquals(actual.size(), 2);
 
+	        List<UserSystem> expected = new ArrayList<UserSystem>();
 	        expected.add(user1);
 	        expected.add(user2);
 	        Assert.assertEquals(actual, expected);
@@ -84,11 +162,14 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
 	        users.add(user1);
 	        users.add(user2);
 	        users.add(user3);
+	        
+	        when(userSystemDao.findAll()).thenReturn(users);
 
 	        //ordinary user type test
-	        actual = userSystemService.getUsersOfSex(SexType.MALE);
+	        List<UserSystem> actual = userSystemService.getUsersOfSex(SexType.MALE);
 	        Assert.assertEquals(actual.size(), 2);
 
+	        List<UserSystem> expected = new ArrayList<UserSystem>();
 	        expected.add(user1);
 	        expected.add(user2);
 	        Assert.assertEquals(actual, expected);
