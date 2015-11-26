@@ -19,7 +19,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.mockito.Mockito.*;
 
-/* This class test functionality of methods of Area Data Access Object class.
+/* This class test functionality of methods of Area Service, Area Data Access Object class.
  *
  * @author Martin Zboril
  */
@@ -38,9 +38,6 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
     private String description;
     private List<Area> areas;
     private Creature creature;
-    private Area ar3;
-    private Area ar4;
-    private Area ar5;
 
     @BeforeMethod
     public void init() {
@@ -118,8 +115,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(5, areaService.findAllAreas().size());
         verify(areaDao, times(1)).findAll();
     }
-
-    //TODO
+    
     @Test
     public void getAreasWithNoCreatureTest() {
         areas = createAreasList();
@@ -145,8 +141,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
 
         verify(areaDao, times(2)).findAll();
     }
-
-    //TODO
+    
     @Test
     public void getAreasMostCreaturesTest() {
         areas = createAreasList();
@@ -159,14 +154,12 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         verify(areaDao, times(2)).findAll();
     }
 
-    //TODO
     @Test
     public void getAreasFewestCreaturesTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
         Assert.assertEquals(2, areaService.getAreasFewestCreatures().size());
         
-
         verify(areaDao, times(1)).findAll();
     }
 
@@ -180,7 +173,6 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         areaService.moveCreature(creature, area, ar2);
         Assert.assertFalse(area.getCreatures().contains(creature));
         Assert.assertTrue(ar2.getCreatures().contains(creature));
-//        verify(areaDao, times(1)).get;
     }
 
     private List<Area> createAreasList() {
@@ -190,28 +182,28 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         Long id2 = 2l;
         ar2 = createArea(id2, "Wall", "Cold one");
         Long id3 = 3l;
-        ar3 = createArea(id3, "Kings landing", "Hot one");
+        Area ar3 = createArea(id3, "Kings landing", "Hot one");
         Long id4 = 4l;
-        ar4 = createArea(id4, "Bravos", "On the south");
+        Area ar4 = createArea(id4, "Bravos", "On the south");
         Long id5 = 5l;
-        ar5 = createArea(id5, "Meereen", "With the sea");
+        Area ar5 = createArea(id5, "Meereen", "With the sea");
 
-        creature = makeCreature("Ned Stark");
+        creature = createCreature("Ned Stark");
         area.addCreature(creature);
-        area.addCreature(makeCreature("Arya Stark"));
-        area.addCreature(makeCreature("Robb Stark"));
-        area.addCreature(makeCreature("Hodor"));
+        area.addCreature(createCreature("Arya Stark"));
+        area.addCreature(createCreature("Robb Stark"));
+        area.addCreature(createCreature("Hodor"));
 
-        ar2.addCreature(makeCreature("Jon Snow"));
+        ar2.addCreature(createCreature("Jon Snow"));
 
-        ar3.addCreature(makeCreature("Jamie Lannister"));
-        ar3.addCreature(makeCreature("Tywin Lannister"));
-        ar3.addCreature(makeCreature("Tyrion Lannister"));
+        ar3.addCreature(createCreature("Jamie Lannister"));
+        ar3.addCreature(createCreature("Tywin Lannister"));
+        ar3.addCreature(createCreature("Tyrion Lannister"));
 
-        ar4.addCreature(makeCreature("Syrio"));
+        ar4.addCreature(createCreature("Syrio"));
 
-        ar5.addCreature(makeCreature("Daenerys Targarien"));
-        ar5.addCreature(makeCreature("Jorah Mormont"));
+        ar5.addCreature(createCreature("Daenerys Targarien"));
+        ar5.addCreature(createCreature("Jorah Mormont"));
 
         areas.add(area);
         areas.add(ar2);
@@ -228,7 +220,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         return areas;
     }
 
-    private Creature makeCreature(String name) {
+    private Creature createCreature(String name) {
         Creature cr = new Creature();
         cr.setName(name);
         cr.setType(CreatureType.BEAST);

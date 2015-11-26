@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * This class is an interface for Service Layer of Area object.
+ * This class ensures the business logic. 
  * 
  * @author Martin Zboril
  */
@@ -46,30 +47,29 @@ public interface AreaService {
      * @param id specific number (identification) which is unique for each area
      * @return Area with specific id
      */
-    Area getAreaById(Long id);
+    public Area getAreaById(Long id);
     
     /**
      * This method finds area by its name
      * @param name string-name of specific area
      * @return area with specific name
      */
-    Area getAreaByName(String name);
+    public Area getAreaByName(String name);
     
     /**
      * This method finds all areas in a database
      * @return list of all areas in a database
      */
-    List<Area> findAllAreas();    
+    public List<Area> findAllAreas();    
        
     /**
      * This method moves the creature from one area to another area
      * @param cr creature to be moved
      * @param fromAr area to be moved from
      * @param toAr area to be moved to
-     * @return moving was successful
+     * @return True - moving was successful, False - was not
      */
     public boolean moveCreature(Creature cr, Area fromAr, Area toAr);
-
         
      /**
      * This method gets areas with no creature in

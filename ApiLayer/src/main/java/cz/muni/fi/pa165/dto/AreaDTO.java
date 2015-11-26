@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.dto;
 
 import java.util.Collections;
@@ -10,6 +6,7 @@ import java.util.Set;
 
 /**
  * This class is a Data Transfer Object of Area.
+ * 
  * @author Martin Zboril
  */
 public class AreaDTO {

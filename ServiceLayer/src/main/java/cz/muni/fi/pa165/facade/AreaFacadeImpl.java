@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.AreaDTO;
@@ -11,17 +7,15 @@ import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.service.AreaService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import java.util.ArrayList;
-import java.util.HashSet;
-
 import java.util.List;
-import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 /**
- *
+ * This class implements the AreaFacade interface.
+ * 
  * @author Martin Zboril
  */
 @Service
@@ -119,21 +113,14 @@ public class AreaFacadeImpl implements AreaFacade{
 
     @Override
     public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
-//        Area ar = entityMapper.map(area, Area.class);
-//        Creature cr = entityMapper.map(creature, Creature.class);
         if(area.getCreatures().contains(creature)){
             return true;
         }
         return false;
     }
 
-
     @Override
-    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {
-//        Area ar = entityMapper.map(fromArea, Area.class);
-//        Area ar2 = entityMapper.map(toArea, Area.class);
-//        Creature cr = entityMapper.map(creature, Creature.class);
-//        return areaService.moveCreature(cr, ar, ar2);                
+    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {              
         return areaService.moveCreature( entityMapper.map(creature, Creature.class),entityMapper.map(fromArea, Area.class), entityMapper.map(toArea, Area.class));
 
     }   

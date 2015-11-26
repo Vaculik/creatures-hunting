@@ -1,17 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
-import java.util.Set;
 
 /**
- * This class is an interface for Area Facade (Service layer)
+ * This class is an interface for Area Facade (Service layer).
+ * It creates a facade for Creature hunting information system
  * 
  * @author Martin Zboril
  */
@@ -119,8 +115,7 @@ public interface AreaFacade {
      * @param creature a creature which to check
      * @return 
      */
-    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature);
-    
+    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature);    
     
     /**
      * This method moves the creature from one area to another area

@@ -18,20 +18,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
-import static org.junit.Assert.*;
-import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
@@ -42,7 +35,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- *
+ * This class test functionality of methods of AreaFacade.
+ * 
  * @author Martin Zboril
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
@@ -88,11 +82,11 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         tmp.setId(idC);
         tmp.setName(nameC);
         tmp.setDescription(descriptionC);
-        creature = makeCreature("Ned Stark");
+        creature = createCreature("Ned Stark");
         tmp.addCreature(creature);
-        tmp.addCreature(makeCreature("Arya Stark"));
-        tmp.addCreature(makeCreature("Robb Stark"));
-        tmp.addCreature(makeCreature("Hodor"));
+        tmp.addCreature(createCreature("Arya Stark"));
+        tmp.addCreature(createCreature("Robb Stark"));
+        tmp.addCreature(createCreature("Hodor"));
         return tmp;
     }
 
@@ -113,7 +107,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     public void getByNameTest() {
         doReturn(areaDTO).when(entityMapper).map(area, AreaDTO.class);
         doReturn(area).when(areaService).getAreaByName(name);
-//        doReturn(areaDTO).when(areaFacade).getById(id);
         Assert.assertEquals(areaFacade.getByName(name), areaDTO);
         Assert.assertNull(areaFacade.getByName("NoName"));
 
@@ -126,7 +119,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         area.setId(id);
         areaDTO.setId(id);
         when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-//        doReturn(areaDTO).when(areaFacade).getById(id);
         Assert.assertEquals(areaFacade.createArea(areaDTO), id);
         verify(entityMapper).map(areaDTO, Area.class);
         verify(areaService).createArea(area);
@@ -139,7 +131,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
         Long tmp = areaFacade.createArea(areaDTO);
         doReturn(area).when(areaService).getAreaById(tmp);
-//        doReturn(areaDTO).when(areaFacade).getById(tmp);
         areaFacade.deleteArea(areaDTO);
         doThrow(new NullPointerException()).when(areaService).getAreaById(tmp);
         verify(entityMapper, times(2)).map(areaDTO, Area.class);
@@ -226,13 +217,14 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     public void getCreaturesAmountTest() {
         when(entityMapper.map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class)).thenReturn(areaDTO);        
         Assert.assertEquals(areaFacade.getCreaturesAmount(areaDTO), 4);
+        verify(entityMapper).map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class);
     }
 
     @Test
     public void addCreatureTest() {
         Assert.assertEquals(areaDTO.getCreatures().size(),4);
-        areaFacade.addCreature(areaDTO, createCreatureDTO(makeCreature("Bran")));
-        Assert.assertEquals(areaDTO.getCreatures().size(),5);
+        areaFacade.addCreature(areaDTO, createCreatureDTO(createCreature("Bran")));
+        Assert.assertEquals(areaDTO.getCreatures().size(),5);        
     }
 
     @Test
@@ -280,7 +272,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         return tmp;
     }
 
-    private Creature makeCreature(String name) {
+    private Creature createCreature(String name) {
         Creature cr = new Creature();
         cr.setName(name);
         cr.setType(CreatureType.BEAST);
@@ -293,7 +285,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
         areasDTO = new ArrayList<>();
-
         
         Long id2 = 2l;
         Area ar2 = createArea(id2, "Wall", "Cold one");
@@ -304,17 +295,16 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         Long id5 = 5l;
         Area ar5 = createArea(id5, "Meereen", "With the sea");
         
+        ar2.addCreature(createCreature("Jon Snow"));
 
-        ar2.addCreature(makeCreature("Jon Snow"));
+        ar3.addCreature(createCreature("Jamie Lannister"));
+        ar3.addCreature(createCreature("Tywin Lannister"));
+        ar3.addCreature(createCreature("Tyrion Lannister"));
 
-        ar3.addCreature(makeCreature("Jamie Lannister"));
-        ar3.addCreature(makeCreature("Tywin Lannister"));
-        ar3.addCreature(makeCreature("Tyrion Lannister"));
+        ar4.addCreature(createCreature("Syrio"));
 
-        ar4.addCreature(makeCreature("Syrio"));
-
-        ar5.addCreature(makeCreature("Daenerys Targarien"));
-        ar5.addCreature(makeCreature("Jorah Mormont"));
+        ar5.addCreature(createCreature("Daenerys Targarien"));
+        ar5.addCreature(createCreature("Jorah Mormont"));
 
         areas.add(area);
         areas.add(ar2);
