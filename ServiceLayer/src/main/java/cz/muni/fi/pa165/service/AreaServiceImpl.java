@@ -70,6 +70,9 @@ public class AreaServiceImpl implements AreaService{
         
         fromAr.removeCreature(cr);
         toAr.addCreature(cr);     
+        
+        areaDao.update(fromAr);
+        areaDao.update(toAr);
         return true;
     }
 
@@ -106,6 +109,7 @@ public class AreaServiceImpl implements AreaService{
                 result.add(ar);
             }
             if(ar.getCreatures().size()>tmpSize){                    
+                tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }
@@ -122,6 +126,7 @@ public class AreaServiceImpl implements AreaService{
                 result.add(ar);
             }
             if(ar.getCreatures().size()<tmpSize){                    
+                tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }

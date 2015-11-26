@@ -31,14 +31,14 @@ public class AreaDaoImpl implements AreaDao {
 
     @Override
     public void create(Area area) {
-        if (area == null) {
-            throw new NullPointerException("Input Are is null");
-        }
-        try {
+//        if (area == null) {
+//            throw new NullPointerException("Input Are is null");
+//        }
+//        try {
             em.persist(area);
-        } catch (Exception ex) {
-            throw new DatabaseCreatureException("Error while creating area");
-        }
+//        } catch (Exception ex) {
+//            throw new DatabaseCreatureException("Error while creating area");
+//        }
     }
 
     @Override

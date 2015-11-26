@@ -93,5 +93,5 @@ public interface AreaService {
      * This method gets areas where is the lowest amount of creatures
      * @return list of areas in a database where is the lowest number of creatures
      */
-    public List<Area> getAreasFewestCreatures();
+    public List<Area> getAreasFewestCreatures();   
 }
