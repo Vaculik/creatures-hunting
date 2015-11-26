@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * Implementation of WeaponService interface.
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @Service
 public class WeaponServiceImpl implements WeaponService {

@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
 /**
  * Tests all methods of WeaponFacade interface
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
 public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {

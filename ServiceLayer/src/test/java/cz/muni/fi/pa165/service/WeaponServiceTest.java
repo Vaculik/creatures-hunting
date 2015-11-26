@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 /**
  * Tests all methods of WeaponService interface
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @ContextConfiguration(classes = ServiceApplicationContext.class)
 public class WeaponServiceTest extends AbstractTestNGSpringContextTests {
