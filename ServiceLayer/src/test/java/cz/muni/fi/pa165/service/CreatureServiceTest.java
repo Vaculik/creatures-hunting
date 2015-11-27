@@ -30,15 +30,11 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
 
     @Mock
     private CreatureDao creatureDao;
-
     @Autowired
     @InjectMocks
     private CreatureService creatureService;
-
     private List<Creature> creatures;
-
     private Creature creature;
-
 
     @BeforeMethod
     public void init() {
@@ -171,10 +167,9 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         verify(creatureDao).findAll();
     }
 
-
     @Test
     public void getCreaturesWithMaxHeightTest() {
-        Creature smallCreature = createCreature(1,1,CreatureType.VAMPIRE);
+        Creature smallCreature = createCreature(1, 1, CreatureType.VAMPIRE);
         Creature creatureWithMaxHeight1 = createCreature(2, 1, CreatureType.UNDEAD);
         Creature creatureWithMaxHeight2 = createCreature(2, 2, CreatureType.BEAST);
 
@@ -207,7 +202,7 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getCreaturesWithMaxWeightTest() {
-        Creature smallCreature = createCreature(1,1,CreatureType.VAMPIRE);
+        Creature smallCreature = createCreature(1, 1, CreatureType.VAMPIRE);
         Creature creatureWithMaxWeight1 = createCreature(2, 2, CreatureType.UNDEAD);
         Creature creatureWithMaxWeight2 = createCreature(1, 2, CreatureType.BEAST);
 
@@ -228,7 +223,6 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         verify(creatureDao).findAll();
     }
 
-
     private Creature createCreature(Integer height, Integer weight, CreatureType type) {
         Creature c = new Creature();
         c.setHeight(height);
@@ -237,5 +231,4 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         c.setName("testing-creature");
         return c;
     }
-
 }

@@ -44,19 +44,14 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
 
     @Autowired
     private WeaponEfficiencyService weaponEfficiencyService;
-
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private WeaponService weaponService;
-
     @Autowired
     private EntityMapper entityMapper;
-
     @Autowired
     private WeaponEfficiencyFacade weaponEfficiencyFacade;
-
     private WeaponEfficiency weaponEfficiency;
     private WeaponEfficiencyDTO weaponEfficiencyDTO;
 
@@ -73,12 +68,10 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
     }
 
 //    Doens't work and don't know why, probably because of the application contexts
-
 //    @ObjectFactory
 //    public IObjectFactory getObjectFactory() {
 //        return new org.powermock.modules.testng.PowerMockObjectFactory();
 //    }
-
     @Test
     public void getWeaponEfficiencyByIdTest() {
         Long id = 1l;
@@ -121,9 +114,7 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
         verify(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
     }
 
-
 //    PowerMock version of a test for creation a new WeaponEfficiency object
-
 //    @Test
 //    public void createWeaponEfficiencyTest() {
 //        final Long id = 1l;
@@ -172,7 +163,6 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
 //            Assert.fail("Exception thrown when verifying creation of new WeaponEfficiency object with no arguments.");
 //        }
 //    }
-
     @Test
     public void deleteWeaponEfficiencyTest() {
         when(entityMapper.map(weaponEfficiencyDTO, WeaponEfficiency.class)).thenReturn(weaponEfficiency);

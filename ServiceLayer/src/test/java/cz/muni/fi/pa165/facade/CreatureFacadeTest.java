@@ -33,17 +33,13 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
 
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private EntityMapper entityMapper;
-
     @Autowired
     private CreatureFacade creatureFacade;
-
     private Creature creature;
     private CreatureDTO creatureDTO;
     private String name;
-
 
     @BeforeMethod
     public void initSingleTest() {
@@ -57,7 +53,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
     public void setup() {
         MockitoAnnotations.initMocks(this);
     }
-
 
     @Test
     public void getCreatureByIdTest() {
@@ -75,7 +70,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(creatureService).getCreatureById(id);
     }
 
-
     @Test
     public void getCreatureByNameTest() {
         when(entityMapper.map(creature, CreatureDTO.class)).thenReturn(creatureDTO);
@@ -87,7 +81,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(entityMapper).map(creature, CreatureDTO.class);
         verify(creatureService).getCreatureByName(name);
     }
-
 
     @Test
     public void createCreatureTest() {
@@ -108,7 +101,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(creatureService).createCreature(creature);
     }
 
-
     @Test
     public void deleteCreatureTest() {
         when(entityMapper.map(creatureDTO, Creature.class)).thenReturn(creature);
@@ -118,7 +110,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(entityMapper).map(creatureDTO, Creature.class);
         verify(creatureService).deleteCreature(creature);
     }
-
 
     @Test
     public void getAllCreaturesTest() {
@@ -136,7 +127,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(creatureService).findAllCreatures();
     }
 
-
     @Test
     public void getCreaturesWithMaxWeight() {
         List<Creature> creatures = new LinkedList<>();
@@ -152,7 +142,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(entityMapper).map(creatures, CreatureDTO.class);
         verify(creatureService).getCreaturesWithMaxWeight();
     }
-
 
     @Test
     public void getCreaturesOfTypeTest() {
@@ -171,7 +160,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(creatureService).getCreaturesOfType(type);
     }
 
-
     @Test
     public void getCreaturesWithMaxHeightTest() {
         List<Creature> creatures = new LinkedList<>();
@@ -187,7 +175,6 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(entityMapper).map(creatures, CreatureDTO.class);
         verify(creatureService).getCreaturesWithMaxHeight();
     }
-
 
     private Creature createCreature(String name, Integer height, Integer weight, CreatureType type) {
         Creature c = new Creature();

@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * This class is a Data Transfer Object of Area.
- * 
+ *
  * @author Martin Zboril
  */
 public class AreaDTO {
@@ -14,7 +14,7 @@ public class AreaDTO {
     Long id;
     String name;
     String description;
-    Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
+    Set<CreatureDTO> creatures = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -47,15 +47,15 @@ public class AreaDTO {
     public void setCreatures(Set<CreatureDTO> creatures) {
         this.creatures = creatures;
     }
-    
-    public void addCreature(CreatureDTO creature){
+
+    public void addCreature(CreatureDTO creature) {
         creatures.add(creature);
-    }        
-    
-    public void removeCreature(CreatureDTO creature){
+    }
+
+    public void removeCreature(CreatureDTO creature) {
         creatures.remove(creature);
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;

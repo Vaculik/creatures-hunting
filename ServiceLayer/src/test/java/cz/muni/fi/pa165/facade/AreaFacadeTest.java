@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
@@ -36,7 +31,7 @@ import org.testng.annotations.Test;
 
 /**
  * This class test functionality of methods of AreaFacade.
- * 
+ *
  * @author Martin Zboril
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
@@ -46,7 +41,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private EntityMapper entityMapper;
     @Autowired
     private AreaService areaService;
-
     @Autowired
     private AreaFacade areaFacade;
     private AreaDTO areaDTO;
@@ -56,7 +50,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private String description;
     private List<Area> areas;
     private List<AreaDTO> areasDTO;
-    
     //help attributes for tests
     private AreaDTO areaOneCreatureDTO1;
     private AreaDTO areaOneCreatureDTO2;
@@ -143,19 +136,19 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         doNothing().when(areaService).updateArea(area);
         areaFacade.updateArea(areaDTO);
         verify(areaService).updateArea(area);
-        verify(entityMapper).map(areaDTO, Area.class);       
-        
-        Assert.assertEquals(areaDTO.getName(),"Winterfell");        
+        verify(entityMapper).map(areaDTO, Area.class);
+
+        Assert.assertEquals(areaDTO.getName(), "Winterfell");
         areaDTO.setName("NoWinterfell");
         areaFacade.updateArea(areaDTO);
-        Assert.assertNotEquals(areaDTO.getName(),"Winterfell");
+        Assert.assertNotEquals(areaDTO.getName(), "Winterfell");
     }
 
     @Test
     public void getAllAreasTest() {
         areas = createAreasList();
         when(areaService.findAllAreas()).thenReturn(areas);
-        Assert.assertEquals(areaService.findAllAreas().size(),5);
+        Assert.assertEquals(areaService.findAllAreas().size(), 5);
         verify(areaService, times(1)).findAllAreas();
     }
 
@@ -212,37 +205,37 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(tmp.size(), 2);
         verify(entityMapper).map(areaService.getAreasWithNoCreature(), AreaDTO.class);
     }
-    
+
     @Test
     public void getCreaturesAmountTest() {
-        when(entityMapper.map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class)).thenReturn(areaDTO);        
+        when(entityMapper.map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class)).thenReturn(areaDTO);
         Assert.assertEquals(areaFacade.getCreaturesAmount(areaDTO), 4);
         verify(entityMapper).map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class);
     }
 
     @Test
     public void addCreatureTest() {
-        Assert.assertEquals(areaDTO.getCreatures().size(),4);
+        Assert.assertEquals(areaDTO.getCreatures().size(), 4);
         areaFacade.addCreature(areaDTO, createCreatureDTO(createCreature("Bran")));
-        Assert.assertEquals(areaDTO.getCreatures().size(),5);        
+        Assert.assertEquals(areaDTO.getCreatures().size(), 5);
     }
 
     @Test
     public void removeCreatureTest() {
-        Assert.assertEquals(areaDTO.getCreatures().size(),4);
+        Assert.assertEquals(areaDTO.getCreatures().size(), 4);
         areaFacade.removeCreature(areaDTO, createCreatureDTO(creature));
-        Assert.assertEquals(areaDTO.getCreatures().size(),3);
+        Assert.assertEquals(areaDTO.getCreatures().size(), 3);
     }
 
     @Test
     public void containAreaCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);        
+        CreatureDTO crDTO = createCreatureDTO(creature);
         Assert.assertTrue(areaFacade.containAreaCreature(areaDTO, crDTO));
     }
 
     @Test
     public void moveCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);        
+        CreatureDTO crDTO = createCreatureDTO(creature);
         Assert.assertTrue(areaDTO.getCreatures().contains(crDTO));
         areaFacade.moveCreature(crDTO, areaDTO, areaOneCreatureDTO1);
         Assert.assertTrue(areaFacade.containAreaCreature(areaOneCreatureDTO1, crDTO));
@@ -253,15 +246,15 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         tmp.setId((area.getId()));
         tmp.setName(area.getName());
         tmp.setDescription(area.getDescription());
-        Set<CreatureDTO> creaturesSet = new HashSet<>();        
-        for(Creature cr : area.getCreatures()){
+        Set<CreatureDTO> creaturesSet = new HashSet<>();
+        for (Creature cr : area.getCreatures()) {
             CreatureDTO crDTO = createCreatureDTO(cr);
             creaturesSet.add(crDTO);
         }
-        tmp.setCreatures(creaturesSet);                  
+        tmp.setCreatures(creaturesSet);
         return tmp;
     }
-    
+
     private CreatureDTO createCreatureDTO(Creature cr) {
         CreatureDTO tmp = new CreatureDTO();
         tmp.setName(cr.getName());
@@ -285,7 +278,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
         areasDTO = new ArrayList<>();
-        
+
         Long id2 = 2l;
         Area ar2 = createArea(id2, "Wall", "Cold one");
         Long id3 = 3l;
@@ -294,7 +287,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         Area ar4 = createArea(id4, "Bravos", "On the south");
         Long id5 = 5l;
         Area ar5 = createArea(id5, "Meereen", "With the sea");
-        
+
         ar2.addCreature(createCreature("Jon Snow"));
 
         ar3.addCreature(createCreature("Jamie Lannister"));
@@ -314,7 +307,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
 
         areaOneCreatureDTO1 = createAreaDTO(ar2);
         areaOneCreatureDTO2 = createAreaDTO(ar4);
-        
+
         areasDTO.add(areaDTO);
         areasDTO.add(areaOneCreatureDTO1);
         areasDTO.add(createAreaDTO(ar3));

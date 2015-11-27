@@ -31,15 +31,11 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
 
     @Mock
     private WeaponEfficiencyDao weaponEfficiencyDao;
-
     @Autowired
     @InjectMocks
     private WeaponEfficiencyService weaponEfficiencyService;
-
     private WeaponEfficiency weaponEfficiency;
-
     private List<WeaponEfficiency> weaponEfficiencies;
-
 
     @BeforeMethod
     public void initSingleTest() {

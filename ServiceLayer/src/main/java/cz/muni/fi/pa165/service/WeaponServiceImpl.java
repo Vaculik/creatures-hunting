@@ -19,7 +19,7 @@ public class WeaponServiceImpl implements WeaponService {
 
     @Autowired
     private WeaponDao weaponDao;
-    
+
     @Override
     public Weapon getWeaponById(Long id) {
         return weaponDao.getById(id);
@@ -55,8 +55,9 @@ public class WeaponServiceImpl implements WeaponService {
         List<Weapon> allWeapons = weaponDao.findAll();
         List<Weapon> returnList = new LinkedList<>();
         for (Weapon weapon : allWeapons) {
-            if (weapon.getType() == type)
+            if (weapon.getType() == type) {
                 returnList.add(weapon);
+            }
         }
         return returnList;
     }
@@ -66,8 +67,9 @@ public class WeaponServiceImpl implements WeaponService {
         List<Weapon> allWeapons = weaponDao.findAll();
         List<Weapon> returnList = new LinkedList<>();
         for (Weapon weapon : allWeapons) {
-            if (weapon.getAmmotype() == ammoType)
+            if (weapon.getAmmotype() == ammoType) {
                 returnList.add(weapon);
+            }
         }
         return returnList;
     }
@@ -78,8 +80,9 @@ public class WeaponServiceImpl implements WeaponService {
         List<Weapon> returnList = new LinkedList<>();
         for (Weapon weapon : allWeapons) {
             int range = weapon.getRange();
-            if (range >= min && range <= max)
+            if (range >= min && range <= max) {
                 returnList.add(weapon);
+            }
         }
         return returnList;
     }

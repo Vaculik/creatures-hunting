@@ -56,9 +56,9 @@ public class CreatureServiceImpl implements CreatureService {
         List<Creature> creatures = creatureDao.findAll();
 
         for (Creature creature : creatures) {
-           if (creature.getType() == type) {
-               results.add(creature);
-           }
+            if (creature.getType() == type) {
+                results.add(creature);
+            }
         }
         return results;
     }

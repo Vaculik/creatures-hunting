@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.service;
 
-
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.Weapon;
 import cz.muni.fi.pa165.entity.WeaponEfficiency;
@@ -8,7 +7,8 @@ import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import java.util.List;
 
 /**
- * The interface represents service layer operations on objects of the class WeaponEfficiency.
+ * The interface represents service layer operations on objects of the class
+ * WeaponEfficiency.
  *
  * @author Karel Vaculik
  */

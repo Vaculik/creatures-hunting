@@ -21,7 +21,6 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
     @Autowired
     private WeaponEfficiencyDao weaponEfficiencyDao;
 
-
     @Override
     public WeaponEfficiency getWeaponEfficiencyById(Long id) {
         return weaponEfficiencyDao.getById(id);

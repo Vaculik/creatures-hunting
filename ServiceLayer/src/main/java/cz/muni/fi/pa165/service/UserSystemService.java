@@ -10,28 +10,28 @@ import cz.muni.fi.pa165.enums.UserType;
 
 @Service
 public interface UserSystemService {
-	
+
     /**
      * This method creates a user.
      *
      * @param user UserSystem to be created
      */
     public void createUser(UserSystem user);
-    
+
     /**
      * This method deletes a user.
      *
      * @param area user to be deleted
      */
     public void deleteUser(UserSystem user);
-    
+
     /**
      * This method updates a user.
      *
      * @param area UserSystem to be updated
      */
     public void updateUser(UserSystem user);
-    
+
     /**
      * Find all Users.
      *
@@ -46,7 +46,7 @@ public interface UserSystemService {
      * @return list of the results
      */
     public List<UserSystem> getUsersOfType(UserType type);
-    
+
     /**
      * Find all users of given sex.
      *
@@ -54,7 +54,7 @@ public interface UserSystemService {
      * @return list of the results
      */
     public List<UserSystem> getUsersOfSex(SexType sex);
-    
+
     /**
      * Find a User by id.
      *

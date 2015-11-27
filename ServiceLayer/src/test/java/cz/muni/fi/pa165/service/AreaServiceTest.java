@@ -115,7 +115,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(5, areaService.findAllAreas().size());
         verify(areaDao, times(1)).findAll();
     }
-    
+
     @Test
     public void getAreasWithNoCreatureTest() {
         areas = createAreasList();
@@ -141,7 +141,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
 
         verify(areaDao, times(2)).findAll();
     }
-    
+
     @Test
     public void getAreasMostCreaturesTest() {
         areas = createAreasList();
@@ -159,7 +159,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
         Assert.assertEquals(2, areaService.getAreasFewestCreatures().size());
-        
+
         verify(areaDao, times(1)).findAll();
     }
 
