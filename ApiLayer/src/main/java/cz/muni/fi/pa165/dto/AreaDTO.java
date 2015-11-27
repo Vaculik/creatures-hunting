@@ -11,10 +11,10 @@ import java.util.Set;
  */
 public class AreaDTO {
 
-    Long id;
-    String name;
-    String description;
-    Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
+    private Long id;
+    private String name;
+    private String description;
+    private Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
 
     public Long getId() {
         return id;
@@ -64,7 +64,6 @@ public class AreaDTO {
                 + ((creatures == null) ? 0 : creatures.hashCode());
         result = prime * result
                 + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -93,13 +92,6 @@ public class AreaDTO {
                 return false;
             }
         } else if (!description.equals(other.description)) {
-            return false;
-        }
-        if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
             return false;
         }
         if (name == null) {

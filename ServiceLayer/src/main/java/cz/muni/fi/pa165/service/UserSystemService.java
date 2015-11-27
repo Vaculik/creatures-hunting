@@ -21,14 +21,14 @@ public interface UserSystemService {
     /**
      * This method deletes a user.
      *
-     * @param area user to be deleted
+     * @param user user to be deleted
      */
     public void deleteUser(UserSystem user);
     
     /**
      * This method updates a user.
      *
-     * @param area UserSystem to be updated
+     * @param user UserSystem to be updated
      */
     public void updateUser(UserSystem user);
     
@@ -50,7 +50,7 @@ public interface UserSystemService {
     /**
      * Find all users of given sex.
      *
-     * @param type the type
+     * @param sex the type
      * @return list of the results
      */
     public List<UserSystem> getUsersOfSex(SexType sex);

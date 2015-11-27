@@ -11,13 +11,13 @@ import cz.muni.fi.pa165.enums.UserType;
  */
 public class UserSystemDTO{
 	
-	Long id;
-	String name;
-	UserType type;
-	SexType sex;
-	Date dateOfBirth;
-	String userName;
-	Integer password;
+	private Long id;
+	private String name;
+	private UserType type;
+	private SexType sex;
+	private Date dateOfBirth;
+	private String userName;
+	private Integer password;
 	
 	public Long getId() {
 		return id;
@@ -79,7 +79,6 @@ public class UserSystemDTO{
 		int result = 1;
 		result = prime * result
 				+ ((dateOfBirth == null) ? 0 : dateOfBirth.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
@@ -103,11 +102,6 @@ public class UserSystemDTO{
 			if (other.dateOfBirth != null)
 				return false;
 		} else if (!dateOfBirth.equals(other.dateOfBirth))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
+import cz.muni.fi.pa165.service.exception.AreaServiceException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.mockito.InjectMocks;
@@ -83,36 +84,30 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void createAreaTest() {
+        doNothing().when(areaDao).create(area);
         areaService.createArea(area);
-        doReturn(area).when(areaDao).getById(id);
         verify(areaDao).create(area);
-        Assert.assertEquals(areaService.getAreaById(id).getName(), name);
     }
 
     @Test
     public void updateAreaTest() {
-        areaService.createArea(area);
-        doReturn(area).when(areaDao).getById(id);
-        area.setDescription("Bad");
+        doNothing().when(areaDao).update(area);
         areaService.updateArea(area);
         verify(areaDao).update(area);
-        Assert.assertEquals(areaService.getAreaById(id).getDescription(), "Bad");
     }
 
     @Test
     public void deleteAreaTest() {
-        areaService.createArea(area);
-        doReturn(area).when(areaDao).getById(id);
+        doNothing().when(areaDao).delete(area);
         areaService.deleteArea(area);
         verify(areaDao).delete(area);
-        doThrow(new NullPointerException()).when(areaDao).getById(id);
     }
 
     @Test
     public void findAllTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
-        Assert.assertEquals(5, areaService.findAllAreas().size());
+        Assert.assertEquals(areaService.findAllAreas().size(), 5);
         verify(areaDao, times(1)).findAll();
     }
     
@@ -120,11 +115,11 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
     public void getAreasWithNoCreatureTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
-        Assert.assertEquals(0, areaService.getAreasWithNoCreature().size());
+        Assert.assertEquals(areaService.getAreasWithNoCreature().size(), 0);
 
         Long id6 = 6l;
         areas.add(createArea(id6, "Dorn", "Very hot"));
-        Assert.assertEquals(1, areaService.getAreasWithNoCreature().size());
+        Assert.assertEquals(areaService.getAreasWithNoCreature().size(), 1);
 
         verify(areaDao, times(2)).findAll();
     }
@@ -133,11 +128,11 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
     public void getAreasWithAnyCreatureTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
-        Assert.assertEquals(5, areaService.getAreasWithAnyCreature().size());
+        Assert.assertEquals(areaService.getAreasWithAnyCreature().size(), 5);
 
         Long id6 = 6l;
         areas.add(createArea(id6, "Dorn", "Very hot"));
-        Assert.assertEquals(5, areaService.getAreasWithAnyCreature().size());
+        Assert.assertEquals(areaService.getAreasWithAnyCreature().size(), 5);
 
         verify(areaDao, times(2)).findAll();
     }
@@ -146,11 +141,11 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
     public void getAreasMostCreaturesTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
-        Assert.assertEquals(1, areaService.getAreasMostCreatures().size());
+        Assert.assertEquals(areaService.getAreasMostCreatures().size(), 1);
         Long id6 = 6l;
         Area ar6 = createArea(id6, "Dorn", "Very hot");
         areas.add(ar6);
-        Assert.assertEquals(1, areaService.getAreasMostCreatures().size());
+        Assert.assertEquals(areaService.getAreasMostCreatures().size(), 1);
         verify(areaDao, times(2)).findAll();
     }
 
@@ -158,22 +153,44 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
     public void getAreasFewestCreaturesTest() {
         areas = createAreasList();
         when(areaDao.findAll()).thenReturn(areas);
-        Assert.assertEquals(2, areaService.getAreasFewestCreatures().size());
+        Assert.assertEquals(areaService.getAreasFewestCreatures().size(), 2);
         
         verify(areaDao, times(1)).findAll();
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void moveNullCreatureTest() {
+        areaService.moveCreature(null, area, ar2);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void moveCreatureNullFirstAreaTest() {
+        areaService.moveCreature(creature, null, ar2);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void moveCreatureNullSecondAreaTest() {
+        areaService.moveCreature(creature, area, null);
+    }
+
+    @Test(expectedExceptions = AreaServiceException.class)
+    public void moveCreatureNotInAreaTest() {
+        areaService.moveCreature(creature, area, ar2);
+    }
+
     @Test
     public void moveCreatureTest() {
-        areas = createAreasList();
-        doReturn(area).when(areaDao).getById(area.getId());
-        doReturn(ar2).when(areaDao).getById(ar2.getId());
-        Assert.assertTrue(area.getCreatures().contains(creature));
-        Assert.assertFalse(ar2.getCreatures().contains(creature));
+        doNothing().when(areaDao).update(area);
+        doNothing().when(areaDao).update(ar2);
+        area.addCreature(creature);
         areaService.moveCreature(creature, area, ar2);
+
         Assert.assertFalse(area.getCreatures().contains(creature));
         Assert.assertTrue(ar2.getCreatures().contains(creature));
+        verify(areaDao).update(area);
+        verify(areaDao).update(area);
     }
+
 
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
@@ -210,12 +227,6 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         areas.add(ar3);
         areas.add(ar4);
         areas.add(ar5);
-
-        int a1 = area.getCreatures().size();
-        int a2 = ar2.getCreatures().size();
-        int a3 = ar3.getCreatures().size();
-        int a4 = ar4.getCreatures().size();
-        int a5 = ar5.getCreatures().size();
 
         return areas;
     }

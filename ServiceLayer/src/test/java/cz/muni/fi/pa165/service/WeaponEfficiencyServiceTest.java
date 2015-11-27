@@ -77,14 +77,6 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
     }
 
     @Test
-    public void updateWeaponEfficiencyTest() {
-        doNothing().when(weaponEfficiencyDao).update(weaponEfficiency);
-
-        weaponEfficiencyService.updateWeaponEfficiency(weaponEfficiency);
-        verify(weaponEfficiencyDao).update(weaponEfficiency);
-    }
-
-    @Test
     public void deleteWeaponEfficiencyTest() {
         doNothing().when(weaponEfficiencyDao).delete(weaponEfficiency);
 

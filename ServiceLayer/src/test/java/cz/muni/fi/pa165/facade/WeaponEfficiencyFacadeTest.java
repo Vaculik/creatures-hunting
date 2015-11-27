@@ -14,18 +14,12 @@ import cz.muni.fi.pa165.service.WeaponEfficiencyService;
 import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
-import org.testng.IObjectFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.ObjectFactory;
 import org.testng.annotations.Test;
 
 import java.util.LinkedList;
@@ -38,7 +32,6 @@ import static org.mockito.Mockito.*;
  *
  * @author Karel Vaculik
  */
-@PrepareForTest(WeaponEfficiencyFacade.class)
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
 public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSpringContextTests {
 
@@ -71,13 +64,6 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
     public void setupMocks() {
         MockitoAnnotations.initMocks(this);
     }
-
-//    Doens't work and don't know why, probably because of the application contexts
-
-//    @ObjectFactory
-//    public IObjectFactory getObjectFactory() {
-//        return new org.powermock.modules.testng.PowerMockObjectFactory();
-//    }
 
     @Test
     public void getWeaponEfficiencyByIdTest() {
@@ -120,58 +106,6 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
         verify(weaponService).getWeaponById(weaponId);
         verify(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
     }
-
-
-//    PowerMock version of a test for creation a new WeaponEfficiency object
-
-//    @Test
-//    public void createWeaponEfficiencyTest() {
-//        final Long id = 1l;
-//        Long creatureId = 1l;
-//        Long weaponId = 1l;
-//        final WeaponEfficiency newWeaponEfficiency = new WeaponEfficiency();
-//
-//        WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO = new WeaponEfficiencyCreateDTO();
-//        weaponEfficiencyCreateDTO.setEfficiency(1);
-//        weaponEfficiencyCreateDTO.setCreatureId(creatureId);
-//        weaponEfficiencyCreateDTO.setWeaponId(weaponId);
-//
-//        Weapon weapon = new Weapon();
-//        weapon.setId(weaponId);
-//        Creature creature = new Creature();
-//        creature.setId(creatureId);
-//
-////        newWeaponEfficiency.setWeapon(weapon);
-////        newWeaponEfficiency.setCreature(creature);
-//
-//        when(creatureService.getCreatureById(creatureId)).thenReturn(creature);
-//        when(weaponService.getWeaponById(weaponId)).thenReturn(weapon);
-//        // TODO: resolve problem of mocking creation of new WeaponEfficiency
-//        try {
-//            PowerMockito.whenNew(WeaponEfficiency.class).withNoArguments().thenReturn(newWeaponEfficiency);
-//        } catch (Exception e) {
-//            Assert.fail("Exception thrown when trying to mock creation of new WeaponEfficiency object with no arguments.");
-//        }
-//        doAnswer(new Answer() {
-//            @Override
-//            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-//                newWeaponEfficiency.setId(id);
-//                return null;
-//            }
-//        }).when(weaponEfficiencyService).createWeaponEfficiency(newWeaponEfficiency);
-//
-//        weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO);
-//        //Assert.assertEquals(weaponEfficiencyFacade.createWeaponEfficiency(weaponEfficiencyCreateDTO), id);
-//
-//        verify(creatureService).getCreatureById(creatureId);
-//        verify(weaponService).getWeaponById(weaponId);
-//        verify(weaponEfficiencyService).createWeaponEfficiency(any(WeaponEfficiency.class));
-//        try {
-//            PowerMockito.verifyNew(WeaponEfficiency.class).withNoArguments();
-//        } catch (Exception e) {
-//            Assert.fail("Exception thrown when verifying creation of new WeaponEfficiency object with no arguments.");
-//        }
-//    }
 
     @Test
     public void deleteWeaponEfficiencyTest() {

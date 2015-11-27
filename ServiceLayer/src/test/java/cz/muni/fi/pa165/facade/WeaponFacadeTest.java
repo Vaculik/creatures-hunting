@@ -11,7 +11,6 @@ import cz.muni.fi.pa165.util.EntityMapper;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Assert;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.reset;

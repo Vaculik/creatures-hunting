@@ -18,14 +18,14 @@ public interface UserSystemFacade {
     /**
      * This method deletes a user.
      *
-     * @param area user to be deleted
+     * @param user user to be deleted
      */
     public void deleteUser(UserSystemDTO user);
     
     /**
      * This method updates a user.
      *
-     * @param area UserSystemDTO to be updated
+     * @param user UserSystemDTO to be updated
      */
     public void updateUser(UserSystemDTO user);
     
@@ -47,7 +47,7 @@ public interface UserSystemFacade {
     /**
      * Find all users of given sex.
      *
-     * @param type the type
+     * @param sex the type
      * @return list of the results
      */
     public List<UserSystemDTO> getUsersOfSex(SexType sex);

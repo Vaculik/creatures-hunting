@@ -101,15 +101,6 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void updateCreatureTest() {
-        doNothing().when(creatureDao).update(creature);
-
-        creatureService.updateCreature(creature);
-
-        verify(creatureDao).update(creature);
-    }
-
-    @Test
     public void findAllCreaturesTest() {
         creatures.add(creature);
 
