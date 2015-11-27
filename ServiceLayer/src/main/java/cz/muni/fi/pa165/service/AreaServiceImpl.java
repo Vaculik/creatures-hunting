@@ -1,26 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.service;
 
 
 import cz.muni.fi.pa165.dao.AreaDao;
 import java.util.List;
-
 import cz.muni.fi.pa165.service.exception.AreaServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
- *
+ * This class implements AreaService interface.
+ * 
  * @author Martin Zboril
  */
 @Service
@@ -70,6 +62,9 @@ public class AreaServiceImpl implements AreaService{
         
         fromAr.removeCreature(cr);
         toAr.addCreature(cr);     
+        
+        areaDao.update(fromAr);
+        areaDao.update(toAr);
         return true;
     }
 
@@ -106,6 +101,7 @@ public class AreaServiceImpl implements AreaService{
                 result.add(ar);
             }
             if(ar.getCreatures().size()>tmpSize){                    
+                tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }
@@ -122,12 +118,12 @@ public class AreaServiceImpl implements AreaService{
                 result.add(ar);
             }
             if(ar.getCreatures().size()<tmpSize){                    
+                tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }
         }                
         return result;
-    }
-    
+    }    
     
 }

@@ -5,8 +5,10 @@
 package cz.muni.fi.pa165.service.exception;
 
 /**
+ * This exception is thrown when there is task to move a creature from specific area
+ * but the creature is not in this area.
  *
- * @author zbora
+ * @author Martin Zboril
  */
 public class AreaServiceException extends RuntimeException {
 

@@ -6,7 +6,6 @@
 package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.Creature;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 

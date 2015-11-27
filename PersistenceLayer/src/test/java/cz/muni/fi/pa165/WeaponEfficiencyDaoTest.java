@@ -26,7 +26,7 @@ import org.testng.annotations.Test;
 /**
  * This test class test methods of WeaponEfficiencyDao.
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @ContextConfiguration(classes = InMemoryDatabaseApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)

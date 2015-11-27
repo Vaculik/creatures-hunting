@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 
@@ -10,7 +6,8 @@ import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
 
 /**
- * This class is an interface for Area Facade (Service layer)
+ * This class is an interface for Area Facade (Service layer).
+ * It creates a facade for Creature hunting information system
  * 
  * @author Martin Zboril
  */
@@ -75,12 +72,6 @@ public interface AreaFacade {
      */
     public List<AreaDTO> getAreasFewestCreatures();
     
-    /**
-     * This method gets creatures of specific Area
-     * @param id id of Area from which creatures are taken
-     * @return list of creatures which occur in specific Area
-     */
-    public List<CreatureDTO> getCreaturesOfAreaById(Long id);
     
     /**
      * This method gets an amount of creatures of specific area
@@ -124,8 +115,7 @@ public interface AreaFacade {
      * @param creature a creature which to check
      * @return 
      */
-    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature);
-    
+    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature);    
     
     /**
      * This method moves the creature from one area to another area

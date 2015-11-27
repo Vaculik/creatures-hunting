@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 /**
  * This class represents an Entity of Weapon
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @Entity
 public class Weapon {

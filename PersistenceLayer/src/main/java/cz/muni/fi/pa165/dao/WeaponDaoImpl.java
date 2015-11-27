@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
  * This class represents an implementation of Data Access Object of Weapon
  * Entity.
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @Repository
 public class WeaponDaoImpl implements WeaponDao {

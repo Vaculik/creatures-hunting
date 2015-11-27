@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * Implementation of WeaponFacade interface.
  *
- * @author Pavel Veselý <448290@mail.muni.cz>
+ * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @Service
 @Transactional
