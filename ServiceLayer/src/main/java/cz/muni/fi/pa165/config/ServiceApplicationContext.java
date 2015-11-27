@@ -21,16 +21,14 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(InMemoryDatabaseApplicationContext.class)
-@ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class, 
-		UserSystemServiceImpl.class, UserSystemFacadeImpl.class,
-                EntityMapperImpl.class, WeaponServiceImpl.class, WeaponFacadeImpl.class,})
+@ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class,
+    UserSystemServiceImpl.class, UserSystemFacadeImpl.class,
+    EntityMapperImpl.class, WeaponServiceImpl.class, WeaponFacadeImpl.class,})
 public class ServiceApplicationContext {
 
     @Bean
-    public Mapper mapper(){
+    public Mapper mapper() {
         DozerBeanMapper dozer = new DozerBeanMapper();
         return dozer;
     }
-
-
 }

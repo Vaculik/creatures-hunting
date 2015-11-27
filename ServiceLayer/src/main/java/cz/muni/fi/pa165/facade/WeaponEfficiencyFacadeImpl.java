@@ -28,13 +28,10 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
 
     @Autowired
     private EntityMapper entityMapper;
-
     @Autowired
     private WeaponEfficiencyService weaponEfficiencyService;
-
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private WeaponService weaponService;
 

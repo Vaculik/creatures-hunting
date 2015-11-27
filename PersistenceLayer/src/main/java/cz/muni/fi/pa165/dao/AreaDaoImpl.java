@@ -6,7 +6,6 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.exception.DatabaseCreatureException;
 import cz.muni.fi.pa165.entity.Area;
-
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -31,7 +30,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void create(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
             em.persist(area);
@@ -43,7 +42,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void delete(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
             em.remove(area);
@@ -55,7 +54,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void update(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
             em.merge(area);

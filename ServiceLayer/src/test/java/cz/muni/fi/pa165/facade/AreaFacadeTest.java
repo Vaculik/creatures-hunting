@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
@@ -36,7 +31,7 @@ import org.testng.annotations.Test;
 
 /**
  * This class test functionality of methods of AreaFacade.
- * 
+ *
  * @author Martin Zboril
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
@@ -46,7 +41,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private EntityMapper entityMapper;
     @Autowired
     private AreaService areaService;
-
     @Autowired
     private AreaFacade areaFacade;
     private AreaDTO areaDTO;
@@ -56,7 +50,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private String description;
     private List<Area> areas;
     private List<AreaDTO> areasDTO;
-    
     //help attributes for tests
     private AreaDTO areaOneCreatureDTO1;
     private AreaDTO areaOneCreatureDTO2;
@@ -141,7 +134,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         doNothing().when(areaService).updateArea(area);
         Assert.assertEquals(areaFacade.updateArea(areaDTO), id);
         verify(areaService).updateArea(area);
-        verify(entityMapper).map(areaDTO, Area.class);       
+        verify(entityMapper).map(areaDTO, Area.class);
     }
 
     @Test
@@ -213,7 +206,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         verify(entityMapper).map(areas, AreaDTO.class);
         verify(areaService).getAreasFewestCreatures();
     }
-    
+
     @Test
     public void getCreaturesAmountTest() {
         when(areaService.getAreaById(id)).thenReturn(area);
@@ -247,7 +240,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void containAreaCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);        
+        CreatureDTO crDTO = createCreatureDTO(creature);
         Assert.assertTrue(areaFacade.containAreaCreature(areaDTO, crDTO));
     }
 
@@ -272,15 +265,15 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         tmp.setId((area.getId()));
         tmp.setName(area.getName());
         tmp.setDescription(area.getDescription());
-        Set<CreatureDTO> creaturesSet = new HashSet<>();        
-        for(Creature cr : area.getCreatures()){
+        Set<CreatureDTO> creaturesSet = new HashSet<>();
+        for (Creature cr : area.getCreatures()) {
             CreatureDTO crDTO = createCreatureDTO(cr);
             creaturesSet.add(crDTO);
         }
-        tmp.setCreatures(creaturesSet);                  
+        tmp.setCreatures(creaturesSet);
         return tmp;
     }
-    
+
     private CreatureDTO createCreatureDTO(Creature cr) {
         CreatureDTO tmp = new CreatureDTO();
         tmp.setName(cr.getName());
@@ -304,7 +297,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
         areasDTO = new ArrayList<>();
-        
+
         Long id2 = 2l;
         Area ar2 = createArea(id2, "Wall", "Cold one");
         Long id3 = 3l;
@@ -313,7 +306,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         Area ar4 = createArea(id4, "Bravos", "On the south");
         Long id5 = 5l;
         Area ar5 = createArea(id5, "Meereen", "With the sea");
-        
+
         ar2.addCreature(createCreature("Jon Snow"));
 
         ar3.addCreature(createCreature("Jamie Lannister"));
@@ -333,7 +326,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
 
         areaOneCreatureDTO1 = createAreaDTO(ar2);
         areaOneCreatureDTO2 = createAreaDTO(ar4);
-        
+
         areasDTO.add(areaDTO);
         areasDTO.add(areaOneCreatureDTO1);
         areasDTO.add(createAreaDTO(ar3));

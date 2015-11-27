@@ -10,16 +10,18 @@ import java.util.Objects;
  * @author Pavel Vesely <448290@mail.muni.cz>
  */
 public class WeaponDTO {
+
     private Long id;
     private String name;
     private WeaponType type;
     private int range;
     private AmmoType ammoType;
     private String description;
-    
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public Long getId() {
         return this.id;
     }
@@ -99,16 +101,16 @@ public class WeaponDTO {
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
-        return "WeaponDTO {" +
-                "id =" + id +
-                ", name='" + name + "'" +
-                ", type=" + type +
-                ", range=" + range +
-                ", ammoType=" + ammoType +
-                ", description=" + description +
-                "}";
+        return "WeaponDTO {"
+                + "id =" + id
+                + ", name='" + name + "'"
+                + ", type=" + type
+                + ", range=" + range
+                + ", ammoType=" + ammoType
+                + ", description=" + description
+                + "}";
     }
 }

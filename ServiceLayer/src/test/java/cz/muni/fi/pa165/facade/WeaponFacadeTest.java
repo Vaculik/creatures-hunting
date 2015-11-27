@@ -36,13 +36,10 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private WeaponFacade weaponFacade;
-
     @Autowired
     private WeaponService weaponService;
-
     @Autowired
     private EntityMapper entityMapper;
-
     Weapon weapon;
     WeaponDTO weaponDTO;
     List<Weapon> weapons;
@@ -109,11 +106,11 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
         when(entityMapper.map(weapons, WeaponDTO.class)).thenReturn(dtos);
 
         Assert.assertEquals(dtos, weaponFacade.getAllWeapons());
-        
+
         verify(weaponService).getAllWeapons();
         verify(entityMapper).map(weapons, WeaponDTO.class);
     }
-    
+
     @Test
     public void createWeaponTest() {
         final Long id = 0l;
@@ -125,35 +122,35 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
             }
         }).when(weaponService).createWeapon(weapon);
         when(entityMapper.map(weaponDTO, Weapon.class)).thenReturn(weapon);
-        
+
         Assert.assertEquals(id, weaponFacade.createWeapon(weaponDTO));
-        
+
         verify(weaponService).createWeapon(weapon);
         verify(entityMapper).map(weaponDTO, Weapon.class);
     }
-    
+
     @Test
     public void updateWeaponTest() {
         doNothing().when(weaponService).updateWeapon(weapon);
         when(entityMapper.map(weaponDTO, Weapon.class)).thenReturn(weapon);
-        
+
         weaponFacade.updateWeapon(weaponDTO);
-        
+
         verify(weaponService).updateWeapon(weapon);
         verify(entityMapper).map(weaponDTO, Weapon.class);
     }
-    
+
     @Test
     public void deleteWeaponTest() {
         doNothing().when(weaponService).deleteWeapon(weapon);
         when(entityMapper.map(weaponDTO, Weapon.class)).thenReturn(weapon);
-        
+
         weaponFacade.deleteWeapon(weaponDTO);
-        
+
         verify(weaponService).deleteWeapon(weapon);
         verify(entityMapper).map(weaponDTO, Weapon.class);
     }
-    
+
     @Test
     public void getWeaponsOfTypeTest() {
         Weapon weapon1 = createDefaultWeapon("weapon1");
@@ -167,11 +164,11 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
         when(entityMapper.map(weapons, WeaponDTO.class)).thenReturn(dtos);
 
         Assert.assertEquals(dtos, weaponFacade.getWeaponsOfType(WeaponType.GUN));
-        
+
         verify(weaponService).getWeaponsOfType(WeaponType.GUN);
         verify(entityMapper).map(weapons, WeaponDTO.class);
     }
-    
+
     @Test
     public void getWeaponsOfAmmoTypeTest() {
         Weapon weapon1 = createDefaultWeapon("weapon1");
@@ -185,11 +182,11 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
         when(entityMapper.map(weapons, WeaponDTO.class)).thenReturn(dtos);
 
         Assert.assertEquals(dtos, weaponFacade.getWeaponsOfAmmoType(AmmoType.BULLET_9MM));
-        
+
         verify(weaponService).getWeaponsOfAmmoType(AmmoType.BULLET_9MM);
         verify(entityMapper).map(weapons, WeaponDTO.class);
     }
-    
+
     @Test
     public void getWeaponsOfRangeTest() {
         Weapon weapon1 = createDefaultWeapon("weapon1");
@@ -199,15 +196,14 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
         dtos.add(weaponDTO);
         dtos.add(weaponDTO1);
 
-        when(weaponService.getWeaponsOfRange(100,300)).thenReturn(weapons);
+        when(weaponService.getWeaponsOfRange(100, 300)).thenReturn(weapons);
         when(entityMapper.map(weapons, WeaponDTO.class)).thenReturn(dtos);
 
-        Assert.assertEquals(dtos, weaponFacade.getWeaponsOfRange(100,300));
-        
-        verify(weaponService).getWeaponsOfRange(100,300);
+        Assert.assertEquals(dtos, weaponFacade.getWeaponsOfRange(100, 300));
+
+        verify(weaponService).getWeaponsOfRange(100, 300);
         verify(entityMapper).map(weapons, WeaponDTO.class);
     }
-    
 
     private WeaponDTO weaponToWeaponDTO(Weapon weapon) {
         WeaponDTO w = new WeaponDTO();

@@ -37,19 +37,14 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
 
     @Autowired
     private WeaponEfficiencyService weaponEfficiencyService;
-
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private WeaponService weaponService;
-
     @Autowired
     private EntityMapper entityMapper;
-
     @Autowired
     private WeaponEfficiencyFacade weaponEfficiencyFacade;
-
     private WeaponEfficiency weaponEfficiency;
     private WeaponEfficiencyDTO weaponEfficiencyDTO;
 
