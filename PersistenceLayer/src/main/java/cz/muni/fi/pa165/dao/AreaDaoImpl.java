@@ -4,9 +4,8 @@
  */
 package cz.muni.fi.pa165.dao;
 
-import cz.muni.fi.pa165.DatabaseCreatureException;
+import cz.muni.fi.pa165.exception.DatabaseCreatureException;
 import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.UserSystem;
 
 import java.util.List;
 

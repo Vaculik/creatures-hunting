@@ -53,24 +53,22 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
         if (creature == null) {
             return results;
         }
+        final Integer[] maxEfficiency = {Integer.MIN_VALUE};
 
-        Integer maxEfficiency = null;
-        Integer efficiency;
-        for (WeaponEfficiency weaponEfficiency : weaponEfficiencyDao.findAll()) {
-            if (creature.equals(weaponEfficiency.getCreature())) {
-                efficiency = weaponEfficiency.getEfficiency();
-                if (efficiency == null) {
-                    continue;
-                }
-                if (maxEfficiency == null || maxEfficiency < efficiency) {
-                    results.clear();
-                    maxEfficiency = efficiency;
-                    results.add(weaponEfficiency.getWeapon());
-                } else if (maxEfficiency == efficiency) {
-                    results.add(weaponEfficiency.getWeapon());
-                }
-            }
-        }
+        weaponEfficiencyDao.findAll()
+                .stream()
+                .filter(w -> creature.equals(w.getCreature()))
+                .filter(w -> w.getEfficiency() != null)
+                .forEach(w -> {
+                    Integer efficiency = w.getEfficiency();
+                    if (maxEfficiency[0] < efficiency) {
+                        results.clear();
+                        maxEfficiency[0] = efficiency;
+                        results.add(w.getWeapon());
+                    } else if (maxEfficiency[0] == efficiency) {
+                        results.add(w.getWeapon());
+                    }
+        });
         return results;
     }
 
@@ -80,24 +78,22 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
         if (weapon == null) {
             return results;
         }
+        final Integer[] maxEfficiency = {Integer.MIN_VALUE};
 
-        Integer maxEfficiency = null;
-        Integer efficiency;
-        for (WeaponEfficiency weaponEfficiency : weaponEfficiencyDao.findAll()) {
-            if (weapon.equals(weaponEfficiency.getWeapon())) {
-                efficiency = weaponEfficiency.getEfficiency();
-                if (efficiency == null) {
-                    continue;
-                }
-                if (maxEfficiency == null || maxEfficiency < efficiency) {
-                    results.clear();
-                    maxEfficiency = efficiency;
-                    results.add(weaponEfficiency.getCreature());
-                } else if (maxEfficiency == efficiency) {
-                    results.add(weaponEfficiency.getCreature());
-                }
-            }
-        }
+        weaponEfficiencyDao.findAll()
+                .stream()
+                .filter(w -> weapon.equals(w.getWeapon()))
+                .filter(w -> w.getEfficiency() != null)
+                .forEach(w -> {
+                    Integer efficiency = w.getEfficiency();
+                    if (maxEfficiency[0] < efficiency) {
+                        results.clear();
+                        maxEfficiency[0] = efficiency;
+                        results.add(w.getCreature());
+                    } else if (maxEfficiency[0] == efficiency) {
+                        results.add(w.getCreature());
+                    }
+                });
         return results;
     }
 }

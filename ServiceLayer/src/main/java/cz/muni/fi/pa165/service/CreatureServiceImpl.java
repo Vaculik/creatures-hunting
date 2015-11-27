@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The implementation of the CreatureService interface.
@@ -52,60 +53,52 @@ public class CreatureServiceImpl implements CreatureService {
 
     @Override
     public List<Creature> getCreaturesOfType(CreatureType type) {
-        List<Creature> results = new LinkedList<>();
-        List<Creature> creatures = creatureDao.findAll();
-
-        for (Creature creature : creatures) {
-           if (creature.getType() == type) {
-               results.add(creature);
-           }
-        }
+        List<Creature> results = creatureDao.findAll()
+                .stream()
+                .filter(c -> c.getType() == type)
+                .collect(Collectors.toList());
         return results;
     }
 
     @Override
     public List<Creature> getCreaturesWithMaxHeight() {
         List<Creature> results = new LinkedList<>();
-        List<Creature> creatures = creatureDao.findAll();
-        Integer maxHeight = null;
-        Integer height;
+        final Integer[] maxHeight = {Integer.MIN_VALUE};
 
-        for (Creature creature : creatures) {
-            height = creature.getHeight();
-            if (height == null) {
-                continue;
-            }
-            if (maxHeight == null || height > maxHeight) {
-                maxHeight = height;
-                results.clear();
-                results.add(creature);
-            } else if (height == maxHeight) {
-                results.add(creature);
-            }
-        }
+        creatureDao.findAll()
+                .stream()
+                .filter(c -> c.getHeight() != null)
+                .forEach(c -> {
+                    Integer height = c.getHeight();
+                    if (height > maxHeight[0]) {
+                        maxHeight[0] = height;
+                        results.clear();
+                        results.add(c);
+                    } else if (height == maxHeight[0]) {
+                        results.add(c);
+                    }
+                });
         return results;
     }
 
     @Override
     public List<Creature> getCreaturesWithMaxWeight() {
         List<Creature> results = new LinkedList<>();
-        List<Creature> creatures = creatureDao.findAll();
-        Integer maxWeight = null;
-        Integer weight;
+        final Integer[] maxWeight = {Integer.MIN_VALUE};
 
-        for (Creature creature : creatures) {
-            weight = creature.getWeight();
-            if (weight == null) {
-                continue;
-            }
-            if (maxWeight == null || weight > maxWeight) {
-                maxWeight = weight;
-                results.clear();
-                results.add(creature);
-            } else if (weight == maxWeight) {
-                results.add(creature);
-            }
-        }
+        creatureDao.findAll()
+                .stream()
+                .filter(c -> c.getWeight() != null)
+                .forEach(c -> {
+                    Integer weight = c.getWeight();
+                    if (weight > maxWeight[0]) {
+                        maxWeight[0] = weight;
+                        results.clear();
+                        results.add(c);
+                    } else if (weight == maxWeight[0]) {
+                        results.add(c);
+                    }
+                });
         return results;
     }
 }

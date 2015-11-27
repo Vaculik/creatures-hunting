@@ -1,7 +1,0 @@
-<suite name="dgf" verbose="10" object-factory="org.powermock.modules.testng.PowerMockObjectFactory">
-    <test name="dgf">
-        <classes>
-            <class name="cz.muni.fi.pa165.facade.WeaponEfficiencyFacadeTest"/>
-        </classes>
-    </test>
-</suite>
