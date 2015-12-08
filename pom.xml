@@ -10,7 +10,8 @@
         <module>PersistenceLayer</module>
     <module>ServiceLayer</module>
     <module>ApiLayer</module>
-  </modules>
+        <module>AngularLayer</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
