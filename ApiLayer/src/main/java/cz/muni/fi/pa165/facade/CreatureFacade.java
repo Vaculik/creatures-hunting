@@ -19,7 +19,7 @@ public interface CreatureFacade {
      * @param id id of the CreatureDTO
      * @return the found CreatureDTO or null if doesn't exist
      */
-    public CreatureDTO getCreatureById(Long id);
+    CreatureDTO getCreatureById(Long id);
 
     /**
      * Find a CreatureDTO by name.
@@ -27,7 +27,7 @@ public interface CreatureFacade {
      * @param name name of the CreatureDTO
      * @return the found CreatureDTO or null if doesn't exist
      */
-    public CreatureDTO getCreatureByName(String name);
+    CreatureDTO getCreatureByName(String name);
 
     /**
      * Create the CreatureDTO.
@@ -35,21 +35,21 @@ public interface CreatureFacade {
      * @param creatureDTO the CreatureDTO to be created
      * @return id of the created CreatureDTO
      */
-    public Long createCreature(CreatureDTO creatureDTO);
+    Long createCreature(CreatureDTO creatureDTO);
 
     /**
      * Delete the CreatureDTO.
      *
      * @param creatureDTO the CreatureDTO to be deleted
      */
-    public void deleteCreature(CreatureDTO creatureDTO);
+    void deleteCreature(CreatureDTO creatureDTO);
 
     /**
      * Find all CreatureDTOs.
      *
      * @return list of the results
      */
-    public List<CreatureDTO> getAllCreatures();
+    List<CreatureDTO> getAllCreatures();
 
     /**
      * Find all CreatureDTOs of a given type.
@@ -57,19 +57,19 @@ public interface CreatureFacade {
      * @param type the type
      * @return list of the results
      */
-    public List<CreatureDTO> getCreaturesOfType(CreatureType type);
+    List<CreatureDTO> getCreaturesOfType(CreatureType type);
 
     /**
      * Find all CreatureDTOs with the biggest height.
      *
      * @return list of the results
      */
-    public List<CreatureDTO> getCreaturesWithMaxHeight();
+    List<CreatureDTO> getCreaturesWithMaxHeight();
 
     /**
      * Find all CreatureDTOs with the biggest weight.
      *
      * @return list of the results
      */
-    public List<CreatureDTO> getCreaturesWithMaxWeight();
+    List<CreatureDTO> getCreaturesWithMaxWeight();
 }

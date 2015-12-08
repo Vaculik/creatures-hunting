@@ -23,28 +23,28 @@ public interface AreaDao {
      *
      * @param area Area to be created
      */
-    public void create(Area area);
+    void create(Area area);
 
     /**
      * This method deletes an area in a database
      *
      * @param area Area to be deleted
      */
-    public void delete(Area area);
+    void delete(Area area);
 
     /**
      * This method updates an area in a database
      *
      * @param area Area to be updated
      */
-    public void update(Area area);
+    void update(Area area);
 
     /**
      * This method finds all areas in a database
      *
      * @return list of all areas in a database
      */
-    public List<Area> findAll();
+    List<Area> findAll();
 
     /**
      * This method finds area by its id
@@ -52,7 +52,7 @@ public interface AreaDao {
      * @param id specific number (identification) which is unique for each area
      * @return id - identification number
      */
-    public Area getById(Long id);
+    Area getById(Long id);
 
     /**
      * This method finds area by its name
@@ -60,5 +60,5 @@ public interface AreaDao {
      * @param name string-name of specific area
      * @return area with specific name
      */
-    public Area getByName(String name);
+    Area getByName(String name);
 }

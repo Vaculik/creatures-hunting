@@ -16,28 +16,28 @@ public interface UserSystemService {
      *
      * @param user UserSystem to be created
      */
-    public void createUser(UserSystem user);
+    void createUser(UserSystem user);
 
     /**
      * This method deletes a user.
      *
      * @param user user to be deleted
      */
-    public void deleteUser(UserSystem user);
+    void deleteUser(UserSystem user);
 
     /**
      * This method updates a user.
      *
      * @param user UserSystem to be updated
      */
-    public void updateUser(UserSystem user);
+    void updateUser(UserSystem user);
 
     /**
      * Find all Users.
      *
      * @return list of the results
      */
-    public List<UserSystem> getAllUsers();
+    List<UserSystem> getAllUsers();
 
     /**
      * Find all users of given type.
@@ -45,7 +45,7 @@ public interface UserSystemService {
      * @param type the type
      * @return list of the results
      */
-    public List<UserSystem> getUsersOfType(UserType type);
+    List<UserSystem> getUsersOfType(UserType type);
 
     /**
      * Find all users of given sex.
@@ -53,7 +53,7 @@ public interface UserSystemService {
      * @param sex the type
      * @return list of the results
      */
-    public List<UserSystem> getUsersOfSex(SexType sex);
+    List<UserSystem> getUsersOfSex(SexType sex);
 
     /**
      * Find a User by id.
@@ -61,7 +61,7 @@ public interface UserSystemService {
      * @param id id of the UserSystem
      * @return the found UserSystem or null if doesn't exist
      */
-    public UserSystem getUserById(Long id);
+    UserSystem getUserById(Long id);
 
     /**
      * Find a User by name.
@@ -69,5 +69,5 @@ public interface UserSystemService {
      * @param name name of the UserSystem
      * @return the found UserSystemDTO or null if doesn't exist
      */
-    public UserSystem getUserByName(String name);
+    UserSystem getUserByName(String name);
 }

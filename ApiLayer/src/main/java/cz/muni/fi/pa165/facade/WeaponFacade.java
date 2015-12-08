@@ -18,7 +18,7 @@ public interface WeaponFacade {
      * @param id unique integer identification of Weapon entity.
      * @return found weaponDTO
      */
-    public WeaponDTO getWeaponById(Long id);
+    WeaponDTO getWeaponById(Long id);
 
     /**
      * Finds weaponDTO of given name.
@@ -26,14 +26,14 @@ public interface WeaponFacade {
      * @param name Unique string identification of Weapon entity.
      * @return Found weaponDTO
      */
-    public WeaponDTO getWeaponByName(String name);
+    WeaponDTO getWeaponByName(String name);
 
     /**
      * Finds all weaponDTOs.
      *
      * @return List of all weaponDTOs in db
      */
-    public List<WeaponDTO> getAllWeapons();
+    List<WeaponDTO> getAllWeapons();
 
     /**
      * Persists new weapon, corresponding to given DTO, into db.
@@ -41,21 +41,21 @@ public interface WeaponFacade {
      * @param weapon Object of class WeaponDTO to be persisted.
      * @return id of newly created weapon
      */
-    public Long createWeapon(WeaponDTO weapon);
+    Long createWeapon(WeaponDTO weapon);
 
     /**
      * Persists changes on object of class WeaponDTO in db.
      *
      * @param weapon New state of object WeaponDTO to be persisted.
      */
-    public void updateWeapon(WeaponDTO weapon);
+    void updateWeapon(WeaponDTO weapon);
 
     /**
      * Deletes object of class Weapon from db.
      *
      * @param weapon WeaponDTO to be deleted.
      */
-    public void deleteWeapon(WeaponDTO weapon);
+    void deleteWeapon(WeaponDTO weapon);
 
     /**
      * Finds all weaponDTOs of given WeaponType.
@@ -63,7 +63,7 @@ public interface WeaponFacade {
      * @param type WeaponType, search key
      * @return List of all weaponDTOs of given type
      */
-    public List<WeaponDTO> getWeaponsOfType(WeaponType type);
+    List<WeaponDTO> getWeaponsOfType(WeaponType type);
 
     /**
      * Finds all weaponDTOs of given AmmoType.
@@ -71,7 +71,7 @@ public interface WeaponFacade {
      * @param ammoType AmmoType, search key
      * @return List of all weaponDTOs of given ammoType
      */
-    public List<WeaponDTO> getWeaponsOfAmmoType(AmmoType ammoType);
+    List<WeaponDTO> getWeaponsOfAmmoType(AmmoType ammoType);
 
     /**
      * Finds all weaponDTOs with range min <= weapon.range <= max.
@@ -81,5 +81,5 @@ public interface WeaponFacade {
      * @param max integer, upper threshold
      * @return List of weaponDTOs of corresponding range
      */
-    public List<WeaponDTO> getWeaponsOfRange(int min, int max);
+    List<WeaponDTO> getWeaponsOfRange(int min, int max);
 }
