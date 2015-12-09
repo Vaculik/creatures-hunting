@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.hateoas;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
