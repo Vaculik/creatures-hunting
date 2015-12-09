@@ -12,6 +12,7 @@
     <module>ApiLayer</module>
         <module>RestApiLayer</module>
         <module>PresentationLayer</module>
+        <module>InitialData</module>
     </modules>
     <dependencies>
         <dependency>
