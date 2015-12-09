@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Primary;
 import static org.mockito.Mockito.mock;
 
 /**
- * The additional configuration of mock objects. This configuration is primarily
+ * The additional config of mock objects. This config is primarily
  * for tests on facade layer.
  *
  * @author Karel Vaculik

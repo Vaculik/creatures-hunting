@@ -3,5 +3,5 @@ package cz.muni.fi.pa165.hateoas;
 /**
  * @author Karel Vaculik
  */
-public interface WeaponEfficiencyRepository {
+public class WeaponEfficiencyResource {
 }
