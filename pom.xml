@@ -10,7 +10,8 @@
         <module>PersistenceLayer</module>
     <module>ServiceLayer</module>
     <module>ApiLayer</module>
-        <module>AngularLayer</module>
+        <module>RestApiLayer</module>
+        <module>PresentationLayer</module>
     </modules>
     <dependencies>
         <dependency>

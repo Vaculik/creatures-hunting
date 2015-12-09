@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.restapi.controllers;
+package cz.muni.fi.pa165.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/creatures")
-public class CreatureRestController {
+@RequestMapping("/weapon-efficiencies")
+public class WeaponEfficiencyRestController {
 }

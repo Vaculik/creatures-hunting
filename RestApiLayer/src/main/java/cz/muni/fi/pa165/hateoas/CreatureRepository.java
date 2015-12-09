@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.restapi.hateoas;
+package cz.muni.fi.pa165.hateoas;
 
 /**
  * @author Karel Vaculik
