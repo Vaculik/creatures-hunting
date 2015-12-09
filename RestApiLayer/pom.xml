@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>AngularLayer</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>RestApiLayer</artifactId>
+    <packaging>war</packaging>
 
-    <name>AngularLayer</name>
+    <name>RestApiLayer</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -36,4 +36,41 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/creatures-hunting</path>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <configuration>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <detectLinks>false</detectLinks>
+                    <links>
+                        <link>http://docs.oracle.com/javaee/6/api/</link>
+                        <link>http://docs.spring.io/spring/docs/current/javadoc-api/</link>
+                        <link>http://docs.spring.io/spring-hateoas/docs/current/api/</link>
+                        <link>http://fasterxml.github.io/jackson-annotations/javadoc/2.5/</link>
+                    </links>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
