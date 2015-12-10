@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.hateoas;
 
+import cz.muni.fi.pa165.controllers.CreatureRestController;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author Karel Vaculik
  */
+
 @Component
 public class CreatureResourceAssembler extends ResourceAssemblerSupport<CreatureDTO, CreatureResource> {
 
@@ -20,8 +22,8 @@ public class CreatureResourceAssembler extends ResourceAssemblerSupport<Creature
     @Autowired
     private EntityLinks entityLinks;
 
-    public CreatureResourceAssembler(Class<?> controllerClass, Class<CreatureResource> resourceType) {
-        super(controllerClass, resourceType);
+    public CreatureResourceAssembler() {
+        super(CreatureRestController.class, CreatureResource.class);
     }
 
     @Override

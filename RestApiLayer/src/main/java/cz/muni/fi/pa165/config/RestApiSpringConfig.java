@@ -15,6 +15,7 @@ import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.text.SimpleDateFormat;
@@ -22,11 +23,12 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Vaculik on 09/12/2015.
+ * @author Karel Vaculik
  */
 
 @EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)
 @Configuration
+@EnableWebMvc
 @Import(InitialDataConfig.class)
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.controllers", "cz.muni.fi.pa165.hateoas"})
 public class RestApiSpringConfig extends WebMvcConfigurerAdapter {
