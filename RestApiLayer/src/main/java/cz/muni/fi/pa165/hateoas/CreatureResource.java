@@ -30,4 +30,24 @@ public class CreatureResource extends ResourceSupport {
         this.type = creatureDTO.getType();
         this.description = creatureDTO.getDescription();
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public CreatureType getType() {
+        return type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

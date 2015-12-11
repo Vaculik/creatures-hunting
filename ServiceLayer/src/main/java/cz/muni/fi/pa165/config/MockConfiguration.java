@@ -7,12 +7,11 @@ import cz.muni.fi.pa165.service.WeaponServiceImpl;
 import cz.muni.fi.pa165.util.EntityMapper;
 import cz.muni.fi.pa165.util.EntityMapperImpl;
 
+import static org.mockito.Mockito.mock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import static org.mockito.Mockito.mock;
 
 /**
  * The additional config of mock objects. This config is primarily
@@ -20,7 +19,9 @@ import static org.mockito.Mockito.mock;
  *
  * @author Karel Vaculik
  */
-@Configuration
+
+// THIS LINE OF CODE WAS REALLY BIG EVIL
+//@Configuration
 @ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class, UserSystemServiceImpl.class,
     UserSystemFacadeImpl.class, EntityMapperImpl.class, WeaponServiceImpl.class, WeaponFacadeImpl.class})
 public class MockConfiguration {

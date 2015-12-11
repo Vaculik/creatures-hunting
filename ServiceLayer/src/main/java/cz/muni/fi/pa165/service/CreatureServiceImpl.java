@@ -33,6 +33,7 @@ public class CreatureServiceImpl implements CreatureService {
 
     @Override
     public void createCreature(Creature creature) {
+        System.out.println("Create creature with name=" + creature.getName());
         creatureDao.create(creature);
     }
 

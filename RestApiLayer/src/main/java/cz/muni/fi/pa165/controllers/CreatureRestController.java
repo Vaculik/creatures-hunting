@@ -12,6 +12,7 @@ import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,17 +39,33 @@ public class CreatureRestController {
     private CreatureResourceAssembler creatureResourceAssembler;
 
     /**
-     *
-     *
      * @return list of creatures
      */
     @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> categories() {
-        logger.debug("GET request creatures.");
+    public HttpEntity<Resources<CreatureResource>> getAllcreatures() {
+        logger.debug("GET all creatures.");
         List<CreatureDTO> creatureDTOs = creatureFacade.getAllCreatures();
-        Resources<CreatureResource> creatureResources = new Resources(creatureResourceAssembler.toResources(creatureDTOs),
+        logger.debug(creatureDTOs.toString());
+        System.out.println(creatureDTOs);
+        Resources<CreatureResource> creatureResources = new Resources<>(
+                creatureResourceAssembler.toResources(creatureDTOs),
                 linkTo(CreatureRestController.class).withSelfRel());
 
-        return new ResponseEntity(creatureResources, HttpStatus.OK);
+        return new ResponseEntity<>(creatureResources, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public HttpEntity<CreatureResource> getCreature(@PathVariable long id) {
+        logger.debug("GET creature with id=" + id);
+        CreatureDTO creatureDTO = creatureFacade.getCreatureById(id);
+        CreatureResource creatureResource = creatureResourceAssembler.toResource(creatureDTO);
+
+        return new ResponseEntity<>(creatureResource, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteCreature(@PathVariable long id) {
     }
 }

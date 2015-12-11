@@ -1,34 +1,26 @@
 package cz.muni.fi.pa165.facade;
 
-import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
-import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.UserSystem;
-import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 import cz.muni.fi.pa165.service.UserSystemService;
