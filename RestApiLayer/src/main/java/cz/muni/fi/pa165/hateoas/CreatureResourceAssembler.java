@@ -10,6 +10,10 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+
+import java.lang.reflect.Method;
+
 /**
  * @author Karel Vaculik
  */
@@ -29,9 +33,12 @@ public class CreatureResourceAssembler extends ResourceAssemblerSupport<Creature
     @Override
     public CreatureResource toResource(CreatureDTO creatureDTO) {
         CreatureResource creatureResource = new CreatureResource(creatureDTO);
+        Long id = creatureDTO.getId();
         try {
-            Link self = entityLinks.linkToSingleResource(CreatureDTO.class, creatureDTO.getId()).withSelfRel();
+            Link self = entityLinks.linkToSingleResource(CreatureDTO.class, id).withSelfRel();
             creatureResource.add(self);
+            Method delete = CreatureRestController.class.getMethod("deleteCreature", long.class);
+            creatureResource.add(linkTo(CreatureRestController.class, delete, id).withRel("delete"));
         } catch (Exception ex) {
             logger.warn("Failed to create links.");
         }

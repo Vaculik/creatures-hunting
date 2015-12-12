@@ -39,7 +39,7 @@ public class CreatureDaoImpl implements CreatureDao {
     }
 
     public void delete(Creature creature) {
-        em.remove(creature);
+        em.remove(em.contains(creature) ? creature : em.merge(creature));
     }
 
     public void update(Creature creature) {
