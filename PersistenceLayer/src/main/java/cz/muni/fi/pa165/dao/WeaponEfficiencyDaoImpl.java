@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import java.util.List;
  * @author Karel Vaculik
  */
 @Repository
+@Transactional
 public class WeaponEfficiencyDaoImpl implements WeaponEfficiencyDao {
 
     @PersistenceContext
@@ -28,7 +30,7 @@ public class WeaponEfficiencyDaoImpl implements WeaponEfficiencyDao {
     }
 
     public void delete(WeaponEfficiency weaponEfficiency) {
-        em.remove(weaponEfficiency);
+        em.remove(em.contains(weaponEfficiency) ? weaponEfficiency : em.merge(weaponEfficiency));
     }
 
     public void update(WeaponEfficiency weaponEfficiency) {

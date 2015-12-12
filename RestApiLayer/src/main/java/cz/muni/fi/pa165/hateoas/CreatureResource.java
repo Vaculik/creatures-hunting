@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.hateoas;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import org.springframework.hateoas.ResourceSupport;
@@ -11,6 +12,7 @@ import org.springframework.hateoas.core.Relation;
  */
 
 @Relation(value = "creature", collectionRelation = "creatures")
+@JsonPropertyOrder(value = {"id", "name", "height", "weight", "type", "description"})
 public class CreatureResource extends ResourceSupport {
 
     @JsonProperty("id")

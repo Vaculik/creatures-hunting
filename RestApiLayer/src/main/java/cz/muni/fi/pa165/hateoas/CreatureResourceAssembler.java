@@ -40,7 +40,7 @@ public class CreatureResourceAssembler extends ResourceAssemblerSupport<Creature
             Method delete = CreatureRestController.class.getMethod("deleteCreature", long.class);
             creatureResource.add(linkTo(CreatureRestController.class, delete, id).withRel("delete"));
         } catch (Exception ex) {
-            logger.warn("Failed to create links.");
+            logger.error("Failed to create links.");
         }
         return creatureResource;
     }

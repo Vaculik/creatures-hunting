@@ -9,5 +9,6 @@ public enum AmmoType {
     NONE,
     BULLET_9MM,
     BULLET_NATO,
-    BATTERY
+    BATTERY,
+    MAGNUM_44
 }

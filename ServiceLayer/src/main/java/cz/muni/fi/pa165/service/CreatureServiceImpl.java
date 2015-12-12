@@ -70,7 +70,7 @@ public class CreatureServiceImpl implements CreatureService {
                         maxHeight[0] = height;
                         results.clear();
                         results.add(c);
-                    } else if (height == maxHeight[0]) {
+                    } else if (height.equals(maxHeight[0])) {
                         results.add(c);
                     }
                 });
@@ -91,7 +91,7 @@ public class CreatureServiceImpl implements CreatureService {
                         maxWeight[0] = weight;
                         results.clear();
                         results.add(c);
-                    } else if (weight == maxWeight[0]) {
+                    } else if (weight.equals(maxWeight[0])) {
                         results.add(c);
                     }
                 });

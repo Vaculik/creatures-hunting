@@ -59,7 +59,7 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
                         results.clear();
                         maxEfficiency[0] = efficiency;
                         results.add(w.getWeapon());
-                    } else if (maxEfficiency[0] == efficiency) {
+                    } else if (maxEfficiency[0].equals(efficiency)) {
                         results.add(w.getWeapon());
                     }
         });
@@ -84,7 +84,7 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
                         results.clear();
                         maxEfficiency[0] = efficiency;
                         results.add(w.getCreature());
-                    } else if (maxEfficiency[0] == efficiency) {
+                    } else if (maxEfficiency[0].equals(efficiency)) {
                         results.add(w.getCreature());
                     }
                 });

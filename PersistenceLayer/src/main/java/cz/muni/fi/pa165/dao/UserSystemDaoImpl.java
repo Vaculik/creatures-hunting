@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class implements basic operations on UserSystem entity.
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Repository;
  * @author Jakub Miculka
  */
 @Repository
+@Transactional
 public class UserSystemDaoImpl implements UserSystemDao {
 
     @PersistenceContext
@@ -68,6 +70,6 @@ public class UserSystemDaoImpl implements UserSystemDao {
         if (user == null) {
             throw new NullPointerException("Argument user is null");
         }
-        em.remove(user);
+        em.remove(em.contains(user) ? user : em.merge(user));
     }
 }
