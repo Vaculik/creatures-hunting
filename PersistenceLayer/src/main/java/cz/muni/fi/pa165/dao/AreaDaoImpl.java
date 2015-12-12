@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class represents an implementation of Area Data Access Object interface.
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Repository;
  * @author Martin Zboril
  */
 @Repository
+@Transactional
 public class AreaDaoImpl implements AreaDao {
 
     @PersistenceContext
@@ -45,7 +47,7 @@ public class AreaDaoImpl implements AreaDao {
             throw new NullPointerException("Input Area is null");
         }
         try {
-            em.remove(area);
+            em.remove(em.contains(area) ? area : em.merge(area));
         } catch (Exception ex) {
             throw new DatabaseCreatureException("Error while deleting area.  Error: " + ex.getMessage());
         }

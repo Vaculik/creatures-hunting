@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.controllers;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
+import cz.muni.fi.pa165.dto.WeaponDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.CreatureFacade;
+import cz.muni.fi.pa165.facade.WeaponEfficiencyFacade;
+import cz.muni.fi.pa165.facade.WeaponFacade;
 import cz.muni.fi.pa165.hateoas.CreatureResource;
 import cz.muni.fi.pa165.hateoas.CreatureResourceAssembler;
 import org.slf4j.Logger;
@@ -21,6 +24,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -38,30 +42,31 @@ public class CreatureRestController {
 
     @Autowired
     private CreatureFacade creatureFacade;
+    @Autowired
+    private WeaponFacade weaponFacade;
+    @Autowired
+    private WeaponEfficiencyFacade weaponEfficiencyFacade;
 
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
 
-    /**
-     * @return list of creatures
-     */
+
     @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> getAllcreatures() {
+    public HttpEntity<Resources<CreatureResource>> getAllCreatures() {
         logger.debug("GET all creatures.");
         List<CreatureDTO> creatureDTOs = creatureFacade.getAllCreatures();
         Link createLink = linkTo(CreatureRestController.class).slash("create").withRel("create");
         Link maxHeightLink = linkTo(CreatureRestController.class).slash("max-height").withRel("max-height");
         Link maxWeightLink = linkTo(CreatureRestController.class).slash("max-weight").withRel("max-weight");
+
         Resources<CreatureResource> creatureResources = new Resources<>(
                 creatureResourceAssembler.toResources(creatureDTOs),
                 linkTo(CreatureRestController.class).withSelfRel(),
                 createLink,
                 maxHeightLink,
                 maxWeightLink);
-        for (CreatureType type : CreatureType.values()) {
-            creatureResources.add(
-                    linkTo(CreatureRestController.class).slash("type").slash(type).withRel(type.name()));
-        }
+        Arrays.stream(CreatureType.values()).forEach( (type -> creatureResources.
+                add(linkTo(CreatureRestController.class).slash("type").slash(type).withRel(type.name()))) );
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }
@@ -146,5 +151,24 @@ public class CreatureRestController {
                 linkTo(this.getClass()).slash("max-weight").withSelfRel());
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/most-vulnerable-to/weapon/{id}", method = RequestMethod.GET)
+    public HttpEntity<Resources<CreatureResource>> findMostVulnerableCreaturesToWeapon(@PathVariable Long id) {
+        logger.debug("GET most vulnerable creatures to weapon with id=" + id);
+        WeaponDTO weaponDTO = weaponFacade.getWeaponById(id);
+        if (weaponDTO == null) {
+            String msg = "Weapon with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }
+
+        List<CreatureDTO> resultCreatures = weaponEfficiencyFacade.findMostVulnerableCreaturesToWeapon(weaponDTO);
+        logger.debug(resultCreatures.toString()); // to delete
+        Resources<CreatureResource> resources = new Resources<>(
+                creatureResourceAssembler.toResources(resultCreatures));
+
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 }

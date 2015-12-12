@@ -17,7 +17,7 @@ import org.springframework.hateoas.core.Relation;
 public class WeaponEfficiencyResource extends ResourceSupport {
 
     @JsonProperty("id")
-    private Long id;
+    private long id;
 
     private Integer efficiency;
     private CreatureDTO creatureDTO;

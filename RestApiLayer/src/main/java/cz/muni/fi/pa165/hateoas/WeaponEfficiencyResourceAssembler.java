@@ -30,8 +30,9 @@ public class WeaponEfficiencyResourceAssembler
     @Override
     public WeaponEfficiencyResource toResource(WeaponEfficiencyDTO weaponEfficiencyDTO) {
         WeaponEfficiencyResource resource = new WeaponEfficiencyResource(weaponEfficiencyDTO);
+        Long id = weaponEfficiencyDTO.getId();
         try {
-            Link self = entityLinks.linkToSingleResource(WeaponEfficiencyResource.class, resource).withSelfRel();
+            Link self = entityLinks.linkToSingleResource(WeaponEfficiencyDTO.class, id).withSelfRel();
             resource.add(self);
         } catch (Exception ex) {
             logger.error("Failed to create links.");

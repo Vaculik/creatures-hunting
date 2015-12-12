@@ -50,7 +50,7 @@ public class WeaponDTO {
         this.range = range;
     }
 
-    public AmmoType getAmmotype() {
+    public AmmoType getAmmoType() {
         return this.ammoType;
     }
 
