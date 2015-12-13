@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The implementation of the WeaponEfficiencyService interface.
@@ -89,5 +90,16 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
                     }
                 });
         return results;
+    }
+
+    @Override
+    public List<WeaponEfficiency> findAllWeaponEfficienciesOfWeapon(Weapon weapon) {
+        if (weapon == null) {
+            return new LinkedList<>();
+        }
+        return weaponEfficiencyDao.findAll()
+                .stream()
+                .filter(w -> weapon.equals(w.getWeapon()))
+                .collect(Collectors.toList());
     }
 }

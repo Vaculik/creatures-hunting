@@ -231,6 +231,64 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
         verify(weaponEfficiencyDao).findAll();
     }
 
+    @Test
+    public void findAllWeaponEfficienciesOfWeaponEmptyResultsTest() {
+        Weapon weapon = new Weapon();
+        Weapon inputWeapon = new Weapon();
+        weapon.setName("different-weapon");
+        inputWeapon.setName("input-weapon");
+        weaponEfficiency.setWeapon(weapon);
+        weaponEfficiencies.add(weaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<WeaponEfficiency> actual = weaponEfficiencyService.findAllWeaponEfficienciesOfWeapon(inputWeapon);
+        Assert.assertEquals(actual.size(), 0);
+        verify(weaponEfficiencyDao).findAll();
+    }
+
+    @Test
+    public void findAllWeaponEfficienciesOfWeaponTest() {
+        Creature creature = new Creature();
+        creature.setName("creature");
+        Weapon inputWeapon = new Weapon();
+        inputWeapon.setName("input-weapon");
+        Weapon otherWeapon = new Weapon();
+        otherWeapon.setName("other-weapon");
+
+        WeaponEfficiency matchingWeaponEfficiency1 = new WeaponEfficiency();
+        matchingWeaponEfficiency1.setEfficiency(1);
+        matchingWeaponEfficiency1.setCreature(creature);
+        matchingWeaponEfficiency1.setWeapon(inputWeapon);
+
+        WeaponEfficiency matchingWeaponEfficiency2 = new WeaponEfficiency();
+        matchingWeaponEfficiency2.setEfficiency(2);
+        matchingWeaponEfficiency2.setCreature(creature);
+        matchingWeaponEfficiency2.setWeapon(inputWeapon);
+
+        WeaponEfficiency otherWeaponEfficiency = new WeaponEfficiency();
+        otherWeaponEfficiency.setEfficiency(1);
+        otherWeaponEfficiency.setCreature(creature);
+        otherWeaponEfficiency.setWeapon(otherWeapon);
+
+        weaponEfficiencies.add(weaponEfficiency);
+        weaponEfficiencies.add(matchingWeaponEfficiency1);
+        weaponEfficiencies.add(matchingWeaponEfficiency2);
+        weaponEfficiencies.add(otherWeaponEfficiency);
+
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+
+        List<WeaponEfficiency> actual = weaponEfficiencyService.findAllWeaponEfficienciesOfWeapon(inputWeapon);
+        List<WeaponEfficiency> expected = new LinkedList<>();
+        expected.add(matchingWeaponEfficiency1);
+        expected.add(matchingWeaponEfficiency2);
+
+        Assert.assertEquals(actual.size(), 2);
+        Assert.assertEquals(actual, expected);
+        verify(weaponEfficiencyDao).findAll();
+    }
+
+
     private WeaponEfficiency createWeaponEfficiency(Integer efficiency) {
         WeaponEfficiency weaponEfficiency = new WeaponEfficiency();
         weaponEfficiency.setEfficiency(efficiency);

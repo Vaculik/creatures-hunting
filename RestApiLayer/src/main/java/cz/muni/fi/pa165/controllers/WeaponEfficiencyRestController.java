@@ -143,4 +143,24 @@ public class WeaponEfficiencyRestController {
 
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
+
+
+    @RequestMapping(value = "/weapon/{id}", method = RequestMethod.GET)
+    public HttpEntity<Resources<WeaponEfficiencyResource>> findAllWeaponEfficienciesOfWeapon(
+            @PathVariable Long id) {
+        logger.debug("GET all weapon efficiencies of weapon with id=" + id);
+        WeaponDTO weaponDTO = weaponFacade.getWeaponById(id);
+        if (weaponDTO == null) {
+            String msg = "Weapon with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }
+
+        List<WeaponEfficiencyDTO> resultWeaponEfficiencies = weaponEfficiencyFacade
+                .findAllWeaponEfficienciesOfWeapon(weaponDTO);
+        Resources<WeaponEfficiencyResource> resources = new Resources<>(
+                weaponEfficiencyResourceAssembler.toResources(resultWeaponEfficiencies));
+
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
 }
