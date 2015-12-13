@@ -121,7 +121,6 @@ public class WeaponEfficiencyRestController {
             throw new ResourceNotFoundException(msg);
         }
         List<WeaponDTO> resultWeapons = weaponEfficiencyFacade.findMostEffectiveWeaponsAtCreature(creatureDTO);
-        logger.debug(resultWeapons.toString()); // to delete
         Resources<WeaponResource> resources = new Resources<>(weaponResourceAssembler.toResources(resultWeapons));
 
         return new ResponseEntity<>(resources, HttpStatus.OK);
@@ -139,9 +138,28 @@ public class WeaponEfficiencyRestController {
         }
 
         List<CreatureDTO> resultCreatures = weaponEfficiencyFacade.findMostVulnerableCreaturesToWeapon(weaponDTO);
-        logger.debug(resultCreatures.toString()); // to delete
         Resources<CreatureResource> resources = new Resources<>(
                 creatureResourceAssembler.toResources(resultCreatures));
+
+        return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/weapon/{id}", method = RequestMethod.GET)
+    public HttpEntity<Resources<WeaponEfficiencyResource>> findAllWeaponEfficienciesOfWeapon(
+            @PathVariable Long id) {
+        logger.debug("GET all weapon efficiencies of weapon with id=" + id);
+        WeaponDTO weaponDTO = weaponFacade.getWeaponById(id);
+        if (weaponDTO == null) {
+            String msg = "Weapon with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }
+
+        List<WeaponEfficiencyDTO> resultWeaponEfficiencies = weaponEfficiencyFacade
+                .findAllWeaponEfficienciesOfWeapon(weaponDTO);
+        Resources<WeaponEfficiencyResource> resources = new Resources<>(
+                weaponEfficiencyResourceAssembler.toResources(resultWeaponEfficiencies));
 
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }

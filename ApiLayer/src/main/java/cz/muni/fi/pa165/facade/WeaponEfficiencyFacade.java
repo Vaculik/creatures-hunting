@@ -59,4 +59,12 @@ public interface WeaponEfficiencyFacade {
      * @return list of the most vulnerable CreatureDTOs
      */
     List<CreatureDTO> findMostVulnerableCreaturesToWeapon(WeaponDTO weaponDTO);
+
+    /**
+     * Find all WeaponEfficiencyDTOs, which belongs to the given WeaponDTO.
+     *
+     * @param weaponDTO the WeaponDTO
+     * @return list of the WeaponEfficiencyDTOs
+     */
+    List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfWeapon(WeaponDTO weaponDTO);
 }

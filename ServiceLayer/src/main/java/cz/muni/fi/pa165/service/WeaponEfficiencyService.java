@@ -58,4 +58,12 @@ public interface WeaponEfficiencyService {
      * @return list of the most vulnerable Creatures
      */
     List<Creature> findMostVulnerableCreaturesToWeapon(Weapon weapon);
+
+    /**
+     * Find all WeaponEfficiencies, which belongs to the given Weapon.
+     *
+     * @param weapon the Weapon
+     * @return list of the WeaponEfficiencies
+     */
+    List<WeaponEfficiency> findAllWeaponEfficienciesOfWeapon(Weapon weapon);
 }

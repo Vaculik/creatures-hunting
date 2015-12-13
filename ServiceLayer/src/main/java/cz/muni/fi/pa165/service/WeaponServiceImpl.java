@@ -67,7 +67,7 @@ public class WeaponServiceImpl implements WeaponService {
         List<Weapon> allWeapons = weaponDao.findAll();
         List<Weapon> returnList = new LinkedList<>();
         for (Weapon weapon : allWeapons) {
-            if (weapon.getAmmotype() == ammoType) {
+            if (weapon.getAmmoType() == ammoType) {
                 returnList.add(weapon);
             }
         }

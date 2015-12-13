@@ -14,6 +14,7 @@ import cz.muni.fi.pa165.service.WeaponEfficiencyService;
 import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import org.mockito.MockitoAnnotations;
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
@@ -163,6 +164,26 @@ public class WeaponEfficiencyFacadeTest extends AbstractTransactionalTestNGSprin
         verify(entityMapper).map(creatures, CreatureDTO.class);
         verify(weaponEfficiencyService).findMostVulnerableCreaturesToWeapon(weapon);
     }
+
+    @Test
+    public void findAllWeaponEfficienciesOfWeapon() {
+        WeaponDTO weaponDTO = new WeaponDTO();
+        Weapon weapon = new Weapon();
+        List<WeaponEfficiency> weaponEfficiencies = new LinkedList<>();
+        List<WeaponEfficiencyDTO> weaponEfficiencyDTOs = new LinkedList<>();
+
+        when(entityMapper.map(weaponDTO, Weapon.class)).thenReturn(weapon);
+        when(entityMapper.map(weaponEfficiencies, WeaponEfficiencyDTO.class)).thenReturn(weaponEfficiencyDTOs);
+        when(weaponEfficiencyService.findAllWeaponEfficienciesOfWeapon(weapon)).thenReturn(weaponEfficiencies);
+
+        Assert.assertEquals(weaponEfficiencyFacade
+                .findAllWeaponEfficienciesOfWeapon(weaponDTO), weaponEfficiencyDTOs);
+
+        verify(entityMapper).map(weaponDTO, Weapon.class);
+        verify(entityMapper).map(weaponEfficiencies, WeaponEfficiencyDTO.class);
+        verify(weaponEfficiencyService).findAllWeaponEfficienciesOfWeapon(weapon);
+    }
+
 
     private WeaponEfficiency createWeaponEfficiency() {
         WeaponEfficiency eff = new WeaponEfficiency();

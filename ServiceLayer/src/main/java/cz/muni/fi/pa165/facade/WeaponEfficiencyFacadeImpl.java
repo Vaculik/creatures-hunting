@@ -78,4 +78,11 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
         return entityMapper.map(weaponEfficiencyService.
                 findMostVulnerableCreaturesToWeapon(weapon), CreatureDTO.class);
     }
+
+    @Override
+    public List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfWeapon(WeaponDTO weaponDTO) {
+        Weapon weapon = entityMapper.map(weaponDTO, Weapon.class);
+        return entityMapper.map(weaponEfficiencyService.
+                findAllWeaponEfficienciesOfWeapon(weapon), WeaponEfficiencyDTO.class);
+    }
 }
