@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>RestApiLayer</artifactId>
+    <artifactId>WebAppLayer</artifactId>
     <packaging>war</packaging>
 
-    <name>RestApiLayer</name>
+    <name>WebAppLayer</name>
     <url>http://maven.apache.org</url>
 
     <properties>

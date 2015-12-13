@@ -19,6 +19,6 @@ hs_err_pid*
 /PersistenceLayer/target/
 /ServiceLayer/target/
 /ApiLayer/target/
-/RestApiLayer/target/
+/WebAppLayer/target/
 /InitialData/target/
 

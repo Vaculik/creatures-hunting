@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.controllers;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
-import cz.muni.fi.pa165.dto.WeaponDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
