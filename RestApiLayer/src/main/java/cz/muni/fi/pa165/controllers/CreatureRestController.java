@@ -152,23 +152,4 @@ public class CreatureRestController {
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }
-
-
-    @RequestMapping(value = "/most-vulnerable-to/weapon/{id}", method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> findMostVulnerableCreaturesToWeapon(@PathVariable Long id) {
-        logger.debug("GET most vulnerable creatures to weapon with id=" + id);
-        WeaponDTO weaponDTO = weaponFacade.getWeaponById(id);
-        if (weaponDTO == null) {
-            String msg = "Weapon with id=" + id + " not found.";
-            logger.debug(msg);
-            throw new ResourceNotFoundException(msg);
-        }
-
-        List<CreatureDTO> resultCreatures = weaponEfficiencyFacade.findMostVulnerableCreaturesToWeapon(weaponDTO);
-        logger.debug(resultCreatures.toString()); // to delete
-        Resources<CreatureResource> resources = new Resources<>(
-                creatureResourceAssembler.toResources(resultCreatures));
-
-        return new ResponseEntity<>(resources, HttpStatus.OK);
-    }
 }

@@ -210,7 +210,7 @@ public class WeaponFacadeTest extends AbstractTestNGSpringContextTests {
         w.setName(weapon.getName());
         w.setRange(weapon.getRange());
         w.setType(weapon.getType());
-        w.setAmmoType(weapon.getAmmotype());
+        w.setAmmoType(weapon.getAmmoType());
         w.setDescription(weapon.getDescription());
         return w;
     }

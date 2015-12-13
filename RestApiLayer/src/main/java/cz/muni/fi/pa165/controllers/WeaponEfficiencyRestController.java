@@ -121,7 +121,6 @@ public class WeaponEfficiencyRestController {
             throw new ResourceNotFoundException(msg);
         }
         List<WeaponDTO> resultWeapons = weaponEfficiencyFacade.findMostEffectiveWeaponsAtCreature(creatureDTO);
-        logger.debug(resultWeapons.toString()); // to delete
         Resources<WeaponResource> resources = new Resources<>(weaponResourceAssembler.toResources(resultWeapons));
 
         return new ResponseEntity<>(resources, HttpStatus.OK);
@@ -139,7 +138,6 @@ public class WeaponEfficiencyRestController {
         }
 
         List<CreatureDTO> resultCreatures = weaponEfficiencyFacade.findMostVulnerableCreaturesToWeapon(weaponDTO);
-        logger.debug(resultCreatures.toString()); // to delete
         Resources<CreatureResource> resources = new Resources<>(
                 creatureResourceAssembler.toResources(resultCreatures));
 
