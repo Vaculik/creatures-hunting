@@ -1,1 +1,10 @@
-<h2>Creatures</h2>
+<h1>Creatures</h1>
+
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" ng-repeat="creature in creatures">
+    <a href="#/creatures/{{creature.id}}">
+        <h3>{{creature.name}}</h3>
+        <p>{{creature.description}}</p>
+    </a>
+</div>
+</div>

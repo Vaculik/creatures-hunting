@@ -16,9 +16,6 @@
 
     <script src="js/creaturesHuntingApp.js"></script>
 
-
-
-
     <style>
         .footer {
             position: absolute;
@@ -34,9 +31,14 @@
 <nav class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#/home">Creatures Hunting</a>
         </div>
-        <div>
+        <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#/home">Home</a></li>
                 <li><a href="#/creatures">Creatures</a></li>
@@ -46,7 +48,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>
@@ -56,20 +58,20 @@
 <div class="container">
     <div ng-app="creaturesHuntingApp">
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
-        <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Warning!</strong> <span>{{warningAlert}}</span>
-        </div>
-        <div ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Error!</strong> <span>{{errorAlert}}</span>
-        </div>
-        <div ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"> <span aria-hidden="true">&times;</span></button>
-            <strong>Success !</strong> <span>{{successAlert}}</span>
-        </div>
+        <%--<div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">--%>
+            <%--<button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>--%>
+            <%--<strong>Warning!</strong> <span>{{warningAlert}}</span>--%>
+        <%--</div>--%>
+        <%--<div ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">--%>
+            <%--<button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"> <span aria-hidden="true">&times;</span></button>--%>
+            <%--<strong>Error!</strong> <span>{{errorAlert}}</span>--%>
+        <%--</div>--%>
+        <%--<div ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">--%>
+            <%--<button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"> <span aria-hidden="true">&times;</span></button>--%>
+            <%--<strong>Success !</strong> <span>{{successAlert}}</span>--%>
+        <%--</div>--%>
+
         <div ng-view>
-            <p>Cena: {{5+5}}</p>
         </div>
     </div>
 </div>
@@ -79,7 +81,6 @@
         <p class="text-muted">&copy;&nbsp;Masaryk University</p>
     </div>
 </footer>
-
 
 </body>
 </html>

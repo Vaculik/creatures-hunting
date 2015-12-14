@@ -10,6 +10,7 @@ app.config(['$routeProvider', function($routeProvider) {
    $routeProvider.
        when('/home', {templateUrl: 'pages/home.html'}).
        when('/creatures', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
+       when('/creatures/:creatureId', {templateUrl: 'pages/particular/creature.html', controller: 'ParticularCreatureController'}).
        when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
        when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
        when('/users', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
@@ -29,3 +30,9 @@ app.config(['$routeProvider', function($routeProvider) {
 //    };
 //});
 
+controllers.controller('CreaturesController', function ($scope, $http) {
+    $http.get('/creatures-hunting/rest/creatures/').then(function (response) {
+        var creatures = response.data['_embedded']['creatures'];
+        $scope.creatures = creatures;
+    });
+});
