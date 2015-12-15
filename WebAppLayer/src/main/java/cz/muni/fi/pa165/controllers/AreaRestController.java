@@ -103,6 +103,7 @@ public class AreaRestController {
     public HttpEntity<Resources<AreaResource>> getAllAreas() {
         logger.debug("GET all areas.");
         List<AreaDTO> areaDTOs = areaFacade.getAllAreas();
+        logger.debug(areaDTOs.toString());
         Resources<AreaResource> resources = new Resources<>(
                 areaResourceAssembler.toResources(areaDTOs),
                 linkTo(AreaRestController.class).withSelfRel());

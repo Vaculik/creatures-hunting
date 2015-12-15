@@ -10,9 +10,7 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.service.AreaService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
 import org.mockito.MockitoAnnotations;
@@ -150,9 +148,9 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     public void getAreasNamesTest() {
         areas = createAreasList();
         List<String> names = new ArrayList<>();
-        for (Area tmp : areas) {
+        areas.stream().forEach((tmp) -> {
             names.add(tmp.getName());
-        }
+        });
         when(areaService.findAllAreas()).thenReturn(areas);
         when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
         List<String> namesFacade = areaFacade.getAreasNames();
@@ -220,19 +218,11 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
         doNothing().when(areaService).updateArea(area);
         Assert.assertEquals(areaDTO.getCreatures().size(), 4);
-        areaFacade.addCreature(areaDTO, createCreatureDTO(createCreature("Bran")));
+        CreatureDTO tmp = createCreatureDTO(createCreature("Bran"));
+        areaFacade.addCreature(areaDTO, tmp);
+        areaFacade.addCreature(areaDTO, tmp);        
         Assert.assertEquals(areaDTO.getCreatures().size(), 5);
-        verify(entityMapper).map(areaDTO, Area.class);
-        verify(areaService).updateArea(area);
-    }
-
-    @Test
-    public void removeCreatureTest() {
-        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-        doNothing().when(areaService).updateArea(area);
-        Assert.assertEquals(areaDTO.getCreatures().size(), 4);
-        areaFacade.removeCreature(areaDTO, createCreatureDTO(creature));
-        Assert.assertEquals(areaDTO.getCreatures().size(), 3);
+        
         verify(entityMapper).map(areaDTO, Area.class);
         verify(areaService).updateArea(area);
     }
@@ -264,11 +254,10 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         tmp.setId((area.getId()));
         tmp.setName(area.getName());
         tmp.setDescription(area.getDescription());
-        Set<CreatureDTO> creaturesSet = new HashSet<>();
-        for (Creature cr : area.getCreatures()) {
-            CreatureDTO crDTO = createCreatureDTO(cr);
+        List<CreatureDTO> creaturesSet = new ArrayList<>();
+        area.getCreatures().stream().map((cr) -> createCreatureDTO(cr)).forEach((crDTO) -> {
             creaturesSet.add(crDTO);
-        }
+        });
         tmp.setCreatures(creaturesSet);
         return tmp;
     }

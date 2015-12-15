@@ -89,11 +89,18 @@ public class AreaFacadeImpl implements AreaFacade {
     }
 
     @Override
-    public void addCreature(AreaDTO area, CreatureDTO creature) {
-        area.addCreature(creature);
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);
-    }
+    public void addCreature(AreaDTO area, CreatureDTO creature){
+         if(creature != null){
+            if(area.getCreatures().contains(creature) == false){
+            area.addCreature(creature);
+            Area ar = entityMapper.map(area, Area.class);
+            areaService.updateArea(ar);
+            }
+         }
+            
+//            return areaService.addCreature( entityMapper.map(ar, Area.class), entityMapper.map(creature, Creature.class),);           
+        }
+    
 
     @Override
     public Long updateArea(AreaDTO area) {
@@ -102,12 +109,12 @@ public class AreaFacadeImpl implements AreaFacade {
         return ar.getId();
     }
 
-    @Override
-    public void removeCreature(AreaDTO area, CreatureDTO creature) {
-        area.removeCreature(creature);
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);
-    }
+//    @Override
+//    public void removeCreature(AreaDTO area, CreatureDTO creature) {
+//        area.removeCreature(creature);
+//        Area ar = entityMapper.map(area, Area.class);
+//        areaService.updateArea(ar);
+//    }
 
     @Override
     public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {

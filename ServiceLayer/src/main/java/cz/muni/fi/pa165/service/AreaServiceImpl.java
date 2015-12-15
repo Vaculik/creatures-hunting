@@ -85,8 +85,7 @@ public class AreaServiceImpl implements AreaService {
 
         for (Area ar : areaDao.findAll()) {
             if (!ar.getCreatures().isEmpty()) {
-                result.add(ar);
-            }
+                result.add(ar);                          }
         }
         return result;
     }
@@ -124,4 +123,17 @@ public class AreaServiceImpl implements AreaService {
         }
         return result;
     }
+
+//    @Override
+//    public void addCreature(Area area, Creature creature) {
+//        if(creature != null){
+//            if(area.getCreatures().contains(creature) == false){
+//                area.addCreature(creature);
+//                areaDao.update(area);
+//            }
+//                
+//        }
+//    }
+    
+    
 }
