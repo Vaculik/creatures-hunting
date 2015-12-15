@@ -50,7 +50,8 @@ public class AreaRestController {
     private AreaResourceAssembler areaResourceAssembler;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<AreaResource> getArea(@PathVariable long id) {
+//    public HttpEntity<AreaResource> getArea(@PathVariable long id) {
+    public final AreaDTO getArea(@PathVariable("id") long id) {
         logger.debug("GET area with id=" + id);
         AreaDTO areaDTO = areaFacade.getById(id);
         if (areaDTO == null) {
@@ -58,8 +59,9 @@ public class AreaRestController {
             logger.debug(msg);
             throw new ResourceNotFoundException(msg);
         }
-        AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
-        return new ResponseEntity<>(areaResource, HttpStatus.OK);
+//        AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
+//        return new ResponseEntity<>(areaResource, HttpStatus.OK);
+        return areaDTO;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -108,7 +110,5 @@ public class AreaRestController {
         logger.debug("rest getCategories()");
         return areaFacade.getAllAreas();
     }
-    
-    
-    
+
 }
