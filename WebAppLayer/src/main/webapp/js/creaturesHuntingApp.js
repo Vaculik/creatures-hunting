@@ -87,3 +87,9 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
 
 
 
+controllers.controller('CreaturesController', function ($scope, $http) {
+    $http.get('/creatures-hunting/rest/creatures/').then(function (response) {
+        var creatures = response.data['_embedded']['creatures'];
+        $scope.creatures = creatures;
+    });
+});
