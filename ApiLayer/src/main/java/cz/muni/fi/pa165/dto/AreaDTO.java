@@ -1,8 +1,9 @@
 package cz.muni.fi.pa165.dto;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+
 
 /**
  * This class is a Data Transfer Object of Area.
@@ -14,7 +15,7 @@ public class AreaDTO {
     private Long id;
     private String name;
     private String description;
-    private Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
+    private List<CreatureDTO> creatures = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,11 +41,11 @@ public class AreaDTO {
         this.description = description;
     }
 
-    public Set<CreatureDTO> getCreatures() {
-        return Collections.unmodifiableSet(creatures);
+    public List<CreatureDTO> getCreatures() {
+        return Collections.unmodifiableList(creatures);
     }
 
-    public void setCreatures(Set<CreatureDTO> creatures) {
+    public void setCreatures(List<CreatureDTO> creatures) {
         this.creatures = creatures;
     }
 

@@ -111,15 +111,6 @@ public interface AreaFacade {
     void addCreature(AreaDTO area, CreatureDTO creature);
 
     /**
-     * This method removes a creature from an area
-     *
-     * @param area an area where to remove from
-     * @param creature a creature which to remove
-     * @return removing was successful
-     */
-    void removeCreature(AreaDTO area, CreatureDTO creature);
-
-    /**
      * This method checks if an area contains a creature
      *
      * @param area an area where to check it

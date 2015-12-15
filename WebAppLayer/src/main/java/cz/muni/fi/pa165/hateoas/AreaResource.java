@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
@@ -22,7 +22,7 @@ public class AreaResource extends ResourceSupport {
 
     private String name;
     private String description;
-    Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
+    List<CreatureDTO> creatures = new ArrayList<>();
     
     public AreaResource(AreaDTO areaDTO){
         this.id = areaDTO.getId();
@@ -39,7 +39,7 @@ public class AreaResource extends ResourceSupport {
         return description;
     }
 
-    public Set<CreatureDTO> getCreatures() {
+    public List<CreatureDTO> getCreatures() {
         return creatures;
     }
     
