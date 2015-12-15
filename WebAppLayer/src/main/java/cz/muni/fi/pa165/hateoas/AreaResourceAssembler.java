@@ -40,8 +40,8 @@ public class AreaResourceAssembler extends ResourceAssemblerSupport<AreaDTO, Are
         try {
             Link self = entityLinks.linkToSingleResource(AreaDTO.class, id).withSelfRel();
             areaResource.add(self);
-            Method delete = AreaRestController.class.getMethod("deleteArea", long.class);
-            areaResource.add(linkTo(AreaRestController.class, delete, id).withRel("delete"));
+//            Method delete = AreaRestController.class.getMethod("deleteArea", long.class);
+//            areaResource.add(linkTo(AreaRestController.class, delete, id).withRel("delete"));
         } catch (Exception ex) {
             logger.error("Failed to create links.");
         }
