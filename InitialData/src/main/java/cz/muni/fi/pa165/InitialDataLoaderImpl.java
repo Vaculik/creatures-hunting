@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165;
 
+import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.Weapon;
 import cz.muni.fi.pa165.entity.WeaponEfficiency;
@@ -59,6 +60,16 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         loadWeaponEfficiency(16,magnum,jacobBlack);
         loadWeaponEfficiency(45,laserRifle,jacobBlack);
         loadWeaponEfficiency(35,laserRifle,frankenstein);
+        
+        Area winterfell = loadArea("Winterfell", "Big north area");
+        Area wall = loadArea("Wall", "Cold one");     
+        Area kingsLanding = loadArea("Kings landing", "Hot one");        
+        Area bravos = loadArea("Bravos", "On the south");
+        Area meereen = loadArea("Meereen", "With the sea");
+        
+        winterfell.addCreature(dracula);
+        winterfell.addCreature(jacobBlack);
+        wall.addCreature(frankenstein);
     }
 
 
@@ -94,5 +105,15 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         newWeaponEfficiency.setWeapon(weapon);
         newWeaponEfficiency.setCreature(creature);
         weaponEfficiencyService.createWeaponEfficiency(newWeaponEfficiency);
+    }
+    
+    private Area loadArea(String name, String description) {
+        logger.debug("Create area with name=" + name);
+        Area newArea = new Area();
+        newArea.setName(name);
+        newArea.setDescription(description);    
+        areaService.createArea(newArea);
+        return newArea;
+
     }
 }

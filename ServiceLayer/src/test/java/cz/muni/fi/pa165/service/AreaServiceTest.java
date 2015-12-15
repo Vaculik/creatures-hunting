@@ -189,8 +189,16 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         verify(areaDao).update(area);
         verify(areaDao).update(area);
     }
-
-
+//
+//    @Test
+//    public void addCreatureTest() {
+//        doNothing().when(areaDao).update(area);
+//        Creature crr = createCreature("Stark");
+//        area.addCreature(crr);       
+//        areaService.addCreature(area, crr);
+//        Assert.assertTrue(area.getCreatures().contains(crr));
+//    }
+//    
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
 
