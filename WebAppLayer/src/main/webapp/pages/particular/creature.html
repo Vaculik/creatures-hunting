@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h1>{{creature.name}}</h1>
+        <p>
+            <strong>
+                {{creature.type}}
+            </strong>
+        </p>
+        <p>
+            Height: {{creature.height}} <br>
+            Weight: {{creature.weight}}
+        </p>
+        <p>
+            {{creature.description}}
+        </p>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <table class="table">
+            <caption>The best weapons against {{creature.name}}</caption>
+            <thread>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr ng-repeat="weapon in mostEffective">
+                <td>{{weapon.name}}</td>
+                <td>{{weapon.type}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
