@@ -12,6 +12,7 @@ app.config(['$routeProvider', function($routeProvider) {
        when('/creatures', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
        when('/creatures/highest', {templateUrl: 'pages/creatures.html', controller: 'HighestCreaturesController'}).
        when('/creatures/heaviest', {templateUrl: 'pages/creatures.html', controller: 'HeaviestCreaturesController'}).
+       when('/creatures/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
        when('/creature/:creatureId', {
            templateUrl: 'pages/particular/creature.html',
            controller: 'ParticularCreatureController'}).
@@ -40,8 +41,7 @@ controllers.controller('CreaturesController', function($http, $scope) {
     console.log('GET all creatures request');
     $http.get('/creatures-hunting/rest/creatures').
         then(function (response) {
-            var creatures = response.data['_embedded']['creatures'];
-            $scope.creatures = creatures;
+            $scope.creatures = response.data['_embedded']['creatures'];;
         });
 });
 
@@ -50,8 +50,7 @@ controllers.controller('HighestCreaturesController', function($http, $scope) {
     console.log('GET the highest creatures request');
     $http.get('/creatures-hunting/rest/creatures/max-height').
         then(function(response) {
-            var highest = response.data['_embedded']['creatures'];
-            $scope.creatures = highest;
+            $scope.creatures = response.data['_embedded']['creatures'];;
         });
 });
 
@@ -60,8 +59,7 @@ controllers.controller('HeaviestCreaturesController', function($http, $scope) {
     console.log('GET the heaviest creatures request');
     $http.get('/creatures-hunting/rest/creatures/max-weight').
         then(function(response) {
-            var heaviest = response.data['_embedded']['creatures'];
-            $scope.creatures = heaviest;
+            $scope.creatures = response.data['_embedded']['creatures'];;
         });
 });
 
@@ -71,8 +69,7 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
     console.log('GET particular creature with id=' + id);
     $http.get('/creatures-hunting/rest/creatures/' + id).
         then(function(response) {
-            var creature = response.data;
-            $scope.creature = creature;
+            $scope.creature = response.data;;
         },
         function error (response) {
             $rootScope.warningAlert = 'Problem occured when load creature ' + response.data.message;
@@ -80,16 +77,29 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
     console.log('GET most effective weapons to creature with id=' + id);
     $http.get('/creatures-hunting/rest/weapon-efficiencies/most-effective-to/creature/' + id).
         then(function(response) {
-            var mostEffective = response.data['_embedded']['weapons'];
-            $scope.mostEffective = mostEffective;
+            $scope.mostEffective = response.data['_embedded']['weapons'];;
         });
 });
 
 
+controllers.controller('NewCreatureController', function($http, $scope) {
+    console.log('New creature controller');
+    $scope.types=['VAMPIRE', 'BEAST', 'UNDEAD'];
+})
 
-controllers.controller('CreaturesController', function ($scope, $http) {
-    $http.get('/creatures-hunting/rest/creatures/').then(function (response) {
-        var creatures = response.data['_embedded']['creatures'];
-        $scope.creatures = creatures;
-    });
-});
+
+
+
+
+
+
+
+
+
+//
+//controllers.controller('CreaturesController', function ($scope, $http) {
+//    $http.get('/creatures-hunting/rest/creatures/').then(function (response) {
+//        var creatures = response.data['_embedded']['creatures'];
+//        $scope.creatures = creatures;
+//    });
+//});
