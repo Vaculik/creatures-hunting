@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * The interface represents service layer operations on objects of the class Creature.
+ * The interface represents service layer operations on objects of the class
+ * Creature.
  *
  * @author Karel Vaculik
  */
@@ -43,13 +44,6 @@ public interface CreatureService {
      * @param creature the Creature to be deleted
      */
     void deleteCreature(Creature creature);
-
-    /**
-     * Update the Creature entity.
-     *
-     * @param creature the Creature to be updated
-     */
-    void updateCreature(Creature creature);
 
     /**
      * Find all Creature entities.

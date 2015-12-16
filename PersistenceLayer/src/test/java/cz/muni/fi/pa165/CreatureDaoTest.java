@@ -4,8 +4,6 @@ import cz.muni.fi.pa165.dao.CreatureDao;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

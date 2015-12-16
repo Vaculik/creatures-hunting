@@ -18,7 +18,7 @@ public interface UserSystemDao {
      * @param id specific number (identification) which is unique for each user
      * @return id - identification number
      */
-    public UserSystem getById(Long id);
+    UserSystem getById(Long id);
 
     /**
      * This method finds user by its name
@@ -26,33 +26,33 @@ public interface UserSystemDao {
      * @param name string-name of specific user
      * @return user with specific name
      */
-    public UserSystem getByName(String name);
+    UserSystem getByName(String name);
 
     /**
      * This method finds all users in a database
      *
      * @return list of all users in a database
      */
-    public List<UserSystem> findAll();
+    List<UserSystem> findAll();
 
     /**
      * This method creates a user in a database
      *
      * @param user UserSystem to be created
      */
-    public void create(UserSystem user);
+    void create(UserSystem user);
 
     /**
      * This method updates a user in a database
      *
      * @param user UserSystem to be updated
      */
-    public void update(UserSystem user);
+    void update(UserSystem user);
 
     /**
      * This method deletes a user in a database
      *
      * @param user UserSystem to be deleted
      */
-    public void delete(UserSystem user);
+    void delete(UserSystem user);
 }

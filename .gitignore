@@ -1,5 +1,6 @@
 # Ignore IntelliJ Idea files
 .idea
+*.iml
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -18,4 +19,6 @@ hs_err_pid*
 /PersistenceLayer/target/
 /ServiceLayer/target/
 /ApiLayer/target/
+/WebAppLayer/target/
+/InitialData/target/
 

@@ -68,7 +68,7 @@ public class Weapon {
         this.range = range;
     }
 
-    public AmmoType getAmmotype() {
+    public AmmoType getAmmoType() {
         return this.ammoType;
     }
 

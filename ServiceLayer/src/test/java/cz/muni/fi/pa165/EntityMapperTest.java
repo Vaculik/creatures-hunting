@@ -49,7 +49,6 @@ public class EntityMapperTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(mapper.map(creatureDTOs, Creature.class), creatures);
     }
 
-
     private Creature createCreature(String name) {
         Creature c = new Creature();
         c.setId(1l);

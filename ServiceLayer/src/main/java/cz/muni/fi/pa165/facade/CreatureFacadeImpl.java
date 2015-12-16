@@ -22,7 +22,6 @@ public class CreatureFacadeImpl implements CreatureFacade {
 
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private EntityMapper entityMapper;
 

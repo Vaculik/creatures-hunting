@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Weapon;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ import javax.persistence.TypedQuery;
  * @author Pavel Vesely <448290@mail.muni.cz>
  */
 @Repository
+@Transactional
 public class WeaponDaoImpl implements WeaponDao {
 
     @PersistenceContext
@@ -64,6 +66,6 @@ public class WeaponDaoImpl implements WeaponDao {
         if (weapon == null) {
             throw new NullPointerException("Argument weapon is null");
         }
-        em.remove(weapon);
+        em.remove(em.contains(weapon) ? weapon : em.merge(weapon));
     }
 }

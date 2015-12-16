@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
@@ -15,9 +10,7 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.service.AreaService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.reset;
 import org.mockito.MockitoAnnotations;
@@ -26,7 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,7 +28,7 @@ import org.testng.annotations.Test;
 
 /**
  * This class test functionality of methods of AreaFacade.
- * 
+ *
  * @author Martin Zboril
  */
 @ContextConfiguration(classes = {ServiceApplicationContext.class, MockConfiguration.class})
@@ -46,7 +38,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private EntityMapper entityMapper;
     @Autowired
     private AreaService areaService;
-
     @Autowired
     private AreaFacade areaFacade;
     private AreaDTO areaDTO;
@@ -56,7 +47,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private String description;
     private List<Area> areas;
     private List<AreaDTO> areasDTO;
-    
     //help attributes for tests
     private AreaDTO areaOneCreatureDTO1;
     private AreaDTO areaOneCreatureDTO2;
@@ -126,126 +116,137 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void deleteAreaTest() {
-        area.setId(id);
-        areaDTO.setId(id);
         when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-        Long tmp = areaFacade.createArea(areaDTO);
-        doReturn(area).when(areaService).getAreaById(tmp);
+        doNothing().when(areaService).deleteArea(area);
         areaFacade.deleteArea(areaDTO);
-        doThrow(new NullPointerException()).when(areaService).getAreaById(tmp);
-        verify(entityMapper, times(2)).map(areaDTO, Area.class);
+        verify(entityMapper, times(1)).map(areaDTO, Area.class);
         verify(areaService).deleteArea(area);
     }
-
-    @Test
-    public void updateAreaTest() {
-        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-        doNothing().when(areaService).updateArea(area);
-        areaFacade.updateArea(areaDTO);
-        verify(areaService).updateArea(area);
-        verify(entityMapper).map(areaDTO, Area.class);       
-        
-        Assert.assertEquals(areaDTO.getName(),"Winterfell");        
-        areaDTO.setName("NoWinterfell");
-        areaFacade.updateArea(areaDTO);
-        Assert.assertNotEquals(areaDTO.getName(),"Winterfell");
-    }
+//
+//    @Test
+//    public void updateAreaTest() {
+//        area.setId(id);
+//        areaDTO.setId(id);
+//        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
+//        doNothing().when(areaService).updateArea(area);
+//        Assert.assertEquals(areaFacade.updateArea(areaDTO), id);
+//        verify(areaService).updateArea(area);
+//        verify(entityMapper).map(areaDTO, Area.class);
+//    }
 
     @Test
     public void getAllAreasTest() {
         areas = createAreasList();
+        when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
         when(areaService.findAllAreas()).thenReturn(areas);
-        Assert.assertEquals(areaService.findAllAreas().size(),5);
+        Assert.assertEquals(areaFacade.getAllAreas().size(),5);
         verify(areaService, times(1)).findAllAreas();
+        verify(entityMapper).map(areas, AreaDTO.class);
     }
 
-    @Test
-    public void getAreasNamesTest() {
-        areas = createAreasList();
-        List<String> names = new ArrayList<>();
-        for (Area tmp : areas) {
-            names.add(tmp.getName());
-        }
-        when(entityMapper.map(areaService.findAllAreas(), AreaDTO.class)).thenReturn(areasDTO);
-        List<String> namesFacade = areaFacade.getAreasNames();
-        Assert.assertEquals(namesFacade, names);
-        verify(areaService, times(2)).findAllAreas();
-    }
+//    @Test
+//    public void getAreasNamesTest() {
+//        areas = createAreasList();
+//        List<String> names = new ArrayList<>();
+//        areas.stream().forEach((tmp) -> {
+//            names.add(tmp.getName());
+//        });
+//        when(areaService.findAllAreas()).thenReturn(areas);
+//        when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
+//        List<String> namesFacade = areaFacade.getAreasNames();
+//        Assert.assertEquals(namesFacade, names);
+//        verify(areaService, times(1)).findAllAreas();
+//        verify(entityMapper).map(areas, AreaDTO.class);
+//    }
 
     @Test
     public void getAreasWithNoCreatureTest() {
         List<AreaDTO> noAreasDTO = new ArrayList<>();
-        when(entityMapper.map(areaService.getAreasWithNoCreature(), AreaDTO.class)).thenReturn(noAreasDTO);
+        List<Area> noAreas = new ArrayList<>();
+        when(areaService.getAreasWithNoCreature()).thenReturn(noAreas);
+        when(entityMapper.map(noAreas, AreaDTO.class)).thenReturn(noAreasDTO);
         List<AreaDTO> tmp = areaFacade.getAreasWithNoCreature();
         Assert.assertEquals(tmp.size(), 0);
-        verify(entityMapper).map(areaService.getAreasWithNoCreature(), AreaDTO.class);
+        verify(entityMapper).map(noAreas, AreaDTO.class);
+        verify(areaService).getAreasWithNoCreature();
     }
 
     @Test
     public void getAreasWithAnyCreatureTest() {
         areas = createAreasList();
-        when(entityMapper.map(areaService.getAreasWithAnyCreature(), AreaDTO.class)).thenReturn(areasDTO);
+        when(areaService.getAreasWithAnyCreature()).thenReturn(areas);
+        when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
         List<AreaDTO> tmp = areaFacade.getAreasWithAnyCreature();
-        Assert.assertEquals(tmp.size(), 5);
-        verify(entityMapper).map(areaService.getAreasWithNoCreature(), AreaDTO.class);
+        Assert.assertEquals(tmp, areasDTO);
+        verify(entityMapper).map(areas, AreaDTO.class);
+        verify(areaService).getAreasWithAnyCreature();
     }
 
     @Test
     public void getAreasMostCreaturesTest() {
         areas = createAreasList();
-        List<AreaDTO> tmpAreasDTO = new ArrayList<>();
-        tmpAreasDTO.add(areaDTO);
-        when(entityMapper.map(areaService.getAreasMostCreatures(), AreaDTO.class)).thenReturn(tmpAreasDTO);
+        when(areaService.getAreasMostCreatures()).thenReturn(areas);
+        when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
         List<AreaDTO> tmp = areaFacade.getAreasMostCreatures();
-        Assert.assertEquals(tmp.size(), 1);
-        verify(entityMapper).map(areaService.getAreasWithNoCreature(), AreaDTO.class);
+        Assert.assertEquals(tmp, areasDTO);
+        verify(entityMapper).map(areas, AreaDTO.class);
+        verify(areaService).getAreasMostCreatures();
     }
 
     @Test
     public void getAreasFewestCreaturesTest() {
         areas = createAreasList();
-        List<AreaDTO> tmpAreasDTO = new ArrayList<>();
-        tmpAreasDTO.add(areaOneCreatureDTO1);
-        tmpAreasDTO.add(areaOneCreatureDTO2);
-        when(entityMapper.map(areaService.getAreasFewestCreatures(), AreaDTO.class)).thenReturn(tmpAreasDTO);
+        when(areaService.getAreasFewestCreatures()).thenReturn(areas);
+        when(entityMapper.map(areas, AreaDTO.class)).thenReturn(areasDTO);
         List<AreaDTO> tmp = areaFacade.getAreasFewestCreatures();
-        Assert.assertEquals(tmp.size(), 2);
-        verify(entityMapper).map(areaService.getAreasWithNoCreature(), AreaDTO.class);
+        Assert.assertEquals(tmp, areasDTO);
+        verify(entityMapper).map(areas, AreaDTO.class);
+        verify(areaService).getAreasFewestCreatures();
     }
-    
+
     @Test
     public void getCreaturesAmountTest() {
-        when(entityMapper.map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class)).thenReturn(areaDTO);        
+        when(areaService.getAreaById(id)).thenReturn(area);
+        when(entityMapper.map(area, AreaDTO.class)).thenReturn(areaDTO);
         Assert.assertEquals(areaFacade.getCreaturesAmount(areaDTO), 4);
-        verify(entityMapper).map(areaService.getAreaById(areaDTO.getId()), AreaDTO.class);
+        verify(entityMapper).map(area, AreaDTO.class);
+        verify(areaService).getAreaById(id);
     }
 
     @Test
     public void addCreatureTest() {
-        Assert.assertEquals(areaDTO.getCreatures().size(),4);
-        areaFacade.addCreature(areaDTO, createCreatureDTO(createCreature("Bran")));
-        Assert.assertEquals(areaDTO.getCreatures().size(),5);        
+        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
+        doNothing().when(areaService).updateArea(area);
+        Assert.assertEquals(areaDTO.getCreatures().size(), 4);
+        CreatureDTO tmp = createCreatureDTO(createCreature("Bran"));
+        areaFacade.addCreature(areaDTO, tmp);
+        areaFacade.addCreature(areaDTO, tmp);        
+        Assert.assertEquals(areaDTO.getCreatures().size(), 5);
+        
+        verify(entityMapper).map(areaDTO, Area.class);
+        verify(areaService).updateArea(area);
     }
 
-    @Test
-    public void removeCreatureTest() {
-        Assert.assertEquals(areaDTO.getCreatures().size(),4);
-        areaFacade.removeCreature(areaDTO, createCreatureDTO(creature));
-        Assert.assertEquals(areaDTO.getCreatures().size(),3);
-    }
-
-    @Test
-    public void containAreaCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);        
-        Assert.assertTrue(areaFacade.containAreaCreature(areaDTO, crDTO));
-    }
+//    @Test
+//    public void containAreaCreatureTest() {
+//        CreatureDTO crDTO = createCreatureDTO(creature);
+//        Assert.assertTrue(areaFacade.containAreaCreature(areaDTO, crDTO));
+//    }
 
     @Test
     public void moveCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);        
-        Assert.assertTrue(areaDTO.getCreatures().contains(crDTO));
-        areaFacade.moveCreature(crDTO, areaDTO, areaOneCreatureDTO1);
-        Assert.assertTrue(areaFacade.containAreaCreature(areaOneCreatureDTO1, crDTO));
+        CreatureDTO crDTO = createCreatureDTO(creature);
+        Area area2 = createArea(1l, "Highgarden", "House of Tyrell");
+        AreaDTO areaDTO2 = createAreaDTO(area2);
+        when(entityMapper.map(crDTO, Creature.class)).thenReturn(creature);
+        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
+        when(entityMapper.map(areaDTO2, Area.class)).thenReturn(area2);
+        when(areaService.moveCreature(creature, area, area2)).thenReturn(true);
+        Assert.assertTrue(areaFacade.moveCreature(crDTO, areaDTO, areaDTO2));
+        verify(entityMapper).map(crDTO, Creature.class);
+        verify(entityMapper).map(areaDTO, Area.class);
+        verify(entityMapper).map(areaDTO2, Area.class);
+        verify(areaService).moveCreature(creature, area, area2);
     }
 
     private AreaDTO createAreaDTO(Area area) {
@@ -253,15 +254,14 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         tmp.setId((area.getId()));
         tmp.setName(area.getName());
         tmp.setDescription(area.getDescription());
-        Set<CreatureDTO> creaturesSet = new HashSet<>();        
-        for(Creature cr : area.getCreatures()){
-            CreatureDTO crDTO = createCreatureDTO(cr);
+        List<CreatureDTO> creaturesSet = new ArrayList<>();
+        area.getCreatures().stream().map((cr) -> createCreatureDTO(cr)).forEach((crDTO) -> {
             creaturesSet.add(crDTO);
-        }
-        tmp.setCreatures(creaturesSet);                  
+        });
+        tmp.setCreatures(creaturesSet);
         return tmp;
     }
-    
+
     private CreatureDTO createCreatureDTO(Creature cr) {
         CreatureDTO tmp = new CreatureDTO();
         tmp.setName(cr.getName());
@@ -285,7 +285,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     private List<Area> createAreasList() {
         areas = new ArrayList<>();
         areasDTO = new ArrayList<>();
-        
+
         Long id2 = 2l;
         Area ar2 = createArea(id2, "Wall", "Cold one");
         Long id3 = 3l;
@@ -294,7 +294,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         Area ar4 = createArea(id4, "Bravos", "On the south");
         Long id5 = 5l;
         Area ar5 = createArea(id5, "Meereen", "With the sea");
-        
+
         ar2.addCreature(createCreature("Jon Snow"));
 
         ar3.addCreature(createCreature("Jamie Lannister"));
@@ -314,7 +314,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
 
         areaOneCreatureDTO1 = createAreaDTO(ar2);
         areaOneCreatureDTO2 = createAreaDTO(ar4);
-        
+
         areasDTO.add(areaDTO);
         areasDTO.add(areaOneCreatureDTO1);
         areasDTO.add(createAreaDTO(ar3));

@@ -12,19 +12,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 /**
  * This class implements the AreaFacade interface.
- * 
+ *
  * @author Martin Zboril
  */
 @Service
 @Transactional
-public class AreaFacadeImpl implements AreaFacade{
+public class AreaFacadeImpl implements AreaFacade {
 
     @Autowired
     private AreaService areaService;
-
     @Autowired
     private EntityMapper entityMapper;
 
@@ -43,16 +41,6 @@ public class AreaFacadeImpl implements AreaFacade{
     @Override
     public List<AreaDTO> getAllAreas() {
         return entityMapper.map(areaService.findAllAreas(), AreaDTO.class);
-    }
-
-    @Override
-    public List<String> getAreasNames() {
-        List<String> names = new ArrayList<>();
-        List<AreaDTO> areas = entityMapper.map(areaService.findAllAreas(), AreaDTO.class);
-        for(AreaDTO area : areas){
-            names.add(area.getName());
-        }
-        return names;
     }
 
     @Override
@@ -91,49 +79,34 @@ public class AreaFacadeImpl implements AreaFacade{
     }
 
     @Override
-    public void addCreature(AreaDTO area, CreatureDTO creature) {                        
-        area.addCreature(creature);        
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);                
-    }
-
-    @Override
-    public Long updateArea(AreaDTO area) {
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);
-        return ar.getId();
-    }
-
-    @Override
-    public void removeCreature(AreaDTO area, CreatureDTO creature) {        
-        area.removeCreature(creature);
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);     
-    }
-
-    @Override
-    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
-        if(area.getCreatures().contains(creature)){
-            return true;
+    public void addCreature(AreaDTO area, CreatureDTO creature){
+         if(creature != null){
+            if(area.getCreatures().contains(creature) == false){
+            area.addCreature(creature);
+            Area ar = entityMapper.map(area, Area.class);
+            areaService.updateArea(ar);
+            }
+         }            
         }
-        return false;
-    }
+    
+//    @Override
+//    public void removeCreature(AreaDTO area, CreatureDTO creature) {
+//        area.removeCreature(creature);
+//        Area ar = entityMapper.map(area, Area.class);
+//        areaService.updateArea(ar);
+//    }
+//
+//    @Override
+//    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
+//        if (area.getCreatures().contains(creature)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
-    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {              
-        return areaService.moveCreature( entityMapper.map(creature, Creature.class),entityMapper.map(fromArea, Area.class), entityMapper.map(toArea, Area.class));
+    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {
+        return areaService.moveCreature(entityMapper.map(creature, Creature.class), entityMapper.map(fromArea, Area.class), entityMapper.map(toArea, Area.class));
 
-    }   
-   
+    }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -1,20 +1,20 @@
 package cz.muni.fi.pa165.dto;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * This class is a Data Transfer Object of Area.
- * 
+ *
  * @author Martin Zboril
  */
 public class AreaDTO {
 
-    Long id;
-    String name;
-    String description;
-    Set<CreatureDTO> creatures = new HashSet<CreatureDTO>();
+    private Long id;
+    private String name;
+    private String description;
+    private List<CreatureDTO> creatures = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,22 +40,22 @@ public class AreaDTO {
         this.description = description;
     }
 
-    public Set<CreatureDTO> getCreatures() {
-        return Collections.unmodifiableSet(creatures);
+    public List<CreatureDTO> getCreatures() {
+        return creatures;
     }
 
-    public void setCreatures(Set<CreatureDTO> creatures) {
+    public void setCreatures(List<CreatureDTO> creatures) {
         this.creatures = creatures;
     }
-    
-    public void addCreature(CreatureDTO creature){
+
+    public void addCreature(CreatureDTO creature) {
         creatures.add(creature);
-    }        
-    
-    public void removeCreature(CreatureDTO creature){
+    }
+
+    public void removeCreature(CreatureDTO creature) {
         creatures.remove(creature);
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -64,7 +64,6 @@ public class AreaDTO {
                 + ((creatures == null) ? 0 : creatures.hashCode());
         result = prime * result
                 + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
@@ -93,13 +92,6 @@ public class AreaDTO {
                 return false;
             }
         } else if (!description.equals(other.description)) {
-            return false;
-        }
-        if (id == null) {
-            if (other.id != null) {
-                return false;
-            }
-        } else if (!id.equals(other.id)) {
             return false;
         }
         if (name == null) {

@@ -1,12 +1,7 @@
 package cz.muni.fi.pa165;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.NoResultException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -15,15 +10,11 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
 import cz.muni.fi.pa165.dao.AreaDao;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
-import cz.muni.fi.pa165.entity.UserSystem;
-import cz.muni.fi.pa165.entity.Weapon;
-import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.CreatureType;
-import cz.muni.fi.pa165.enums.WeaponType;
+
 
 /**
  * This class test functionality of methods of Area Data Access Object class.

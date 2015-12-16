@@ -28,13 +28,10 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
 
     @Autowired
     private EntityMapper entityMapper;
-
     @Autowired
     private WeaponEfficiencyService weaponEfficiencyService;
-
     @Autowired
     private CreatureService creatureService;
-
     @Autowired
     private WeaponService weaponService;
 
@@ -80,5 +77,12 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
         Weapon weapon = entityMapper.map(weaponDTO, Weapon.class);
         return entityMapper.map(weaponEfficiencyService.
                 findMostVulnerableCreaturesToWeapon(weapon), CreatureDTO.class);
+    }
+
+    @Override
+    public List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfWeapon(WeaponDTO weaponDTO) {
+        Weapon weapon = entityMapper.map(weaponDTO, Weapon.class);
+        return entityMapper.map(weaponEfficiencyService.
+                findAllWeaponEfficienciesOfWeapon(weapon), WeaponEfficiencyDTO.class);
     }
 }

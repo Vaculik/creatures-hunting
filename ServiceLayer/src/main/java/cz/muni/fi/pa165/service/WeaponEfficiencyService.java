@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.service;
 
-
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.entity.Weapon;
 import cz.muni.fi.pa165.entity.WeaponEfficiency;
@@ -8,7 +7,8 @@ import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import java.util.List;
 
 /**
- * The interface represents service layer operations on objects of the class WeaponEfficiency.
+ * The interface represents service layer operations on objects of the class
+ * WeaponEfficiency.
  *
  * @author Karel Vaculik
  */
@@ -28,13 +28,6 @@ public interface WeaponEfficiencyService {
      * @param weaponEfficiency the WeaponEfficiency to be created
      */
     void createWeaponEfficiency(WeaponEfficiency weaponEfficiency);
-
-    /**
-     * Update the WeaponEfficiency entity.
-     *
-     * @param weaponEfficiency the WeaponEfficiency to be updated
-     */
-    void updateWeaponEfficiency(WeaponEfficiency weaponEfficiency);
 
     /**
      * Delete the WeaponEfficiency.
@@ -65,4 +58,12 @@ public interface WeaponEfficiencyService {
      * @return list of the most vulnerable Creatures
      */
     List<Creature> findMostVulnerableCreaturesToWeapon(Weapon weapon);
+
+    /**
+     * Find all WeaponEfficiencies, which belongs to the given Weapon.
+     *
+     * @param weapon the Weapon
+     * @return list of the WeaponEfficiencies
+     */
+    List<WeaponEfficiency> findAllWeaponEfficienciesOfWeapon(Weapon weapon);
 }

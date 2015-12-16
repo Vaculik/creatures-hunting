@@ -7,34 +7,34 @@ import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
 public interface UserSystemFacade {
-	
+
     /**
      * This method creates a user.
      *
      * @param user UserSystemDTO to be created
      */
-    public void createUser(UserSystemDTO user);
-    
+    void createUser(UserSystemDTO user);
+
     /**
      * This method deletes a user.
      *
-     * @param area user to be deleted
+     * @param user user to be deleted
      */
-    public void deleteUser(UserSystemDTO user);
-    
+    void deleteUser(UserSystemDTO user);
+
     /**
      * This method updates a user.
      *
-     * @param area UserSystemDTO to be updated
+     * @param user UserSystemDTO to be updated
      */
-    public void updateUser(UserSystemDTO user);
-    
+    void updateUser(UserSystemDTO user);
+
     /**
      * Find all Users.
      *
      * @return list of the results
      */
-    public List<UserSystemDTO> getAllUsers();
+    List<UserSystemDTO> getAllUsers();
 
     /**
      * Find all users of given type.
@@ -42,23 +42,23 @@ public interface UserSystemFacade {
      * @param type the type
      * @return list of the results
      */
-    public List<UserSystemDTO> getUsersOfType(UserType type);
-    
+    List<UserSystemDTO> getUsersOfType(UserType type);
+
     /**
      * Find all users of given sex.
      *
-     * @param type the type
+     * @param sex the type
      * @return list of the results
      */
-    public List<UserSystemDTO> getUsersOfSex(SexType sex);
-    
+    List<UserSystemDTO> getUsersOfSex(SexType sex);
+
     /**
      * Find a User by id.
      *
      * @param id id of the UserSystem
      * @return the found UserSystemDTO or null if doesn't exist
      */
-    public UserSystemDTO getUserById(Long id);
+    UserSystemDTO getUserById(Long id);
 
     /**
      * Find a User by name.
@@ -66,5 +66,5 @@ public interface UserSystemFacade {
      * @param name name of the UserSystem
      * @return the found UserSystemDTO or null if doesn't exist
      */
-    public UserSystemDTO getUserByName(String name);
+    UserSystemDTO getUserByName(String name);
 }

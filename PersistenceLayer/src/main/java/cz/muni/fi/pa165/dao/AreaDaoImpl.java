@@ -4,10 +4,8 @@
  */
 package cz.muni.fi.pa165.dao;
 
-import cz.muni.fi.pa165.DatabaseCreatureException;
+import cz.muni.fi.pa165.exceptions.DatabaseCreatureException;
 import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.UserSystem;
-
 import java.util.List;
 
 import javax.persistence.TypedQuery;
@@ -16,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * This class represents an implementation of Area Data Access Object interface.
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Repository;
  * @author Martin Zboril
  */
 @Repository
+@Transactional
 public class AreaDaoImpl implements AreaDao {
 
     @PersistenceContext
@@ -32,7 +32,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void create(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
             em.persist(area);
@@ -44,10 +44,10 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void delete(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
-            em.remove(area);
+            em.remove(em.contains(area) ? area : em.merge(area));
         } catch (Exception ex) {
             throw new DatabaseCreatureException("Error while deleting area.  Error: " + ex.getMessage());
         }
@@ -56,7 +56,7 @@ public class AreaDaoImpl implements AreaDao {
     @Override
     public void update(Area area) {
         if (area == null) {
-            throw new NullPointerException("Input Are is null");
+            throw new NullPointerException("Input Area is null");
         }
         try {
             em.merge(area);

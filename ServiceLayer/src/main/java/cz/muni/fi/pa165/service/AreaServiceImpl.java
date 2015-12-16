@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.service;
 
-
 import cz.muni.fi.pa165.dao.AreaDao;
 import java.util.List;
 import cz.muni.fi.pa165.service.exception.AreaServiceException;
@@ -12,15 +11,15 @@ import java.util.ArrayList;
 
 /**
  * This class implements AreaService interface.
- * 
+ *
  * @author Martin Zboril
  */
 @Service
-public class AreaServiceImpl implements AreaService{
+public class AreaServiceImpl implements AreaService {
 
     @Autowired
-   private AreaDao areaDao;
-    
+    private AreaDao areaDao;
+
     @Override
     public void createArea(Area area) {
         areaDao.create(area);
@@ -52,17 +51,17 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public boolean moveCreature(Creature cr, Area fromAr, Area toAr){
-        if(cr == null || fromAr == null || toAr == null){
+    public boolean moveCreature(Creature cr, Area fromAr, Area toAr) {
+        if (cr == null || fromAr == null || toAr == null) {
             throw new IllegalArgumentException("Creature or one of the Areas is null");
         }
-        if(!fromAr.getCreatures().contains(cr)){
+        if (!fromAr.getCreatures().contains(cr)) {
             throw new AreaServiceException("The area does not contain the creature");
         }
-        
+
         fromAr.removeCreature(cr);
-        toAr.addCreature(cr);     
-        
+        toAr.addCreature(cr);
+
         areaDao.update(fromAr);
         areaDao.update(toAr);
         return true;
@@ -71,24 +70,23 @@ public class AreaServiceImpl implements AreaService{
     @Override
     public List<Area> getAreasWithNoCreature() {
         List<Area> result = new ArrayList<>();
-       
-        for(Area ar : areaDao.findAll()){
-            if(ar.getCreatures().isEmpty()){
+
+        for (Area ar : areaDao.findAll()) {
+            if (ar.getCreatures().isEmpty()) {
                 result.add(ar);
             }
-        }                
+        }
         return result;
     }
 
     @Override
     public List<Area> getAreasWithAnyCreature() {
         List<Area> result = new ArrayList<>();
-       
-        for(Area ar : areaDao.findAll()){
-            if(!ar.getCreatures().isEmpty()){
-                result.add(ar);
-            }
-        }                
+
+        for (Area ar : areaDao.findAll()) {
+            if (!ar.getCreatures().isEmpty()) {
+                result.add(ar);                          }
+        }
         return result;
     }
 
@@ -96,16 +94,16 @@ public class AreaServiceImpl implements AreaService{
     public List<Area> getAreasMostCreatures() {
         List<Area> result = new ArrayList<>();
         Integer tmpSize = Integer.MIN_VALUE;
-        for(Area ar : areaDao.findAll()){
-            if(ar.getCreatures().size()==tmpSize){                    
+        for (Area ar : areaDao.findAll()) {
+            if (ar.getCreatures().size() == tmpSize) {
                 result.add(ar);
             }
-            if(ar.getCreatures().size()>tmpSize){                    
+            if (ar.getCreatures().size() > tmpSize) {
                 tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }
-        }                
+        }
         return result;
     }
 
@@ -113,17 +111,29 @@ public class AreaServiceImpl implements AreaService{
     public List<Area> getAreasFewestCreatures() {
         List<Area> result = new ArrayList<>();
         Integer tmpSize = Integer.MAX_VALUE;
-        for(Area ar : areaDao.findAll()){
-            if(ar.getCreatures().size()==tmpSize){                    
+        for (Area ar : areaDao.findAll()) {
+            if (ar.getCreatures().size() == tmpSize) {
                 result.add(ar);
             }
-            if(ar.getCreatures().size()<tmpSize){                    
+            if (ar.getCreatures().size() < tmpSize) {
                 tmpSize = ar.getCreatures().size();
                 result.clear();
                 result.add(ar);
             }
-        }                
+        }
         return result;
-    }    
+    }
+
+//    @Override
+//    public void addCreature(Area area, Creature creature) {
+//        if(creature != null){
+//            if(area.getCreatures().contains(creature) == false){
+//                area.addCreature(creature);
+//                areaDao.update(area);
+//            }
+//                
+//        }
+//    }
+    
     
 }

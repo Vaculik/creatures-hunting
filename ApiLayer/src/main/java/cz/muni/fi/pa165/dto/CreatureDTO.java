@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.dto;
 
-
 import cz.muni.fi.pa165.enums.CreatureType;
 
 /**
@@ -16,7 +15,6 @@ public class CreatureDTO {
     private Integer weight;
     private CreatureType type;
     private String description;
-
 
     public void setId(Long id) {
         this.id = id;
@@ -69,14 +67,24 @@ public class CreatureDTO {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CreatureDTO)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CreatureDTO)) {
+            return false;
+        }
 
         CreatureDTO that = (CreatureDTO) o;
 
-        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) return false;
-        if (getHeight() != null ? !getHeight().equals(that.getHeight()) : that.getHeight() != null) return false;
-        if (getWeight() != null ? !getWeight().equals(that.getWeight()) : that.getWeight() != null) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null) {
+            return false;
+        }
+        if (getHeight() != null ? !getHeight().equals(that.getHeight()) : that.getHeight() != null) {
+            return false;
+        }
+        if (getWeight() != null ? !getWeight().equals(that.getWeight()) : that.getWeight() != null) {
+            return false;
+        }
         return getType() == that.getType();
 
     }
@@ -92,14 +100,12 @@ public class CreatureDTO {
 
     @Override
     public String toString() {
-        return "CreatureDTO{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", height=" + height +
-                ", weight=" + weight +
-                ", type=" + type +
-                '}';
+        return "CreatureDTO{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", height=" + height
+                + ", weight=" + weight
+                + ", type=" + type
+                + '}';
     }
 }
-
-

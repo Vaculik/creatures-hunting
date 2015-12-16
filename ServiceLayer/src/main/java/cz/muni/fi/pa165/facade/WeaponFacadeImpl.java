@@ -22,10 +22,9 @@ public class WeaponFacadeImpl implements WeaponFacade {
 
     @Autowired
     private WeaponService weaponService;
-    
     @Autowired
     private EntityMapper entityMapper;
-    
+
     @Override
     public WeaponDTO getWeaponById(Long id) {
         return entityMapper.map(weaponService.getWeaponById(id), WeaponDTO.class);
