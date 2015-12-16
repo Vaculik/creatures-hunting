@@ -32,5 +32,22 @@
             </tr>
             </tbody>
         </table>
+        <br>
+        <table class="table">
+            <caption>All {{creature.type}} creatures</caption>
+            <col width="40%">
+            <thread>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr ng-repeat="creature in typeCreatures">
+                <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
+                <td>{{creature.description}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
