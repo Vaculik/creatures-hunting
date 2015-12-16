@@ -16,19 +16,12 @@
 
     <script src="js/creaturesHuntingApp.js"></script>
 
-    <style>
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #f5f5f5;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-static-top">
+<div id="wrapper">
+<nav id="navbar" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -55,7 +48,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div id="content" class="container">
     <div ng-app="creaturesHuntingApp">
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
@@ -75,12 +68,11 @@
         </div>
     </div>
 </div>
-
-<footer class="footer">
+<footer id="footer" class="footer">
     <div class="container">
         <p class="text-muted">&copy;&nbsp;Masaryk University</p>
     </div>
 </footer>
-
+</div>
 </body>
 </html>
