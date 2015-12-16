@@ -7,7 +7,7 @@
         <p class="help-block" ng-show="form.name.$error.required">Name is required</p>
         <p class="help-block" ng-show="form.name.$error.minlength">Name must be at least 3 characters</p>
     </div>
-    <div class="form-group" ng-class="{'has-error': !form.name.$valid}">
+    <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
         <label for="type">Type:</label>
         <select class="form-control" name="type" ng-model="creature.type" id="type" required>
             <option ng-repeat="type in types">{{type}}</option>

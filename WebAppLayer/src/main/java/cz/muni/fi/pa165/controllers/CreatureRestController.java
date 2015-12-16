@@ -51,9 +51,30 @@ public class CreatureRestController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> getAllCreatures() {
-        logger.debug("GET all creatures.");
-        List<CreatureDTO> creatureDTOs = creatureFacade.getAllCreatures();
+    public HttpEntity<Resources<CreatureResource>> getAllCreatures(@RequestParam(value="view", defaultValue = "all") String viewType) {
+        List<CreatureDTO> creatureDTOs;
+        switch(viewType) {
+            case "all": {
+                logger.debug("GET all creatures.");
+                creatureDTOs = creatureFacade.getAllCreatures();
+                break;
+            }
+            case "highest": {
+                logger.debug("GET creatures with max height.");
+                creatureDTOs = creatureFacade.getCreaturesWithMaxHeight();
+                break;
+            }
+            case "heaviest": {
+                logger.debug("GET creatures with max weight.");
+                creatureDTOs = creatureFacade.getCreaturesWithMaxWeight();
+                break;
+            }
+            default: {
+                String msg = "View request parameter value=" + viewType + " is invalid.";
+                logger.error(msg);
+                throw new InvalidRequestFormatException(msg);
+            }
+        }
         Link createLink = linkTo(CreatureRestController.class).slash("create").withRel("create");
         Link maxHeightLink = linkTo(CreatureRestController.class).slash("max-height").withRel("max-height");
         Link maxWeightLink = linkTo(CreatureRestController.class).slash("max-weight").withRel("max-weight");
@@ -124,30 +145,6 @@ public class CreatureRestController {
         Resources<CreatureResource> creatureResources = new Resources<>(
                 creatureResourceAssembler.toResources(creatureDTOs),
                 linkTo(this.getClass()).slash("type").slash(type).withSelfRel());
-
-        return new ResponseEntity<>(creatureResources, HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/max-height", method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> getMaxHeightCreatures() {
-        logger.debug("GET max height creatures");
-        List<CreatureDTO> creatureDTOs = creatureFacade.getCreaturesWithMaxHeight();
-        Resources<CreatureResource> creatureResources = new Resources<>(
-                creatureResourceAssembler.toResources(creatureDTOs),
-                linkTo(this.getClass()).slash("max-height").withSelfRel());
-
-        return new ResponseEntity<>(creatureResources, HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/max-weight", method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> getMaxWeightCreatures() {
-        logger.debug("GET max weight creatures");
-        List<CreatureDTO> creatureDTOs = creatureFacade.getCreaturesWithMaxWeight();
-        Resources<CreatureResource> creatureResources = new Resources<>(
-                creatureResourceAssembler.toResources(creatureDTOs),
-                linkTo(this.getClass()).slash("max-weight").withSelfRel());
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }

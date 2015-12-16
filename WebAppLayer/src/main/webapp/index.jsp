@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#/home">Home</a></li>
-                <li><a href="#/creatures">Creatures</a></li>
+                <li><a href="#/creatures/all">Creatures</a></li>
                 <li><a href="#/weapons">Weapons</a></li>
                 <li><a href="#/areas">Areas</a></li>
                 <li><a href="#/users">Users</a></li>

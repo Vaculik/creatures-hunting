@@ -9,10 +9,8 @@ var controllers = angular.module('controllers', []);
 app.config(['$routeProvider', function($routeProvider) {
    $routeProvider.
        when('/home', {templateUrl: 'pages/home.html'}).
-       when('/creatures', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
-       when('/creatures/highest', {templateUrl: 'pages/creatures.html', controller: 'HighestCreaturesController'}).
-       when('/creatures/heaviest', {templateUrl: 'pages/creatures.html', controller: 'HeaviestCreaturesController'}).
-       when('/creatures/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
+       when('/creatures/:viewType', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
+       when('/creature/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
        when('/creature/:creatureId', {
            templateUrl: 'pages/particular/creature.html',
            controller: 'ParticularCreatureController'}).
@@ -37,31 +35,21 @@ app.run(function ($rootScope) {
 
 
 
-controllers.controller('CreaturesController', function($http, $scope) {
-    console.log('GET all creatures request');
-    $http.get('/creatures-hunting/rest/creatures').
+controllers.controller('CreaturesController', function($http, $routeParams, $scope) {
+    var viewType = $routeParams.viewType;
+    console.log('GET creatures request viewType=' + viewType);
+    $http.get('/creatures-hunting/rest/creatures/?view=' + viewType).
         then(function (response) {
             $scope.creatures = response.data['_embedded']['creatures'];;
         });
+    $scope.title = "All creatures";
+    if (viewType == "highest") {
+        $scope.title = "The highest creatures";
+    } else if (viewType == "heaviest") {
+        $scope.title = "The heaviest creatures";
+    }
 });
 
-
-controllers.controller('HighestCreaturesController', function($http, $scope) {
-    console.log('GET the highest creatures request');
-    $http.get('/creatures-hunting/rest/creatures/max-height').
-        then(function(response) {
-            $scope.creatures = response.data['_embedded']['creatures'];;
-        });
-});
-
-
-controllers.controller('HeaviestCreaturesController', function($http, $scope) {
-    console.log('GET the heaviest creatures request');
-    $http.get('/creatures-hunting/rest/creatures/max-weight').
-        then(function(response) {
-            $scope.creatures = response.data['_embedded']['creatures'];;
-        });
-});
 
 
 controllers.controller('ParticularCreatureController', function ($http, $rootScope, $routeParams, $scope) {
@@ -86,20 +74,3 @@ controllers.controller('NewCreatureController', function($http, $scope) {
     console.log('New creature controller');
     $scope.types=['VAMPIRE', 'BEAST', 'UNDEAD'];
 })
-
-
-
-
-
-
-
-
-
-
-//
-//controllers.controller('CreaturesController', function ($scope, $http) {
-//    $http.get('/creatures-hunting/rest/creatures/').then(function (response) {
-//        var creatures = response.data['_embedded']['creatures'];
-//        $scope.creatures = creatures;
-//    });
-//});
