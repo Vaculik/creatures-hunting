@@ -41,7 +41,7 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         logger.debug("Loading data");
         Creature dracula = loadCreature("Dracula", 180, 90, CreatureType.VAMPIRE, "Lord of Transylvania.");
         Creature jacobBlack = loadCreature("Jacob Black", 175, 80, CreatureType.BEAST, "Werewolf from Twilight.");
-        Creature frankenstein = loadCreature("Frankenstein", 190, 100,
+        Creature frankenstein = loadCreature("Frankenstein's monster", 190, 100,
                 CreatureType.UNDEAD, "Created from scientific experiment.");
 
         Weapon knife = loadWeapon("Knife", WeaponType.MELEE, 0, AmmoType.NONE, "Short knife good for cutting meal");

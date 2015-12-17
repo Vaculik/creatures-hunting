@@ -6,26 +6,230 @@
 var app = angular.module('creaturesHuntingApp', ['ngRoute', 'controllers']);
 var controllers = angular.module('controllers', []);
 
-app.config(['$routeProvider', function($routeProvider) {
-   $routeProvider.
-       when('/home', {templateUrl: 'pages/home.html'}).
-       when('/creatures', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
-       when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
-       when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
-       when('/users', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
-       otherwise({redirectTo: '/home'})
-}]);
+app.config(['$routeProvider', function ($routeProvider) {
+        $routeProvider.
+                when('/home', {templateUrl: 'pages/home.html'}).
+                when('/creatures/:viewType', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
+                when('/creature/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
+                when('/creature/:creatureId', {
+                    templateUrl: 'pages/particular/creature.html',
+                    controller: 'ParticularCreatureController'}).
+                when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
+                when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
+                when('/areas/nocreature', {templateUrl: 'pages/areas.html', controller: 'NoCreatureAreaController'}).
+                when('/areas/anycreature', {templateUrl: 'pages/areas.html', controller: 'AnyCreatureAreaController'}).
+                when('/areas/mostcreatures', {templateUrl: 'pages/areas.html', controller: 'MostCreaturesAreaController'}).
+                when('/areas/fewestcreatures', {templateUrl: 'pages/areas.html', controller: 'FewestCreaturesAreaController'}).
+                when('/areas/new', {templateUrl: 'pages/new/new-area.html', controller: 'NewAreaController'}).                
+                when('/area/:areaId', {
+                    templateUrl: 'pages/particular/area.html',
+                    controller: 'ParticularAreaController'}).
+                when('/users', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
+                otherwise({redirectTo: '/home'});
+    }]);
 
 
-//app.run(function ($rootScope) {
-//    $rootScope.hideSuccessAlert = function () {
-//        $rootScope.successAlert = undefined;
-//    };
-//    $rootScope.hideWarningAlert = function () {
-//        $rootScope.warningAlert = undefined;
-//    };
-//    $rootScope.hideErrorAlert = function () {
-//        $rootScope.errorAlert = undefined;
-//    };
-//});
+app.run(function ($rootScope) {
+    $rootScope.hideSuccessAlert = function () {
+        $rootScope.successAlert = undefined;
+    };
+    $rootScope.hideWarningAlert = function () {
+        $rootScope.warningAlert = undefined;
+    };
+    $rootScope.hideErrorAlert = function () {
+        $rootScope.errorAlert = undefined;
+    };
+});
 
+
+
+controllers.controller('CreaturesController', function ($http, $routeParams, $scope) {
+    var viewType = $routeParams.viewType;
+    console.log('GET creatures request viewType=' + viewType);
+    $http.get('/creatures-hunting/rest/creatures/?view=' + viewType).
+            then(function (response) {
+                $scope.creatures = response.data['_embedded']['creatures'];
+            });
+    $scope.title = "All creatures";
+    if (viewType === "highest") {
+        $scope.title = "The highest creatures";
+    } else if (viewType === "heaviest") {
+        $scope.title = "The heaviest creatures";
+    }
+});
+
+
+var creaturesOfType = function (type, $http, $scope) {
+    console.log('GET creatures of type=' + type);
+    $http.get('/creatures-hunting/rest/creatures/type/' + type).
+            then(function (response) {
+                $scope.typeCreatures = response.data['_embedded']['creatures'];
+            });
+};
+
+
+
+controllers.controller('ParticularCreatureController', function ($http, $rootScope, $location, $routeParams, $scope) {
+    var creatureId = $routeParams.creatureId;
+    console.log('GET particular creature with id=' + creatureId);
+    $http.get('/creatures-hunting/rest/creatures/' + creatureId).
+            then(function (response) {
+                $scope.creature = response.data;
+                creaturesOfType(response.data.type, $http, $scope);
+                console.log($scope.typeCreatures);
+            },
+                    function error(response) {
+                        $rootScope.warningAlert = 'Problem occured when load creature ' + response.data.message;
+                    });
+
+    console.log('GET most effective weapons to creature with id=' + creatureId);
+    $http.get('/creatures-hunting/rest/weapon-efficiencies/most-effective-to/creature/' + creatureId).
+            then(function (response) {
+                $scope.mostEffective = response.data['_embedded']['weapons'];
+            });
+
+    $scope.delete = function (id) {
+        console.log('Delete creature with id=' + id);
+        $http.delete('/creatures-hunting/rest/creatures/' + id).
+                then(function success(response) {
+                    console.log('Creature with id=' + id + ' was deleted.');
+                    $rootScope.succesAllert = 'Creature was deleted';
+                    $location.path('/creatures/all');
+                }, function error(response) {
+                    console.log('Error when deleting creature with id=' + id);
+                    console.log(response);
+                    $rootScope.errorAlert('Problem has occured when deleting creature!');
+                });
+    };
+});
+
+
+controllers.controller('NewCreatureController', function ($http, $rootScope, $location, $scope) {
+    console.log('New creature controller');
+    $scope.types = ['VAMPIRE', 'BEAST', 'UNDEAD'];
+    $scope.creature = {
+        'name': '',
+        'height': 0,
+        'weight': 0,
+        'type': $scope.types[0],
+        'description': ''
+    };
+    $scope.create = function (creature) {
+        console.log('Create creature: ' + creature.name);
+        $http.post('/creatures-hunting/rest/creatures/create', creature).
+                then(function success(response) {
+                    $rootScope.succesAllert = 'The new creature was created.';
+                    $location.path('/creatures/all');
+                }, function error(response) {
+                    console.log('Error when creating new creature');
+                    console.log(response);
+                    $rootScope.errorAlert = 'Problem has occured, cannot create new creature!';
+                });
+    };
+});
+
+controllers.controller('AreasController', function ($http, $scope) {
+    console.log('GET all areas request');
+    $http.get('/creatures-hunting/rest/areas').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];
+                $scope.page = "Areas";
+                ;
+            });
+});
+
+controllers.controller('NoCreatureAreaController', function ($http, $scope) {
+    console.log('GET the areas with no creature request');
+    $http.get('/creatures-hunting/rest/areas/no-creature').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];
+                $scope.page = "Areas with no creature";
+                ;
+            });
+});
+
+
+controllers.controller('AnyCreatureAreaController', function ($http, $scope) {
+    console.log('GET the areas with any creature request');
+    $http.get('/creatures-hunting/rest/areas/any-creature').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];
+                $scope.page = "Areas with any creature";
+                ;
+            });
+});
+
+controllers.controller('MostCreaturesAreaController', function ($http, $scope) {
+    console.log('GET the areas with most creatures request');
+    $http.get('/creatures-hunting/rest/areas/most-creatures').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];
+                $scope.page = "Areas with the most creatures";
+                ;
+            });
+});
+
+controllers.controller('FewestCreaturesAreaController', function ($http, $scope) {
+    console.log('GET the areas with fewest creatures request');
+    $http.get('/creatures-hunting/rest/areas/fewest-creatures').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];
+                $scope.page = "Areas with the fewest creatures";
+                ;
+            });
+});
+
+controllers.controller('ParticularAreaController', function ($http, $rootScope, $routeParams,  $location,$scope) {
+    var id = $routeParams.areaId;
+    console.log('GET particular area with id=' + id);
+    $http.get('/creatures-hunting/rest/areas/' + id).
+            then(function (response) {
+                $scope.area = response.data;
+                ;
+            },
+                    function error(response) {
+                        $rootScope.warningAlert = 'Problem occured when load area ' + response.data.message;
+                    });
+    console.log('GET creatures to area with id=' + id);
+    $http.get('/creatures-hunting/rest/areas/' + id).
+            then(function (response) {
+                $scope.creatures = response.data['creatures'];                
+                ;
+            });
+            
+    $scope.delete = function (id) {
+        console.log('Delete area with id=' + id);
+        $http.delete('/creatures-hunting/rest/areas/' + id).
+                then(function success(response) {
+                    console.log('Area with id=' + id + ' was deleted.');
+                    $rootScope.succesAllert = 'Area was deleted';
+                    $location.path('/areas');
+                }, function error(response) {
+                    console.log('Error when deleting area with id=' + id);
+                    console.log(response);
+                    $rootScope.errorAlert('Problem has occured when deleting area!');
+                });
+                
+    };
+
+});
+
+controllers.controller('NewAreaController', function ($http, $rootScope, $location, $scope) {
+    console.log('New area controller');
+    $scope.area = {
+        'name': '',       
+        'description': ''
+    };
+    $scope.create = function (area) {
+        console.log('Create area: ' + area.name);
+        $http.post('/creatures-hunting/rest/areas/create', area).
+                then(function success(response) {
+                    $rootScope.succesAllert = 'The new area was created.';
+                    $location.path('/areas');
+                }, function error(response) {
+                    console.log('Error when creating new area');
+                    console.log(response);
+                    $rootScope.errorAlert = 'Problem has occured, cannot create new area!';
+                });
+    };
+});

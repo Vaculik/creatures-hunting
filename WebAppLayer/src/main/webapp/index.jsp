@@ -16,44 +16,39 @@
 
     <script src="js/creaturesHuntingApp.js"></script>
 
-
-
-
-    <style>
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #f5f5f5;
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-<nav class="navbar navbar-inverse navbar-static-top">
+<div id="wrapper">
+<nav id="navbar" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <a class="navbar-brand" href="#/home">Creatures Hunting</a>
         </div>
-        <div>
+        <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="#/home">Home</a></li>
-                <li><a href="#/creatures">Creatures</a></li>
+                <li><a href="#/creatures/all">Creatures</a></li>
                 <li><a href="#/weapons">Weapons</a></li>
                 <li><a href="#/areas">Areas</a></li>
                 <li><a href="#/users">Users</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span>Login</a>
+                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<div class="container">
+<div id="content" class="container">
     <div ng-app="creaturesHuntingApp">
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
@@ -68,18 +63,16 @@
             <button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"> <span aria-hidden="true">&times;</span></button>
             <strong>Success !</strong> <span>{{successAlert}}</span>
         </div>
+
         <div ng-view>
-            <p>Cena: {{5+5}}</p>
         </div>
     </div>
 </div>
-
-<footer class="footer">
+<footer id="footer" class="footer">
     <div class="container">
         <p class="text-muted">&copy;&nbsp;Masaryk University</p>
     </div>
 </footer>
-
-
+</div>
 </body>
 </html>
