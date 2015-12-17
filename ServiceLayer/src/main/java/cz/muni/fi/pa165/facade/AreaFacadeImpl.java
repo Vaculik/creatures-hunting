@@ -64,11 +64,6 @@ public class AreaFacadeImpl implements AreaFacade {
     }
 
     @Override
-    public int getCreaturesAmount(AreaDTO ar) {
-        return entityMapper.map(areaService.getAreaById(ar.getId()), AreaDTO.class).getCreatures().size();
-    }
-
-    @Override
     public AreaDTO getById(Long id) {
         return entityMapper.map(areaService.getAreaById(id), AreaDTO.class);
     }

@@ -2,7 +2,6 @@
  * Created by vaculik on 14.12.15.
  */
 
-
 var app = angular.module('creaturesHuntingApp', ['ngRoute', 'controllers']);
 var controllers = angular.module('controllers', []);
 
@@ -24,6 +23,7 @@ app.config(['$routeProvider', function ($routeProvider) {
                 when('/area/:areaId', {
                     templateUrl: 'pages/particular/area.html',
                     controller: 'ParticularAreaController'}).
+                
                 when('/users', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
                 otherwise({redirectTo: '/home'});
     }]);
@@ -40,7 +40,6 @@ app.run(function ($rootScope) {
         $rootScope.errorAlert = undefined;
     };
 });
-
 
 
 controllers.controller('CreaturesController', function ($http, $routeParams, $scope) {
@@ -133,7 +132,7 @@ controllers.controller('AreasController', function ($http, $scope) {
     $http.get('/creatures-hunting/rest/areas').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
-                $scope.page = "Areas";
+                $scope.page = "Areas";                                
                 ;
             });
 });
@@ -181,6 +180,9 @@ controllers.controller('FewestCreaturesAreaController', function ($http, $scope)
 
 controllers.controller('ParticularAreaController', function ($http, $rootScope, $routeParams,  $location,$scope) {
     var id = $routeParams.areaId;
+    $scope.a = '#areas/'+id+'/addcreature';
+    
+    console.log('A is = ' + $scope.a);
     console.log('GET particular area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
@@ -193,7 +195,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     console.log('GET creatures to area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
-                $scope.creatures = response.data['creatures'];                
+                $scope.creatures = response.data['creatures'];                                
                 ;
             });
             
@@ -211,6 +213,19 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 });
                 
     };
+
+    $http.get('/creatures-hunting/rest/areas').
+            then(function (response) {
+                $scope.areas = response.data['_embedded']['areas'];                                            
+                ;
+            });
+            
+    $http.get('/creatures-hunting/rest/creatures').
+            then(function (response) {
+            $scope.creatures2 = response.data['_embedded']['creatures'];                       
+                ;
+            }); 
+    
 
 });
 

@@ -2,7 +2,8 @@ package cz.muni.fi.pa165.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * This class is a Data Transfer Object of Area.
@@ -12,8 +13,14 @@ import java.util.List;
 public class AreaDTO {
 
     private Long id;
+
+    @NotNull
+    @Size(min = 3, max = 64)
     private String name;
+
+    @Size(max = 255)
     private String description;
+
     private List<CreatureDTO> creatures = new ArrayList<>();
 
     public Long getId() {

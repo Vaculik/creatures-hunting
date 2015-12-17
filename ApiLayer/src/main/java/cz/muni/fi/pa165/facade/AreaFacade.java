@@ -65,14 +65,6 @@ public interface AreaFacade {
     List<AreaDTO> getAreasFewestCreatures();
 
     /**
-     * This method gets an amount of creatures of specific area
-     *
-     * @param ar Area of which we want the amount of creature
-     * @return an amount of creatures of specific area
-     */
-    int getCreaturesAmount(AreaDTO ar);
-
-    /**
      * This method finds area by its id
      *
      * @param id specific number (identification) which is unique for each area
