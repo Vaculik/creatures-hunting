@@ -13,6 +13,8 @@
         <p>
             {{creature.description}}
         </p>
+        <br>
+        <button class="btn btn-default" type="submit" ng-click="delete(creature.id)">Delete</button>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <table class="table">
@@ -27,6 +29,23 @@
             <tr ng-repeat="weapon in mostEffective">
                 <td>{{weapon.name}}</td>
                 <td>{{weapon.type}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="table">
+            <caption>All {{creature.type}} creatures</caption>
+            <col width="40%">
+            <thread>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thread>
+            <tbody>
+            <tr ng-repeat="creature in typeCreatures">
+                <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
+                <td>{{creature.description}}</td>
             </tr>
             </tbody>
         </table>
