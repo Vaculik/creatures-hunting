@@ -1,0 +1,37 @@
+<h2>New creature:</h2>
+<form name="form" novalidate role="form">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+    <div class="form-group" ng-class="{'has-error': !form.name.$valid}">
+        <label for="name">Name:</label>
+        <input placeholder="Name" type="text" ng-minlength="3" maxlength="64" required class="form-control" ng-model="creature.name" name="name" id="name">
+        <p class="help-block" ng-show="form.name.$error.required">Name is required</p>
+        <p class="help-block" ng-show="form.name.$error.minlength">Name must be at least 3 characters</p>
+    </div>
+    <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
+        <label for="type">Type:</label>
+        <select class="form-control" name="type" ng-model="creature.type" id="type" required>
+            <option ng-repeat="type in types">{{type}}</option>
+        </select>
+        <p class="help-block" ng-show="form.type.$error.required">Type is required</p>
+    </div>
+    <div class="form-group" ng-class="{'has-error': !form.height.$valid}">
+        <label for="height">Height in cm:</label>
+        <input placeholder="0" type="number" ng-min="1" ng-pattern="/^-?\d*$/" required class="form-control" name="height" ng-model="creature.height" id="height">
+        <p class="help-block" ng-show="form.height.$error.required">Height is required</p>
+        <p class="help-block" ng-show="form.height.$error.min">Height must be at least 1</p>
+        <p class="help-block" ng-show="form.height.$error.pattern">Height must be integer</p>
+    </div>
+    <div class="form-group" ng-class="{'has-error': !form.weight.$valid}">
+        <label for="weight">Weight in kg:</label>
+        <input placeholder="0" type="number" ng-min="1" ng-pattern="/^-?\d*$/" required class="form-control" name="weight" ng-model="creature.weight" id="weight">
+        <p class="help-block" ng-show="form.weight.$error.required">Weight is required</p>
+        <p class="help-block" ng-show="form.weight.$error.min">Weight must be at least 1</p>
+        <p class="help-block" ng-show="form.weight.$error.pattern">Weight must be integer</p>
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea class="form-control" maxlength="255" rows="4" name="description" ng-model="creature.description" id="description"></textarea>
+    </div>
+        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="create(creature)">Create creature</button>
+    </div>
+</form>

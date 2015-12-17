@@ -28,25 +28,11 @@ public interface AreaFacade {
     void deleteArea(AreaDTO area);
 
     /**
-     * This method updates an area.
-     *
-     * @param area AreaDTO to be updated
-     */
-    Long updateArea(AreaDTO area);
-
-    /**
      * This method finds all areas in a database
      *
      * @return list of all areas in a database
      */
     List<AreaDTO> getAllAreas();
-
-    /**
-     * This method gets names of all areas
-     *
-     * @return list of names of all areas in a database
-     */
-    List<String> getAreasNames();
 
     /**
      * This method gets areas with no creature in
@@ -109,15 +95,6 @@ public interface AreaFacade {
      * @param creature a creature which to add
      */
     void addCreature(AreaDTO area, CreatureDTO creature);
-
-    /**
-     * This method checks if an area contains a creature
-     *
-     * @param area an area where to check it
-     * @param creature a creature which to check
-     * @return
-     */
-    boolean containAreaCreature(AreaDTO area, CreatureDTO creature);
 
     /**
      * This method moves the creature from one area to another area

@@ -44,16 +44,6 @@ public class AreaFacadeImpl implements AreaFacade {
     }
 
     @Override
-    public List<String> getAreasNames() {
-        List<String> names = new ArrayList<>();
-        List<AreaDTO> areas = entityMapper.map(areaService.findAllAreas(), AreaDTO.class);
-        for (AreaDTO area : areas) {
-            names.add(area.getName());
-        }
-        return names;
-    }
-
-    @Override
     public List<AreaDTO> getAreasWithNoCreature() {
         return entityMapper.map(areaService.getAreasWithNoCreature(), AreaDTO.class);
     }
@@ -96,33 +86,23 @@ public class AreaFacadeImpl implements AreaFacade {
             Area ar = entityMapper.map(area, Area.class);
             areaService.updateArea(ar);
             }
-         }
-            
-//            return areaService.addCreature( entityMapper.map(ar, Area.class), entityMapper.map(creature, Creature.class),);           
+         }            
         }
     
-
-    @Override
-    public Long updateArea(AreaDTO area) {
-        Area ar = entityMapper.map(area, Area.class);
-        areaService.updateArea(ar);
-        return ar.getId();
-    }
-
 //    @Override
 //    public void removeCreature(AreaDTO area, CreatureDTO creature) {
 //        area.removeCreature(creature);
 //        Area ar = entityMapper.map(area, Area.class);
 //        areaService.updateArea(ar);
 //    }
-
-    @Override
-    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
-        if (area.getCreatures().contains(creature)) {
-            return true;
-        }
-        return false;
-    }
+//
+//    @Override
+//    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
+//        if (area.getCreatures().contains(creature)) {
+//            return true;
+//        }
+//        return false;
+//    }
 
     @Override
     public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {

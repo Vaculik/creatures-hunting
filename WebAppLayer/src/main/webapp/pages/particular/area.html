@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h1>{{area.name}}</h1>
+        <p>
+            Description: {{area.description}}
+        </p>
+        <br>
+        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button>
+        <button class="btn btn-default" type="submit" ng-click="addCreature(creature.id)">Add creature</button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <table class="table">
+            <caption>Creatures in area {{area.name}}:</caption>
+            <thread>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+            </thread>
+            <tbody>
+                <tr ng-repeat="creature in creatures">
+                    <td><a href="#/creature/{{creature.id}}">{{creature.name}}</td>
+                    <td>{{creature.type}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

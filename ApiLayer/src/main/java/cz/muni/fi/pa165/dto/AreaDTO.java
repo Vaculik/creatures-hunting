@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.dto;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -42,7 +41,7 @@ public class AreaDTO {
     }
 
     public List<CreatureDTO> getCreatures() {
-        return Collections.unmodifiableList(creatures);
+        return creatures;
     }
 
     public void setCreatures(List<CreatureDTO> creatures) {

@@ -1,11 +1,13 @@
-<h2>Creatures</h2>
-<button type="button" class="btn btn-default">New creature</button>
+<h2>{{title}}</h2>
+<a href="#creature/new">
+    <button type="button" class="btn btn-default">New creature</button>
+</a>
 <div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
         Show <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
-        <li><a href="#/creatures">All</a></li>
+        <li><a href="#/creatures/all">All</a></li>
         <li><a href="#/creatures/highest">The highest</a></li>
         <li><a href="#/creatures/heaviest">The heaviest</a></li>
     </ul>
@@ -15,11 +17,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" ng-repeat="creature in creatures">
         <a href="#/creature/{{creature.id}}">
             <h3>{{creature.name}}</h3>
-            <p>
-                <strong>
-                    {{creature.type}}
-                </strong>
-            </p>
+            <p>{{creature.type}}</p>
             <p>{{creature.description}}</p>
         </a>
     </div>
