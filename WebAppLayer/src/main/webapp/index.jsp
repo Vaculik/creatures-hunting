@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body>
+<body ng-app="creaturesHuntingApp">
 <div id="wrapper">
 <nav id="navbar" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
@@ -41,7 +41,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                 </li>
             </ul>
         </div>
@@ -49,7 +49,7 @@
 </nav>
 
 <div id="content" class="container">
-    <div ng-app="creaturesHuntingApp">
+    <div>
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>

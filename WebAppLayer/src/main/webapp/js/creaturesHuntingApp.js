@@ -6,6 +6,64 @@
 var app = angular.module('creaturesHuntingApp', ['ngRoute', 'controllers']);
 var controllers = angular.module('controllers', []);
 
+app.constant('AUTH_EVENTS', {
+    loginSuccess: 'auth-login-success',
+    loginFailed: 'auth-login-failed',
+    logoutSuccess: 'auth-logout-success',
+    sessionTimeout: 'auth-session-timeout',
+    notAuthenticated: 'auth-not-authenticated',
+    notAuthorized: 'auth-not-authorized'
+});
+
+app.constant('USER_ROLES', {
+    all: '*',
+    admin: 'admin',
+    user: 'user',
+    guest: 'guest'
+});
+
+app.factory('AuthService', function ($http, Session) {
+    var authService = {};
+
+    authService.login = function (credentials) {
+        return $http
+            .post('/login', credentials)
+            .then(function (res) {
+                Session.create(res.data.id, res.data.user.id,
+                    res.data.user.role);
+                return res.data.user;
+            });
+    };
+
+    authService.isAuthenticated = function () {
+        return !!Session.userId;
+    };
+
+    authService.isAuthorized = function (authorizedRoles) {
+        if (!angular.isArray(authorizedRoles)) {
+            authorizedRoles = [authorizedRoles];
+        }
+        return (authService.isAuthenticated() &&
+        authorizedRoles.indexOf(Session.userRole) !== -1);
+    };
+
+    return authService;
+});
+
+app.service('Session', function () {
+    this.create = function (sessionId, userId, userRole) {
+        this.id = sessionId;
+        this.userId = userId;
+        this.userRole = userRole;
+    };
+    this.destroy = function () {
+        this.id = null;
+        this.userId = null;
+        this.userRole = null;
+    };
+});
+
+
 app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider.
                 when('/home', {templateUrl: 'pages/home.html'}).
@@ -25,11 +83,12 @@ app.config(['$routeProvider', function ($routeProvider) {
                     templateUrl: 'pages/particular/area.html',
                     controller: 'ParticularAreaController'}).
                 when('/users', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
+                when('/login', {templateUrl: 'pages/login.html', controller: 'LoginController'}).
                 otherwise({redirectTo: '/home'});
     }]);
 
 
-app.run(function ($rootScope) {
+app.run(function ($rootScope, $scope, USER_ROLES, AuthService) {
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };
@@ -39,7 +98,33 @@ app.run(function ($rootScope) {
     $rootScope.hideErrorAlert = function () {
         $rootScope.errorAlert = undefined;
     };
+
+    // Initialize the scope properties for authentization
+    $scope.currentUser = null;
+    $scope.userRoles = USER_ROLES;
+    $scope.isAuthorized = AuthService.isAuthorized;
+    // Setter of currentUser property. We can’t simply assign a new value to it from a child scope,
+    // because that would result in a shadow property.
+    $scope.setCurrentUser = function(user) {
+        $scope.currentUser = user;
+    }
 });
+
+
+controllers.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+    $scope.credentials = {
+        username: '',
+        password: ''
+    };
+    $scope.login = function (credentials) {
+        AuthService.login(credentials).then(function (user) {
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+            $scope.setCurrentUser(user);
+        }, function () {
+            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+        });
+    };
+})
 
 
 
@@ -134,7 +219,7 @@ controllers.controller('AreasController', function ($http, $scope) {
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas";
-                ;
+
             });
 });
 
@@ -144,7 +229,7 @@ controllers.controller('NoCreatureAreaController', function ($http, $scope) {
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with no creature";
-                ;
+
             });
 });
 
@@ -155,7 +240,7 @@ controllers.controller('AnyCreatureAreaController', function ($http, $scope) {
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with any creature";
-                ;
+
             });
 });
 
@@ -165,7 +250,7 @@ controllers.controller('MostCreaturesAreaController', function ($http, $scope) {
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with the most creatures";
-                ;
+
             });
 });
 
@@ -175,7 +260,7 @@ controllers.controller('FewestCreaturesAreaController', function ($http, $scope)
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with the fewest creatures";
-                ;
+
             });
 });
 
@@ -185,7 +270,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
                 $scope.area = response.data;
-                ;
+
             },
                     function error(response) {
                         $rootScope.warningAlert = 'Problem occured when load area ' + response.data.message;
@@ -194,7 +279,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
                 $scope.creatures = response.data['creatures'];                
-                ;
+
             });
             
     $scope.delete = function (id) {
