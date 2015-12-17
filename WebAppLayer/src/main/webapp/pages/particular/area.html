@@ -1,13 +1,51 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <h1>{{area.name}}</h1>
-        <p>
-            Description: {{area.description}}
+        <p><b>
+                Amount of creatures: </b>{{creatures.length}}
+        </p>
+        <p><b>
+                Description:</b> {{area.description}}
         </p>
         <br>
-        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button>
-        <button class="btn btn-default" type="submit" ng-click="addCreature(creature.id)">Add creature</button>
+        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button><br><br>                
+
+        <h3>Add Creature</h3>
+        <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
+            <label for="name">Creature:</label>
+            <select class="form-control" name="name" ng-model="creature2.name" id="name" required>
+                <option ng-repeat="creature2 in creatures2| orderBy:'+name'">{{creature2.name}} - {{creature2.type}}</option>
+            </select>
+            <p class="help-block" ng-show="form.type.$error.required">Name is required</p>
+        </div>
+        <br>
+        <button class="btn btn-default" type="submit" ng-click="addCreature(area.id)">Add Creature</button><br><br>  
+
+        <h3>Move Creature</h3>
+
+
+        <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
+            <label for="name">Creature:</label>
+            <select class="form-control" name="name" ng-model="creature.name" id="name" required>
+                <option ng-repeat="creature in creatures| orderBy:'+name'">{{creature.name}} - {{creature.type}}</option>
+            </select>
+            <p class="help-block" ng-show="form.type.$error.required">Name is required</p>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
+            <label for="namearea">To area:</label>
+            <select class="form-control" name="namearea" ng-model="area.name" id="namearea" required>
+                <option ng-repeat="area in areas| orderBy:'+name'">{{area.name}}</option>
+            </select>
+            <p class="help-block" ng-show="form.type.$error.required">Name is required</p>
+        </div>
+
+        <br>
+        <button class="btn btn-default" type="submit" ng-click="move(area.id)">Move Creature</button><br><br>          
+
     </div>
+
+
+
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <table class="table">
             <caption>Creatures in area {{area.name}}:</caption>
@@ -18,7 +56,7 @@
                 </tr>
             </thread>
             <tbody>
-                <tr ng-repeat="creature in creatures">
+                <tr ng-repeat="creature in creatures| orderBy:'+type'">
                     <td><a href="#/creature/{{creature.id}}">{{creature.name}}</td>
                     <td>{{creature.type}}</td>
                 </tr>

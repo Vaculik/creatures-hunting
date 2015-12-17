@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.controllers;
 
 import cz.muni.fi.pa165.dto.AreaDTO;
@@ -35,7 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 /**
- *
+ *  The contoller for the rest layer of Creature informations system
+ * 
  * @author Martin Zboril
  */
 @RestController

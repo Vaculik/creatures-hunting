@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.entity.Area;
@@ -101,12 +97,4 @@ public interface AreaService {
      * creatures
      */
     List<Area> getAreasFewestCreatures();
-//    
-//    /**
-//     * This method adds a creature to an area
-//     *
-//     * @param area an area where to add
-//     * @param creature a creature which to add
-//     */
-//    void addCreature(Area area, Creature creature);
 }
