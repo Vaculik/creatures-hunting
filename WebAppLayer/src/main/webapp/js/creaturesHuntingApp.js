@@ -1,3 +1,5 @@
+/* global difference_ */
+
 /**
  * Created by vaculik on 14.12.15.
  */
@@ -181,7 +183,16 @@ controllers.controller('FewestCreaturesAreaController', function ($http, $scope)
 controllers.controller('ParticularAreaController', function ($http, $rootScope, $routeParams,  $location,$scope) {
     var id = $routeParams.areaId;
     $scope.a = '#areas/'+id+'/addcreature';
-    
+     $scope.types = ['VAMPIRE', 'BEAST', 'UNDEAD'];
+    $scope.creatureChosenAddCreature = {
+        'name': ''
+    };
+    $scope.creatureChosenMoveCreature = {
+        'name': ''
+    };
+    $scope.areaChosenMoveCreature = {
+        'name': ''
+    };
     console.log('A is = ' + $scope.a);
     console.log('GET particular area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
@@ -213,6 +224,34 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 });
                 
     };
+    
+    
+     $scope.addCreature = function (name) {
+        console.log('Add creature with name=' + name);        
+        $http.post('/creatures-hunting/rest/areas/addcreature', id,name).
+                then(function success(response) {
+                    console.log('Creature with name=' + name + ' was added.');
+                    $location.path('/areas/id');
+                }, function error(response) {
+                    console.log('Error when adding creature with name=' + name);
+                    console.log(response);
+                });
+       
+    };
+    
+    $scope.moveCreature = function (name, nameArea) {
+        console.log('Move creature with name=' + name);
+        console.log('Move to area with name=' + nameArea);
+        $http.post('/creatures-hunting/rest/areas/movecreature', name,id,nameArea).
+                then(function success(response) {
+                    console.log('Creature with name=' + name + ' was moved.');
+                    $location.path('/areas/id');
+                }, function error(response) {
+                    console.log('Error when moving creature with name=' + name);
+                    console.log(response);
+                });
+       
+    };
 
     $http.get('/creatures-hunting/rest/areas').
             then(function (response) {
@@ -224,9 +263,9 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
             then(function (response) {
             $scope.creatures2 = response.data['_embedded']['creatures'];                       
                 ;
-            }); 
-    
-
+            });     
+            
+     
 });
 
 controllers.controller('NewAreaController', function ($http, $rootScope, $location, $scope) {
@@ -247,4 +286,5 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
                     $rootScope.errorAlert = 'Problem has occured, cannot create new area!';
                 });
     };
+    
 });
