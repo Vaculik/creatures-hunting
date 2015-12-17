@@ -2,6 +2,10 @@ package cz.muni.fi.pa165.dto;
 
 import cz.muni.fi.pa165.enums.CreatureType;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Data transfer object of the Creature entity.
  *
@@ -10,10 +14,23 @@ import cz.muni.fi.pa165.enums.CreatureType;
 public class CreatureDTO {
 
     private Long id;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String name;
+
+    @NotNull
+    @Min(1)
     private Integer height;
+
+    @NotNull
+    @Min(1)
     private Integer weight;
+
+    @NotNull
     private CreatureType type;
+
+    @Size(max=255)
     private String description;
 
     public void setId(Long id) {
