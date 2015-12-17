@@ -114,6 +114,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/creatures-hunting</path>
+                    <url>http://localhost:8080/creatures-hunting/</url>
                 </configuration>
             </plugin>
 
