@@ -145,7 +145,12 @@ controllers.controller('NewWeaponEfficiencyController', function ($http, $rootSc
     };
     $scope.create = function (efficiency) {
         console.log("Create efficiency");
-        $http.post('/creatures-hunting/rest/weapons/create', efficiency).then(function (response) {//Request successful
+        var toSend = {
+            "efficiency": efficiency.efficiency,
+            "creatureId": efficiency.creatureDTO.id,
+            "weaponId": efficiency.weaponDTO.id
+        }
+        $http.post('/creatures-hunting/rest/weapons/create', toSend).then(function (response) {//Request successful
 //            $rootScope.succesAllert("Weapon " + weapon.name + " created");
             $location.path('rest/weapon-efficiencies/create');
         }, function (response) {//Request failed
