@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.muni.fi.pa165.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,16 @@ public class UserSystemServiceImpl implements UserSystemService {
     }
 
     @Override
-    public UserSystem getUserByName(String name) {
-        return userSystemDao.getByName(name);
+    public UserSystem getUserByUserName(String name) {
+        return userSystemDao.getByUserName(name);
+    }
+
+    @Override
+    public UserSystem login(String userName, String password) {
+        UserSystem user = userSystemDao.getByUserName(userName);
+        if (user == null) {
+            return null;
+        }
+        return PasswordUtil.checkPassword(password, user.getPassword()) ? user : null;
     }
 }

@@ -16,39 +16,10 @@ app.constant('AUTH_EVENTS', {
 });
 
 app.constant('USER_ROLES', {
-    all: '*',
     admin: 'admin',
-    user: 'user',
-    guest: 'guest'
+    user: 'user'
 });
 
-app.factory('AuthService', function ($http, Session) {
-    var authService = {};
-
-    authService.login = function (credentials) {
-        return $http
-            .post('/login', credentials)
-            .then(function (res) {
-                Session.create(res.data.id, res.data.user.id,
-                    res.data.user.role);
-                return res.data.user;
-            });
-    };
-
-    authService.isAuthenticated = function () {
-        return !!Session.userId;
-    };
-
-    authService.isAuthorized = function (authorizedRoles) {
-        if (!angular.isArray(authorizedRoles)) {
-            authorizedRoles = [authorizedRoles];
-        }
-        return (authService.isAuthenticated() &&
-        authorizedRoles.indexOf(Session.userRole) !== -1);
-    };
-
-    return authService;
-});
 
 app.service('Session', function () {
     this.create = function (sessionId, userId, userRole) {
@@ -61,6 +32,38 @@ app.service('Session', function () {
         this.userId = null;
         this.userRole = null;
     };
+});
+
+
+app.factory('AuthService', function ($http, Session) {
+    var authService = {};
+
+    authService.login = function (credentials) {
+        return {'id': '1',
+        'name': 'Karel'};
+        //return $http
+        //    .post('/login', credentials)
+        //    .then(function (response) {
+        //        Session.create(response.data.id, response.data.user.id,
+        //            response.data.user.role);
+        //        return response.data.user;
+        //    });
+    };
+    // If id is null then boolean value is false -> return false;
+    // If id != 0 then boolean value is true -> return true;
+    authService.isAuthenticated = function () {
+        return Boolean(Session.userId);
+    };
+
+    authService.isAuthorized = function (authorizedRoles) {
+        if (!angular.isArray(authorizedRoles)) {
+            authorizedRoles = [authorizedRoles];
+        }
+        return (authService.isAuthenticated() &&
+        authorizedRoles.indexOf(Session.userRole) !== -1);
+    };
+
+    return authService;
 });
 
 
@@ -88,7 +91,7 @@ app.config(['$routeProvider', function ($routeProvider) {
     }]);
 
 
-app.run(function ($rootScope, $scope, USER_ROLES, AuthService) {
+app.run(function ($rootScope) {
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };
@@ -98,10 +101,14 @@ app.run(function ($rootScope, $scope, USER_ROLES, AuthService) {
     $rootScope.hideErrorAlert = function () {
         $rootScope.errorAlert = undefined;
     };
+});
 
+
+controllers.controller('NavbarController', function($scope, USER_ROLES, AuthService) {
     // Initialize the scope properties for authentization
     $scope.currentUser = null;
     $scope.userRoles = USER_ROLES;
+    $scope.isAuthenticated = AuthService.isAuthenticated;
     $scope.isAuthorized = AuthService.isAuthorized;
     // Setter of currentUser property. We can’t simply assign a new value to it from a child scope,
     // because that would result in a shadow property.
@@ -124,7 +131,7 @@ controllers.controller('LoginController', function ($scope, $rootScope, AUTH_EVE
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         });
     };
-})
+});
 
 
 

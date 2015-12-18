@@ -21,7 +21,7 @@
 
 <body ng-app="creaturesHuntingApp">
 <div id="wrapper">
-<nav id="navbar" class="navbar navbar-inverse navbar-static-top">
+<nav id="navbar" class="navbar navbar-inverse navbar-static-top" ng-controller="NavbarController">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -39,9 +39,17 @@
                 <li><a href="#/areas">Areas</a></li>
                 <li><a href="#/users">Users</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
+            </ul>
+            <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#/user/{{currentUser.id}}">{{currentUser.name}}</a>
+                </li>
+                <li>
+                    <a href="#/home"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>

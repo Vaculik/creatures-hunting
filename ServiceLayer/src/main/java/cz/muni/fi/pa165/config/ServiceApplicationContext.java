@@ -21,9 +21,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(InMemoryDatabaseApplicationContext.class)
-@ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class,
-    UserSystemServiceImpl.class, UserSystemFacadeImpl.class,
-    EntityMapperImpl.class, WeaponServiceImpl.class, WeaponFacadeImpl.class,})
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.service", "cz.muni.fi.pa165.util", "cz.muni.fi.pa165, facade"})
 public class ServiceApplicationContext {
 
     @Bean

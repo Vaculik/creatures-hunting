@@ -30,11 +30,11 @@ public class UserSystemDaoImpl implements UserSystemDao {
     }
 
     @Override
-    public UserSystem getByName(String name) {
+    public UserSystem getByUserName(String name) {
         if (name == null) {
             throw new NullPointerException("Argument name is null");
         }
-        TypedQuery<UserSystem> query = em.createQuery("SELECT userSystem FROM UserSystem as userSystem WHERE userSystem.name=:n",
+        TypedQuery<UserSystem> query = em.createQuery("SELECT userSystem FROM UserSystem as userSystem WHERE userSystem.userName=:n",
                 UserSystem.class).setParameter("n", name);
         try {
             return query.getSingleResult();

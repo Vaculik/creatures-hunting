@@ -69,5 +69,14 @@ public interface UserSystemService {
      * @param name name of the UserSystem
      * @return the found UserSystemDTO or null if doesn't exist
      */
-    UserSystem getUserByName(String name);
+    UserSystem getUserByUserName(String name);
+
+    /**
+     * Authenticate a user with given login name and password.
+     *
+     * @param loginName the login name
+     * @param password the password
+     * @return the authenticated UserSystem or null, if authentication failed
+     */
+    UserSystem login(String loginName, String password);
 }
