@@ -1,4 +1,4 @@
-<h2>New user:</h2>
+<h2>Edit user:</h2>
 <form name="form" novalidate role="form">
     <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
     <div class="form-group" ng-class="{'has-error': !form.userName.$valid}">
@@ -38,7 +38,7 @@
         <input type="date" class="form-control" ng-model="user.dateOfBirth" name="dateOfBirth" id="dateOfBirth">
     </div>
     <div>
-        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="create(user)">Create user</button>
+        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="edit(user)">Submit changes</button>
     </div>
     </div>
 </form>
