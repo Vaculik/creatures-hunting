@@ -90,6 +90,10 @@ public class Area {
         creatures.remove(creature);
     }
 
+    public void setCreatures(List<Creature> creatures) {
+        this.creatures = creatures;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;

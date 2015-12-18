@@ -46,6 +46,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/login', {templateUrl: 'pages/login.html', controller: 'LoginController'}).
         when('/users/:viewType', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
         when('/user/new', {templateUrl: 'pages/new/new-user.html', controller: 'NewUserController'}).
+        when('/users/edit/:userId', {templateUrl: 'pages/edit/edit-user.html', controller: 'EditUserController'}).
         when('/user/:userId', {templateUrl: 'pages/particular/user.html', controller: 'ParticularUserController'}).
         otherwise({redirectTo: '/home'});
 }]);

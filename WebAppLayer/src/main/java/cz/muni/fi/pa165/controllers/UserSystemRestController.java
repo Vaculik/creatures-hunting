@@ -2,14 +2,17 @@ package cz.muni.fi.pa165.controllers;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.dto.WeaponDTO;
 import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
 import cz.muni.fi.pa165.hateoas.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,5 +163,23 @@ public class UserSystemRestController {
                 linkTo(this.getClass()).slash("sex").slash(sex).withSelfRel());
 
     	return new ResponseEntity<>(userResources, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editWeapon(@PathVariable long id, @RequestBody @Valid UserSystemDTO userDTO,
+            BindingResult bindingResult) {
+        if (userDTO.getId() != id) {
+            String msg = "User edit id mismatch.";
+            logger.error(msg);
+            throw new InvalidParameterException(msg);
+        }
+        logger.debug("POST edit user id=" + userDTO.getId().toString());
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed: editing user id=" + userDTO.getId().toString() + ": " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
+
+        userFacade.updateUser(userDTO);
     }
 }

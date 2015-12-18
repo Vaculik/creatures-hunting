@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
 
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
@@ -14,6 +15,7 @@ import cz.muni.fi.pa165.enums.UserType;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.service.*;
 
+import cz.muni.fi.pa165.util.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
+    private final String adminPasswordHash = PasswordUtil.hashPassword("admin");
+    private final String userPasswordHash = PasswordUtil.hashPassword("user");
 
     @Autowired
     private CreatureService creatureService;
@@ -78,12 +82,21 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         wall.addCreature(frankenstein);
         areaService.updateArea(wall);
         areaService.updateArea(winterfell);
-        
 
-        loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
-        loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
-        loadUser("Vlasta Plaminkova", "12345", SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
-        loadUser("Coco Jambo", "12345", SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1989, Calendar.SEPTEMBER, 5);
+        loadUser("Karel Vaculík", adminPasswordHash, SexType.MALE, UserType.ADMIN, "Karel", calendar.getTime());
+        calendar.set(1992, Calendar.APRIL, 10);
+        loadUser("Martin Zbořil", adminPasswordHash, SexType.MALE, UserType.ADMIN, "Martin", calendar.getTime());
+        calendar.set(1990, Calendar.MARCH, 19);
+        loadUser("Jakub Mičulka", userPasswordHash, SexType.MALE, UserType.ORDINARY, "Jakub", calendar.getTime());
+        calendar.set(1991, Calendar.DECEMBER, 3);
+        loadUser("Pavel Veselý", userPasswordHash, SexType.MALE, UserType.ORDINARY, "Pavel", calendar.getTime());
+
+//        loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
+//        loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
+//        loadUser("Vlasta Plaminkova", "12345", SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
+//        loadUser("Coco Jambo", "12345", SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
     }
 
 
@@ -139,7 +152,7 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         user.setSex(sex);
         user.setType(type);
         user.setUserName(userName);
-        user.setDateOfBirth(dateOfBirth);
+        user.setDateOfBirth(new java.sql.Date(dateOfBirth.getTime()));
         userSystemService.createUser(user);
         
         return user;

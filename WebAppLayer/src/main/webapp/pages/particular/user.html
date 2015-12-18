@@ -12,6 +12,12 @@
             Date of birth: {{user.dateOfBirth}}
         </p>
         <br>
+        <div>
+        <a href="#users/edit/{{user.id}}">
+            <!--ng-if="isAuthenticated()"-->
+            <button type="button" class="btn btn-default">Edit user</button>
+        </a>
+        </div>
         <div ng-if="isAuthorized(userRoles.admin)">
             <button class="btn btn-default" type="submit" ng-click="delete(user.id)">Delete</button>
         </div>
