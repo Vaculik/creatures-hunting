@@ -51,23 +51,6 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public boolean moveCreature(Creature cr, Area fromAr, Area toAr) {
-        if (cr == null || fromAr == null || toAr == null) {
-            throw new IllegalArgumentException("Creature or one of the Areas is null");
-        }
-        if (!fromAr.getCreatures().contains(cr)) {
-            throw new AreaServiceException("The area does not contain the creature");
-        }
-
-        fromAr.removeCreature(cr);
-        toAr.addCreature(cr);
-
-        areaDao.update(fromAr);
-        areaDao.update(toAr);
-        return true;
-    }
-
-    @Override
     public List<Area> getAreasWithNoCreature() {
         List<Area> result = new ArrayList<>();
 
