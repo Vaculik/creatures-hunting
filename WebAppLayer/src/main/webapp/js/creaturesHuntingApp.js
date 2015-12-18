@@ -262,9 +262,21 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
             then(function (response) {
             $scope.creatures2 = response.data['_embedded']['creatures'];                       
                 ;
-            });     
-            
-     
+            });        
+    
+    console.log('GET others creatures to area with id=' + id);
+    $http.get('/creatures-hunting/rest/areas/' + id +'/otherscreatures').
+            then(function (response) {
+                $scope.othersCreatures = response.data['_embedded']['creatures']
+                ;
+            });
+    
+    console.log('GET others areas to area with id=' + id);
+    $http.get('/creatures-hunting/rest/areas/' + id +'/othersareas').
+            then(function (response) {
+                $scope.othersAreas = response.data['_embedded']['areas']
+                ;
+            });
 });
 
 controllers.controller('NewAreaController', function ($http, $rootScope, $location, $scope) {

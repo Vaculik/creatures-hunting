@@ -8,6 +8,9 @@ import cz.muni.fi.pa165.facade.AreaFacade;
 import cz.muni.fi.pa165.facade.CreatureFacade;
 import cz.muni.fi.pa165.hateoas.AreaResource;
 import cz.muni.fi.pa165.hateoas.AreaResourceAssembler;
+import cz.muni.fi.pa165.hateoas.CreatureResource;
+import cz.muni.fi.pa165.hateoas.CreatureResourceAssembler;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -49,6 +52,9 @@ public class AreaRestController {
 
     @Autowired
     private AreaResourceAssembler areaResourceAssembler;
+    
+    @Autowired
+    private CreatureResourceAssembler creatureResourceAssembler;
 
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAllAreas() {
@@ -186,6 +192,52 @@ public class AreaRestController {
 
         AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
+    }
+      
+    @RequestMapping(value = "/{id}/otherscreatures", method = RequestMethod.GET)
+    public HttpEntity<Resources<CreatureResource>> getCreaturesFromOthersAreas(@PathVariable long id) {
+        logger.debug("GET others creatures for area with id=" + id);
+        AreaDTO areaDTO = areaFacade.getById(id);
+        
+        logger.debug(areaDTO.toString());
+        if (areaDTO == null) {
+            String msg = "Others creatures for area with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }        
+        
+        List<CreatureDTO> allCreaturesDTOs = creatureFacade.getAllCreatures();
+        List<CreatureDTO> othersCreaturesDTOs = new ArrayList<>();
+        for(CreatureDTO crDTO : allCreaturesDTOs){
+            if(!areaDTO.getCreatures().contains(crDTO)){
+                othersCreaturesDTOs.add(crDTO);
+            }
+        }
+
+        Resources<CreatureResource> creatureResources = new Resources<>(
+                creatureResourceAssembler.toResources(othersCreaturesDTOs));
+
+        return new ResponseEntity<>(creatureResources, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/{id}/othersareas", method = RequestMethod.GET)
+    public HttpEntity<Resources<AreaResource>> getOthersAreas(@PathVariable long id) {
+        logger.debug("GET others creatures for area with id=" + id);
+        AreaDTO areaDTO = areaFacade.getById(id);
+        
+        logger.debug(areaDTO.toString());
+        if (areaDTO == null) {
+            String msg = "Others creatures for area with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }        
+        
+        List<AreaDTO> allAreasDTOs = areaFacade.getAllAreas();
+        allAreasDTOs.remove(areaDTO);
+        Resources<AreaResource> areaResources = new Resources<>(
+                areaResourceAssembler.toResources(allAreasDTOs));
+
+        return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
 }
