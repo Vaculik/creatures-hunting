@@ -178,20 +178,7 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         verify(areaService).getAreasFewestCreatures();
     }
 
-    @Test
-    public void addCreatureTest() {
-        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-        doNothing().when(areaService).updateArea(area);
-        Assert.assertEquals(areaDTO.getCreatures().size(), 4);
-        CreatureDTO tmp = createCreatureDTO(createCreature("Bran"));
-        areaFacade.addCreature(areaDTO, tmp);
-        areaFacade.addCreature(areaDTO, tmp);        
-        Assert.assertEquals(areaDTO.getCreatures().size(), 5);
-        
-        verify(entityMapper).map(areaDTO, Area.class);
-        verify(areaService).updateArea(area);
-    }
-    
+
     @Test
     public void moveCreatureTest() {
         CreatureDTO crDTO = createCreatureDTO(creature);

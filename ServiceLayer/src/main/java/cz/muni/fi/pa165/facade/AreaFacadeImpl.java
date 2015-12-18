@@ -1,12 +1,13 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.AreaAddCreatureDTO;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.service.AreaService;
 import cz.muni.fi.pa165.util.EntityMapper;
-import java.util.ArrayList;
+
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,18 +75,9 @@ public class AreaFacadeImpl implements AreaFacade {
     }
 
     @Override
-    public void addCreature(AreaDTO area, CreatureDTO creature){
-         if(creature != null){
-            if(!area.getCreatures().contains(creature)){
-                area.addCreature(creature);
-                System.out.println("ABAA");
-                System.out.println(area.getCreatures());
-                Area ar = entityMapper.map(area, Area.class);
-                System.out.println(ar.getCreatures());
-                areaService.updateArea(ar);
-            }
-         }            
-        }
+    public void addCreature(AreaAddCreatureDTO areaAddCreatureDTO){
+        areaService.addCreature(areaAddCreatureDTO.getAreaId(), areaAddCreatureDTO.getCreatureName());
+    }
     
     @Override
     public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {

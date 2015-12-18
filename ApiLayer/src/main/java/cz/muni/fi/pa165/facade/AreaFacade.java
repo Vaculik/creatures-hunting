@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.AreaAddCreatureDTO;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import java.util.List;
@@ -83,10 +84,9 @@ public interface AreaFacade {
     /**
      * This method adds a creature to an area
      *
-     * @param area an area where to add
-     * @param creature a creature which to add
+     * @param areaAddCreatureDTO an area where to add
      */
-    void addCreature(AreaDTO area, CreatureDTO creature);
+    void addCreature(AreaAddCreatureDTO areaAddCreatureDTO);
 
     /**
      * This method moves the creature from one area to another area

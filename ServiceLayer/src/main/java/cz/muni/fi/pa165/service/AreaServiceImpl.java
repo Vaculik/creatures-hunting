@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.dao.AreaDao;
 import java.util.List;
+
+import cz.muni.fi.pa165.dao.CreatureDao;
 import cz.muni.fi.pa165.service.exception.AreaServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class AreaServiceImpl implements AreaService {
 
     @Autowired
     private AreaDao areaDao;
+
+    @Autowired
+    private CreatureDao creatureDao;
 
     @Override
     public void createArea(Area area) {
@@ -122,5 +127,20 @@ public class AreaServiceImpl implements AreaService {
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean addCreature(Long areaId, String creatureName) {
+        Area area = areaDao.getById(areaId);
+        Creature creature = creatureDao.getByName(creatureName);
+        if (area == null || creatureName == null) {
+            return false;
+        }
+        if (area.getCreatures().contains(creature)) {
+            return false;
+        }
+        area.addCreature(creature);
+        areaDao.update(area);
+        return true;
     }
 }

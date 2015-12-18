@@ -51,14 +51,15 @@ controllers.controller('FewestCreaturesAreaController', function ($http, $scope)
 
 controllers.controller('ParticularAreaController', function ($http, $rootScope, $routeParams,  $location,$scope) {
     var id = $routeParams.areaId;
-    $scope.creatureChosenAddCreature = {
-        'name': ''
-    };
     $scope.creatureChosenMoveCreature = {
         'name': ''
     };
     $scope.areaChosenMoveCreature = {
         'name': ''
+    };
+    $scope.addCreatureDTO = {
+        'areaId': id,
+        'creatureName': ''
     };
     console.log('GET particular area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
@@ -91,22 +92,22 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     };
     
     
-     $scope.addCreature = function (name) {
-        console.log('Add creature with name=' + name + 'to area with id ' + id);
-        $http.post('/creatures-hunting/rest/areas/' + id + '/' + name + '/addcreature').
+     $scope.addCreature = function () {
+         console.log('Add creature with name=' + $scope.addCreatureDTO.creatureName + ' to area with id ' + $scope.addCreatureDTO.areaId);
+         $http.post('/creatures-hunting/rest/areas/add-creature', $scope.addCreatureDTO).
                 then(function success(response) {
-                    console.log('Creature with name=' + name + ' was added.');
-                    $location.path('/areas');
+                    console.log('Creature with name=' + $scope.addCreatureDTO.creatureName + ' was added.');
                 }, function error(response) {
-                    console.log('Error when adding creature with name=' + name);
+                    console.log('Error when adding creature with name=' + $scope.addCreatureDTO.creatureName);
                     console.log(response);
+                    $rootScope.errorAlert('Error when adding creature with name=', $scope.addCreatureDTO.creatureName);
                 });
 
     };
 
 
     $scope.moveCreature = function (name, nameArea) {        
-        console.log('Move creature with name=' + name + ' from area with id=' + id + 'to area with name ' + nameArea);
+        console.log('Move creature with name=' + name + ' from area with id=' + id + ' to area with name ' + nameArea);
         $http.post('/creatures-hunting/rest/areas/' + id + '/' + nameArea + '/' + name + '/movecreature').
                 then(function success(response) {
                     console.log('Creature with name=' + name + ' was moved.');

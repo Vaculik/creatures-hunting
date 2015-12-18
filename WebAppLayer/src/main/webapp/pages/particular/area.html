@@ -13,29 +13,29 @@
         <h3>Add Creature</h3>
         <form name="form2" novalidate role="form">
         <div class="form-group" ng-class="{'has-error': !form2.name.$valid}">
-            <label for="name">Creature:</label>
-            <select class="form-control" name="name" ng-model="creatureChosenAddCreature.name" id="creature" required>
+            <label for="addCreature">Creature:</label>
+            <select class="form-control" name="name" ng-model="addCreatureDTO.creatureName" id="addCreature" required>
                 <option ng-repeat="othersCreature in othersCreatures | orderBy:'+name' ">{{othersCreature.name}}</option>                
             </select>
             <p class="help-block" ng-show="form2.name.$error.required"></p>
         </div>
         <br>        
-        <button ng-disabled="!form2.$valid" class="btn btn-default" type="submit" ng-click="addCreature(creatureChosenAddCreature.name)">Add Creature</button><br><br>  
+        <button ng-disabled="!form2.$valid" class="btn btn-default" type="submit" ng-click="addCreature()">Add Creature</button><br><br>
         </form>
         
         <h3>Move Creature</h3>
         <form name="form" novalidate role="form">
 
         <div class="form-group" ng-class="{'has-error': !form.name.$valid}">
-            <label for="name">Creature:</label>
-            <select class="form-control" name="name" ng-model="creatureChosenMoveCreature.name" id="creature" required>
+            <label for="moveCreature">Creature:</label>
+            <select class="form-control" name="name" ng-model="creatureChosenMoveCreature.name" id="moveCreature" required>
                 <option ng-repeat="creature in creatures | orderBy:'+name' ">{{creature.name}}</option>                
             </select>
             <p class="help-block" ng-show="form.name.$error.required"></p>
         </div>
         <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
-            <label for="namearea">To area:</label>
-            <select class="form-control" name="areaMove" ng-model="areaChosenMoveCreature.name" id="area.name" required>
+            <label for="area">To area:</label>
+            <select class="form-control" name="areaMove" ng-model="areaChosenMoveCreature.name" id="area" required>
                 <option ng-repeat="otherArea in othersAreas | orderBy:'+name' ">{{otherArea.name}}</option>                
             </select>            
             <p class="help-block" ng-show="form.type.$error.required"></p>

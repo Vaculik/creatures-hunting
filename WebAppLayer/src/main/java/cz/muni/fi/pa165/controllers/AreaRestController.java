@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.controllers;
 
+import cz.muni.fi.pa165.dto.AreaAddCreatureDTO;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
@@ -167,18 +168,19 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/{name}/addcreature", method = RequestMethod.POST)
-    public HttpEntity<AreaResource> addCreature(@PathVariable long id, @PathVariable String name) {
-        String nameCr = name.replace("%20", " ");
-        CreatureDTO creatureDTO = creatureFacade.getCreatureByName(nameCr);
-        AreaDTO areaDTO = areaFacade.getById(id);
+    @RequestMapping(value = "/add-creature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void addCreature(@RequestBody @Valid AreaAddCreatureDTO areaAddCreatureDTO,
+                                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed when add creature to area: " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
 
-        logger.debug("POST add new Creature with ID " + creatureDTO.getId() + creatureDTO.getName());
-        logger.debug("POST add new Area with ID " + areaDTO.getId() + areaDTO.getName());
-        areaFacade.addCreature(areaDTO, creatureDTO);
+        logger.debug("POST add new Creature with name={}", areaAddCreatureDTO.getCreatureName());
+        logger.debug("POST add new Area with ID={}", areaAddCreatureDTO.getAreaId());
 
-        AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
-        return new ResponseEntity<>(areaResource, HttpStatus.OK);
+        areaFacade.addCreature(areaAddCreatureDTO);
     }
 
     @RequestMapping(value = "/{id}/{nameCreature}/{nameAreaTo}/movecreature", method = RequestMethod.PUT)
