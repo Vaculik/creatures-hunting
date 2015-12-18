@@ -22,8 +22,7 @@ import org.springframework.context.annotation.Primary;
 
 // THIS LINE OF CODE WAS REALLY BIG EVIL
 //@Configuration
-@ComponentScan(basePackageClasses = {CreatureServiceImpl.class, CreatureFacadeImpl.class, UserSystemServiceImpl.class,
-    UserSystemFacadeImpl.class, EntityMapperImpl.class, WeaponServiceImpl.class, WeaponFacadeImpl.class})
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.service"})
 public class MockConfiguration {
 
     @Bean

@@ -15,7 +15,7 @@
         <div class="form-group" ng-class="{'has-error': !form2.name.$valid}">
             <label for="name">Creature:</label>
             <select class="form-control" name="name" ng-model="creatureChosenAddCreature.name" id="creature" required>
-                <option ng-repeat="creature2 in creatures2 | orderBy:'+name' ">{{creature2.name}}</option>                
+                <option ng-repeat="othersCreature in othersCreatures | orderBy:'+name' ">{{othersCreature.name}}</option>                
             </select>
             <p class="help-block" ng-show="form2.name.$error.required"></p>
         </div>
@@ -36,7 +36,7 @@
         <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
             <label for="namearea">To area:</label>
             <select class="form-control" name="areaMove" ng-model="areaChosenMoveCreature.name" id="area.name" required>
-                <option ng-repeat="area in areas | orderBy:'+name' ">{{area.name}}</option>                
+                <option ng-repeat="otherArea in othersAreas | orderBy:'+name' ">{{otherArea.name}}</option>                
             </select>            
             <p class="help-block" ng-show="form.type.$error.required"></p>
         </div>

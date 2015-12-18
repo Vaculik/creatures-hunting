@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
+import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
+import cz.muni.fi.pa165.hateoas.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +25,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.UserSystemFacade;
-import cz.muni.fi.pa165.hateoas.CreatureResource;
-import cz.muni.fi.pa165.hateoas.UserSystemResource;
-import cz.muni.fi.pa165.hateoas.UserSystemResourceAssembler;
 
 @RestController
 @RequestMapping("/users")
@@ -39,73 +42,93 @@ import cz.muni.fi.pa165.hateoas.UserSystemResourceAssembler;
 public class UserSystemRestController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserSystemRestController.class);
-	
+
 	@Autowired
 	private UserSystemFacade userFacade;
-	
+
 	@Autowired
 	private UserSystemResourceAssembler userResourceAssembler;
-	
-	public HttpEntity<Resources<UserSystemResource>> getAllUsers() {
-		logger.debug("GET all users.");
-		List<UserSystemDTO> usersDTO = userFacade.getAllUsers();
+
+	@Autowired
+	private UserSystemVerifiedResourceAssembler userVerifiedResourceAssembler;
+
+	@RequestMapping(method = RequestMethod.GET)
+	public HttpEntity<Resources<UserSystemResource>> getAllUsers(@RequestParam(value = "view", defaultValue = "all") String viewType) {
+		List<UserSystemDTO> usersDTO;
+		usersDTO = userFacade.getAllUsers();
+
 		Link createLink = linkTo(UserSystemRestController.class).slash("create").withRel("create");
-		Link typeLink = linkTo(UserSystemRestController.class).slash("type").withRel("type");
-		Link sexLink = linkTo(UserSystemRestController.class).slash("sex").withRel("sex");
-		
-		Resources<UserSystemResource> resources = new Resources<> (
+
+		Resources<UserSystemResource> resources = new Resources<>(
 				userResourceAssembler.toResources(usersDTO),
 				linkTo(UserSystemRestController.class).withSelfRel(),
-				createLink,
-				typeLink,
-				sexLink
+				createLink
 		);
-		
+
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 	}
-	
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<UserSystemResource> getCreature(@PathVariable long id) {
-    	logger.debug("GET user with id=" + id);
-    	UserSystemDTO userDTO = userFacade.getUserById(id);
-    	if (userDTO == null) {
-            String msg = "User with id=" + id + " not found.";
-            logger.debug(msg);
-            throw new ResourceNotFoundException(msg);
-    	}
-    	UserSystemResource userResource = userResourceAssembler.toResource(userDTO);
-    	return new ResponseEntity<>(userResource, HttpStatus.OK);
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public HttpEntity<UserSystemResource> getUser(@PathVariable long id) {
+		logger.debug("GET user with id=" + id);
+		UserSystemDTO userDTO = userFacade.getUserById(id);
+		if (userDTO == null) {
+			String msg = "User with id=" + id + " not found.";
+			logger.debug(msg);
+			throw new ResourceNotFoundException(msg);
+		}
+		UserSystemResource userResource = userResourceAssembler.toResource(userDTO);
+		return new ResponseEntity<>(userResource, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/login-name/{name}", method = RequestMethod.GET)
+	public HttpEntity<UserSystemResource> getCreature(@PathVariable String name) {
+		logger.debug("GET user with name=" + name);
+		UserSystemDTO userDTO = userFacade.getUserByUserName(name);
+		if (userDTO == null) {
+			String msg = "User with userName=" + name + " not found.";
+			logger.debug(msg);
+			throw new ResourceNotFoundException(msg);
+		}
+		UserSystemResource userResource = userResourceAssembler.toResource(userDTO);
+		return new ResponseEntity<>(userResource, HttpStatus.OK);
+	}
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createUser(@RequestBody @Valid UserSystemDTO userDTO,
+    												BindingResult bindingResult) {
+    	logger.debug("POST new user");
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed when create new user: " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
+        
+        userFacade.createUser(userDTO);
     }
-    
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    public HttpEntity<UserSystemResource> getCreature(@PathVariable String name) {
-    	logger.debug("GET user with name=" + name);
-    	UserSystemDTO userDTO = userFacade.getUserByName(name);
-    	if (userDTO == null) {
-            String msg = "User with name=" + name + " not found.";
-            logger.debug(msg);
-            throw new ResourceNotFoundException(msg);
-    	}
-    	UserSystemResource userResource = userResourceAssembler.toResource(userDTO);
-    	return new ResponseEntity<>(userResource, HttpStatus.OK);
-    }
-    
-//    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public HttpEntity<UserSystemResource> createUser(@RequestBody @Valid UserSystemDTO userDTO,
-//    												BindingResult bindingResult) {
-//    	logger.debug("POST new user");
-//        if (bindingResult.hasErrors()) {
-//            String msg = "Validation failed when create new user: " + bindingResult.toString();
-//            logger.error(msg);
-//            throw new InvalidRequestFormatException(msg);
-//        }
-//        
-//        userFacade.createUser(userDTO);
-//    }
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public HttpEntity<UserSystemVerifiedResource> loginUser(@RequestBody @Valid UserSystemLoginDTO userLoginDTO,
+															BindingResult bindingResult) {
+		logger.debug("Authenticate user with login name={}", userLoginDTO.getLoginName());
+		if (bindingResult.hasErrors()) {
+			String msg = "Validation failed when authenticate user with login name=" + userLoginDTO.getLoginName();
+			logger.error(msg);
+			throw new InvalidRequestFormatException(msg);
+		}
+		UserSystemVerifiedDTO userVerifiedDTO = userFacade.login(userLoginDTO);
+		if (userVerifiedDTO == null) {
+			String msg = "Authentication of user with login name=" + userLoginDTO.getLoginName() + " has failed.";
+			logger.debug(msg);
+			throw new AuthenticationFailedException(msg);
+		}
+		UserSystemVerifiedResource userVerifiedResource = userVerifiedResourceAssembler.toResource(userVerifiedDTO);
+		return new ResponseEntity<>(userVerifiedResource, HttpStatus.OK);
+	}
     
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable long id) {
-    	logger.debug("DELETE area with id=" + id);
+    	logger.debug("DELETE user with id=" + id);
     	UserSystemDTO userDTO = userFacade.getUserById(id);
     	
     	if (userDTO == null) {

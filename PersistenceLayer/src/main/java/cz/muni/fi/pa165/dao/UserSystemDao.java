@@ -21,12 +21,12 @@ public interface UserSystemDao {
     UserSystem getById(Long id);
 
     /**
-     * This method finds user by its name
+     * This method finds user by its user name
      *
-     * @param name string-name of specific user
-     * @return user with specific name
+     * @param userName the user name of specific user
+     * @return user with specific user name
      */
-    UserSystem getByName(String name);
+    UserSystem getByUserName(String userName);
 
     /**
      * This method finds all users in a database

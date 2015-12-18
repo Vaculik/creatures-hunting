@@ -8,6 +8,9 @@ import cz.muni.fi.pa165.facade.AreaFacade;
 import cz.muni.fi.pa165.facade.CreatureFacade;
 import cz.muni.fi.pa165.hateoas.AreaResource;
 import cz.muni.fi.pa165.hateoas.AreaResourceAssembler;
+import cz.muni.fi.pa165.hateoas.CreatureResource;
+import cz.muni.fi.pa165.hateoas.CreatureResourceAssembler;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import org.slf4j.Logger;
@@ -30,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 /**
- *  The contoller for the rest layer of Creature informations system
- * 
+ * The contoller for the rest layer of Creature informations system
+ *
  * @author Martin Zboril
  */
 @RestController
@@ -49,6 +52,9 @@ public class AreaRestController {
 
     @Autowired
     private AreaResourceAssembler areaResourceAssembler;
+
+    @Autowired
+    private CreatureResourceAssembler creatureResourceAssembler;
 
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAllAreas() {
@@ -161,31 +167,80 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/addcreature", method = RequestMethod.POST)
-    public HttpEntity<AreaResource> addCreature(long id, String name) {               
-        CreatureDTO creatureDTO = creatureFacade.getCreatureByName(name);        
-
+    @RequestMapping(value = "/{id}/{name}/addcreature", method = RequestMethod.POST)
+    public HttpEntity<AreaResource> addCreature(@PathVariable long id, @PathVariable String name) {
+        String nameCr = name.replace("%20", " ");
+        CreatureDTO creatureDTO = creatureFacade.getCreatureByName(nameCr);
         AreaDTO areaDTO = areaFacade.getById(id);
-        
+
         logger.debug("POST add new Creature with ID " + creatureDTO.getId() + creatureDTO.getName());
-        logger.debug("POST add new Area with ID " + areaDTO.getId()  + areaDTO.getName());
+        logger.debug("POST add new Area with ID " + areaDTO.getId() + areaDTO.getName());
         areaFacade.addCreature(areaDTO, creatureDTO);
 
         AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/movecreature", method = RequestMethod.PUT)
-    public HttpEntity<AreaResource> moveCreature(@PathVariable("id") long id, long id2, long id3) {
+    @RequestMapping(value = "/{id}/{nameCreature}/{nameAreaTo}/movecreature", method = RequestMethod.PUT)
+    public HttpEntity<AreaResource> moveCreature(@PathVariable long id, @PathVariable String nameCreature, @PathVariable String nameAreaTo) {
 
+        String nameAr = nameAreaTo.replace("%20", " ");
+        String nameCr = nameCreature.replace("%20", " ");
         AreaDTO areaDTO = areaFacade.getById(id);
-        AreaDTO areaDTO2 = areaFacade.getById(id2);
-        CreatureDTO creatureDTO = creatureFacade.getCreatureById(id3);
+        AreaDTO areaDTO2 = areaFacade.getByName(nameAr);
+        CreatureDTO creatureDTO = creatureFacade.getCreatureByName(nameCr);
         logger.debug("POST add new Creature with ID " + creatureDTO.getId());
         areaFacade.moveCreature(creatureDTO, areaDTO, areaDTO2);
 
         AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/{id}/otherscreatures", method = RequestMethod.GET)
+    public HttpEntity<Resources<CreatureResource>> getCreaturesFromOthersAreas(@PathVariable long id) {
+        logger.debug("GET others creatures for area with id=" + id);
+        AreaDTO areaDTO = areaFacade.getById(id);
+
+        logger.debug(areaDTO.toString());
+        if (areaDTO == null) {
+            String msg = "Others creatures for area with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }
+
+        List<CreatureDTO> allCreaturesDTOs = creatureFacade.getAllCreatures();
+        List<CreatureDTO> othersCreaturesDTOs = new ArrayList<>();
+        for (CreatureDTO crDTO : allCreaturesDTOs) {
+            if (!areaDTO.getCreatures().contains(crDTO)) {
+                othersCreaturesDTOs.add(crDTO);
+            }
+        }
+
+        Resources<CreatureResource> creatureResources = new Resources<>(
+                creatureResourceAssembler.toResources(othersCreaturesDTOs));
+
+        return new ResponseEntity<>(creatureResources, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/othersareas", method = RequestMethod.GET)
+    public HttpEntity<Resources<AreaResource>> getOthersAreas(@PathVariable long id) {
+        logger.debug("GET others creatures for area with id=" + id);
+        AreaDTO areaDTO = areaFacade.getById(id);
+
+        logger.debug(areaDTO.toString());
+        if (areaDTO == null) {
+            String msg = "Others creatures for area with id=" + id + " not found.";
+            logger.debug(msg);
+            throw new ResourceNotFoundException(msg);
+        }
+
+        List<AreaDTO> allAreasDTOs = areaFacade.getAllAreas();
+        allAreasDTOs.remove(areaDTO);
+        Resources<AreaResource> areaResources = new Resources<>(
+                areaResourceAssembler.toResources(allAreasDTOs));
+
+        return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
 }

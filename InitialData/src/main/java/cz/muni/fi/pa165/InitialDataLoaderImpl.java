@@ -76,11 +76,11 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         winterfell.addCreature(dracula);
         winterfell.addCreature(jacobBlack);
         wall.addCreature(frankenstein);
-        
-        loadUser("Petr Parku", 12345, SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
-        loadUser("Janek Neprustrelny", 12345, SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
-        loadUser("Vlasta Plaminkova", 12345, SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
-        loadUser("Coco Jambo", 12345, SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
+
+        loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
+        loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
+        loadUser("Vlasta Plaminkova", "12345", SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
+        loadUser("Coco Jambo", "12345", SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
     }
 
 
@@ -127,8 +127,8 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         return newArea;
 
     }
-    
-    private UserSystem loadUser(String name, Integer password, SexType sex, UserType type, String userName, Date dateOfBirth) {
+
+    private UserSystem loadUser(String name, String password, SexType sex, UserType type, String userName, Date dateOfBirth) {
     	logger.debug("Create user with name=" + name);
     	UserSystem user = new UserSystem();
         user.setName(name);

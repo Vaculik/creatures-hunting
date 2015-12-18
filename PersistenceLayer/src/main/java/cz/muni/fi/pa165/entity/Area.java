@@ -77,16 +77,10 @@ public class Area {
     public void setDescription(String description) {
         this.description = description;
     }
-//
-//    public List<Creature> getCreatures() {
-////        return Collections.unmodifiableList(creatures);
-//        return creatures;
-//            }
 
     public List<Creature> getCreatures() {
         return creatures;
-    }
-    
+    }    
 
     public void addCreature(Creature creature) {
         creatures.add(creature);

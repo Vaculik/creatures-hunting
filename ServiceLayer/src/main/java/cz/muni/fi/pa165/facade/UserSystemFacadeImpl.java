@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
+import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +28,10 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
 
     @Override
     public void createUser(UserSystemDTO user) {
-        userSystemService.createUser(entityMapper.map(user, UserSystem.class));
+        UserSystem newUser = entityMapper.map(user, UserSystem.class);
+        String encryptedPassword = PasswordUtil.hashPassword(user.getPassword());
+        newUser.setPassword(encryptedPassword);
+        userSystemService.createUser(newUser);
     }
 
     @Override
@@ -59,7 +65,25 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
     }
 
     @Override
-    public UserSystemDTO getUserByName(String name) {
-        return entityMapper.map(userSystemService.getUserByName(name), UserSystemDTO.class);
+    public UserSystemDTO getUserByUserName(String name) {
+        return entityMapper.map(userSystemService.getUserByUserName(name), UserSystemDTO.class);
+    }
+
+    @Override
+    public UserSystemVerifiedDTO login(UserSystemLoginDTO userSystemLoginDTO) {
+        String loginName = userSystemLoginDTO.getLoginName();
+        String password = userSystemLoginDTO.getPassword();
+        UserSystem verifiedUser = userSystemService.login(loginName, password);
+        if (verifiedUser == null) {
+            return null;
+        }
+
+        UserSystemVerifiedDTO verifiedUserDTO = new UserSystemVerifiedDTO();
+        verifiedUserDTO.setUserId(verifiedUser.getId());
+        verifiedUserDTO.setUserLoginName(verifiedUser.getUserName());
+        if (verifiedUser.getType() == UserType.ADMIN) {
+            verifiedUserDTO.setAdmin(true);
+        }
+        return verifiedUserDTO;
     }
 }

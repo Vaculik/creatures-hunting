@@ -18,7 +18,7 @@ public class UserSystemDTO {
     private SexType sex;
     private Date dateOfBirth;
     private String userName;
-    private Integer password;
+    private String password;
 
     public Long getId() {
         return id;
@@ -68,11 +68,11 @@ public class UserSystemDTO {
         this.userName = userName;
     }
 
-    public Integer getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Integer password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

@@ -20,9 +20,9 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body>
+<body ng-app="creaturesHuntingApp">
 <div id="wrapper">
-<nav id="navbar" class="navbar navbar-inverse navbar-static-top">
+<nav id="navbar" class="navbar navbar-inverse navbar-static-top" ng-controller="NavbarController">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -38,11 +38,19 @@
                 <li><a href="#/creatures/all">Creatures</a></li>
                 <li><a href="#/weapons">Weapons</a></li>
                 <li><a href="#/areas">Areas</a></li>
-                <li><a href="#/users">Users</a></li>
+                <li><a href="#/users/all">Users</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
+            <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                </li>
+            </ul>
+            <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#/user/{{currentUser.id}}">{{currentUser.name}}</a>
+                </li>
+                <li>
+                    <a href="#/home"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>
@@ -50,7 +58,7 @@
 </nav>
 
 <div id="content" class="container">
-    <div ng-app="creaturesHuntingApp">
+    <div>
         <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
         <div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"> <span aria-hidden="true">&times;</span></button>

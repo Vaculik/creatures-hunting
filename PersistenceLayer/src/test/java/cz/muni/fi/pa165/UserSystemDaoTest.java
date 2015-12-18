@@ -61,10 +61,10 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void getByNameTest() {
+    public void getByUserNameTest() {
         UserSystem user = createUser("Tyrion");
         userDao.create(user);
-        UserSystem tmp = userDao.getByName(user.getName());
+        UserSystem tmp = userDao.getByUserName(user.getUserName());
         Assert.assertEquals(tmp, user);
     }
 
@@ -72,7 +72,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
     public void getByNameNotEqualsTest() {
         UserSystem user = createUser("Tyrion");
         userDao.create(user);
-        UserSystem tmp = userDao.getByName("Sansa Stark");
+        UserSystem tmp = userDao.getByUserName("nick Sansa Stark");
         Assert.assertNotEquals(tmp, user);
         Assert.assertNotEquals(null, user);
         Assert.assertNull(tmp);
@@ -82,7 +82,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
     public void getByNullNameTest() {
         UserSystem user = createUser("Ned Stark");
         userDao.create(user);
-        userDao.getByName(null);
+        userDao.getByUserName(null);
     }
 
     @Test(expectedExceptions = NullPointerException.class)
@@ -97,7 +97,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(1, userDao.findAll().size());
         userDao.delete(user);
         Assert.assertEquals(0, userDao.findAll().size());
-        UserSystem tmp = userDao.getByName(user.getName());
+        UserSystem tmp = userDao.getByUserName(user.getUserName());
         Assert.assertNotEquals(tmp, user);
         Assert.assertNull(tmp);
     }
@@ -113,7 +113,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertFalse(userDao.findAll().contains(user2));
         Assert.assertTrue(userDao.findAll().contains(user));
 
-        UserSystem tmp = userDao.getByName(user.getName());
+        UserSystem tmp = userDao.getByUserName(user.getUserName());
         Assert.assertEquals(tmp, user);
     }
 
@@ -131,11 +131,11 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         user.setSex(SexType.FEMALE);
         user.setType(UserType.ADMIN);
         user.setUserName("Arya the blind");
-        user.setPassword(new Integer(654321));
+        user.setPassword("abcd");
 
         userDao.update(user);
 
-        UserSystem tmp = userDao.getByName(user.getName());
+        UserSystem tmp = userDao.getByUserName(user.getUserName());
 
         Assert.assertEquals(tmp, user);
         Assert.assertEquals(user.getId(), tmp.getId());
@@ -193,7 +193,7 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
     private UserSystem createUser(String name) {
         UserSystem user = new UserSystem();
         user.setName(name);
-        user.setPassword(new Integer(123456));
+        user.setPassword("abcd");
         user.setSex(SexType.MALE);
         user.setType(UserType.ORDINARY);
         user.setUserName("nick " + name);

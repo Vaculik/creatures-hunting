@@ -80,13 +80,13 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
         userDTO.setName(name);
 
         when(entityMapper.map(user, UserSystemDTO.class)).thenReturn(userDTO);
-        when(userSystemService.getUserByName(name)).thenReturn(user);
+        when(userSystemService.getUserByUserName(name)).thenReturn(user);
 
-        Assert.assertEquals(userSystemFacade.getUserByName(name), userDTO);
-        Assert.assertNull(userSystemFacade.getUserByName(wrongName));
+        Assert.assertEquals(userSystemFacade.getUserByUserName(name), userDTO);
+        Assert.assertNull(userSystemFacade.getUserByUserName(wrongName));
 
         verify(entityMapper).map(user, UserSystemDTO.class);
-        verify(userSystemService).getUserByName(name);
+        verify(userSystemService).getUserByUserName(name);
     }
 
     @Test
@@ -184,7 +184,7 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
     private UserSystem createUser(String name, SexType sex, UserType type) {
         UserSystem user = new UserSystem();
         user.setName(name);
-        user.setPassword(new Integer(123456));
+        user.setPassword("abcd");
         user.setSex(sex);
         user.setType(type);
         user.setUserName("nick " + name);

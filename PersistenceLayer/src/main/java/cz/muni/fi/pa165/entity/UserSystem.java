@@ -39,7 +39,7 @@ public class UserSystem {
     
     private String userName;
     
-    private Integer password;
+    private String password;
 
     public UserSystem() {
     }
@@ -88,7 +88,7 @@ public class UserSystem {
         this.userName = userName;
     }
 
-    public Integer getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -100,7 +100,7 @@ public class UserSystem {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public void setPassword(Integer password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 

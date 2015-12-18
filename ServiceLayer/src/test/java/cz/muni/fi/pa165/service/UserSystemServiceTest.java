@@ -70,18 +70,18 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void getUserByNameTest() {
+    public void getUserByUserNameTest() {
         String name = "Ice-B";
         String wrongName = "Doktor z hor";
-        user.setName(name);
+        user.setUserName(name);
 
-        when(userSystemDao.getByName(name)).thenReturn(user);
+        when(userSystemDao.getByUserName(name)).thenReturn(user);
 
-        Assert.assertEquals(userSystemService.getUserByName(name), user);
-        Assert.assertNull(userSystemService.getUserByName(wrongName));
+        Assert.assertEquals(userSystemService.getUserByUserName(name), user);
+        Assert.assertNull(userSystemService.getUserByUserName(wrongName));
 
-        verify(userSystemDao).getByName(name);
-        verify(userSystemDao).getByName(wrongName);
+        verify(userSystemDao).getByUserName(name);
+        verify(userSystemDao).getByUserName(wrongName);
     }
 
     @Test
@@ -183,7 +183,7 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
     private UserSystem createUser(String name, SexType sex, UserType type) {
         UserSystem user = new UserSystem();
         user.setName(name);
-        user.setPassword(new Integer(123456));
+        user.setPassword("abcd");
         user.setSex(sex);
         user.setType(type);
         user.setUserName("nick " + name);
