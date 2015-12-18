@@ -108,11 +108,11 @@ controllers.controller('EditUserController', function ($http, $routeParams, $roo
                 $rootScope.warningAlert = 'Problem occured when loading user ' + response.data.message;
             });
     
-    $scope.edit = function (weapon) {
+    $scope.edit = function (user) {
         console.log("EDIT user " + user.name);
         $http.post('/creatures-hunting/rest/users/edit/'+user.id, user).then(function (response) {//Request successful
-//            $rootScope.succesAllert("Weapon " + weapon.name + " edited");
-            $location.path('/users/' + user.id);
+        	$rootScope.succesAllert = 'User was changed.';
+        	$location.path('/user/' + user.id);
         }, function (response) {//Request failed
             console.log("EDIT user failed");
             console.log(response);
