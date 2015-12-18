@@ -3,10 +3,10 @@ Included in module WebAppLayer.<br>
 <br>
 **Entities with attributes:**<br>
 1. Area<br>
-* id (long)<br>
-* name (String)<br>
-* description (String)<br>
-* creatures (list of creatures)<br>
+	- id (long)<br>
+	- name (String)<br>
+	- description (String)<br>
+	- creatures (list of creatures)<br>
 2. Creature<br>
 	- id (long)<br>
 	- name (String) <br>
@@ -42,8 +42,11 @@ Included in module WebAppLayer.<br>
 4. _http://localhost:8080/creatures-hunting/rest/weapons<br>_
 5. _http://localhost:8080/creatures-hunting/rest/weapon-efficiencies/<br>_
 <br>
+
 ## GET<br>
+
 <br>
+
 ###Entities<br>
 The command for retrieving data is:<br>
 _curl -i -X GET http://localhost:8080/creatures-hunting/rest/ENTITY_<br>
