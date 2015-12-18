@@ -2,19 +2,19 @@
 Included in module WebAppLayer.<br>
 <br>
 **Entities with attributes:**<br>
-*1. Area<br>*
+**1. Area<br>**
 	- id (long)<br>
 	- name (String)<br>
 	- description (String)<br>
 	- creatures (list of creatures)<br>
-*2. Creature<br>*
+**2. Creature<br>**
 	- id (long)<br>
 	- name (String) <br>
 	- height (integer)<br>
 	- weight (integer)<br>
 	- type (CreatureType) - values: UNDEAD, VAMPIRE, BEAST	<br>
 	- description (String)<br>
-*3. User<br>*
+**3. User<br>**
 	- id (long)<br>
 	- name (String)<br>
 	- type (UserType) - values: ADMIN, ORDINARY<br>
@@ -22,14 +22,14 @@ Included in module WebAppLayer.<br>
 	- dateOfBirth (Date)<br>
 	- userName (String)<br>
 	- password (String)<br>
-*4. Weapon<br>*
+**4. Weapon<br>**
 	- id (long)<br>
 	- name (String)<br>
 	- type (WeaponType) - values: MELEE, GUN, ENERGY, EXPLOSIVE<br>
 	- range (integer)<br>
 	- ammoType (AmmoType) - values:  NONE, BULLET_9MM, BULLET_NATO, BATTERY, MAGNUM_44<br>
 	- description (String)<br>
-*5. WeaponEfficiency<br>*
+**5. WeaponEfficiency<br>**
 	- id (long)<br>
 	- efficiency (integer)<br>
 	- creature (Creature)<br>
