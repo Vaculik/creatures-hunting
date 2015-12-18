@@ -22,28 +22,6 @@
         <br>        
         <button ng-disabled="!form2.$valid" class="btn btn-default" type="submit" ng-click="addCreature(creatureChosenAddCreature.name)">Add Creature</button><br><br>  
         </form>
-        
-        <h3>Move Creature</h3>
-        <form name="form" novalidate role="form">
-
-        <div class="form-group" ng-class="{'has-error': !form.name.$valid}">
-            <label for="name">Creature:</label>
-            <select class="form-control" name="name" ng-model="creatureChosenMoveCreature.name" id="creature" required>
-                <option ng-repeat="creature in creatures | orderBy:'+name' ">{{creature.name}}</option>                
-            </select>
-            <p class="help-block" ng-show="form.name.$error.required"></p>
-        </div>
-        <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
-            <label for="namearea">To area:</label>
-            <select class="form-control" name="areaMove" ng-model="areaChosenMoveCreature.name" id="area.name" required>
-                <option ng-repeat="otherArea in othersAreas | orderBy:'+name' ">{{otherArea.name}}</option>                
-            </select>            
-            <p class="help-block" ng-show="form.type.$error.required"></p>
-        </div>
-
-        <br>
-        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="moveCreature(creatureChosenMoveCreature.name,areaChosenMoveCreature.name)">Move Creature</button><br><br>          
-        </form>
         </div>
     </div>
 

@@ -155,40 +155,7 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         when(areaDao.findAll()).thenReturn(areas);
         Assert.assertEquals(areaService.getAreasFewestCreatures().size(), 2);
         verify(areaDao, times(1)).findAll();
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void moveNullCreatureTest() {
-        areaService.moveCreature(null, area, ar2);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void moveCreatureNullFirstAreaTest() {
-        areaService.moveCreature(creature, null, ar2);
-    }
-
-    @Test(expectedExceptions = IllegalArgumentException.class)
-    public void moveCreatureNullSecondAreaTest() {
-        areaService.moveCreature(creature, area, null);
-    }
-
-    @Test(expectedExceptions = AreaServiceException.class)
-    public void moveCreatureNotInAreaTest() {
-        areaService.moveCreature(creature, area, ar2);
-    }
-
-    @Test
-    public void moveCreatureTest() {
-        doNothing().when(areaDao).update(area);
-        doNothing().when(areaDao).update(ar2);
-        area.addCreature(creature);
-        areaService.moveCreature(creature, area, ar2);
-
-        Assert.assertFalse(area.getCreatures().contains(creature));
-        Assert.assertTrue(ar2.getCreatures().contains(creature));
-        verify(areaDao).update(area);
-        verify(areaDao).update(area);
-    }
+    }  
  
     private List<Area> createAreasList() {
         areas = new ArrayList<>();

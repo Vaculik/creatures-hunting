@@ -87,14 +87,5 @@ public interface AreaFacade {
      * @param creature a creature which to add
      */
     void addCreature(AreaDTO area, CreatureDTO creature);
-
-    /**
-     * This method moves the creature from one area to another area
-     *
-     * @param creature creature to be moved
-     * @param fromArea area to be moved from
-     * @param toArea area to be moved to
-     * @return moving was successful
-     */
-    boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea);
+   
 }

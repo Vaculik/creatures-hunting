@@ -181,22 +181,6 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/{nameCreature}/{nameAreaTo}/movecreature", method = RequestMethod.PUT)
-    public HttpEntity<AreaResource> moveCreature(@PathVariable long id, @PathVariable String nameCreature, @PathVariable String nameAreaTo) {
-
-        String nameAr = nameAreaTo.replace("%20", " ");
-        String nameCr = nameCreature.replace("%20", " ");
-        AreaDTO areaDTO = areaFacade.getById(id);
-        AreaDTO areaDTO2 = areaFacade.getByName(nameAr);
-        CreatureDTO creatureDTO = creatureFacade.getCreatureByName(nameCr);
-        logger.debug("POST add new Creature with ID " + creatureDTO.getId());
-        areaFacade.moveCreature(creatureDTO, areaDTO, areaDTO2);
-
-        AreaResource areaResource = areaResourceAssembler.toResource(areaDTO);
-        return new ResponseEntity<>(areaResource, HttpStatus.OK);
-
-    }
-
     @RequestMapping(value = "/{id}/otherscreatures", method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> getCreaturesFromOthersAreas(@PathVariable long id) {
         logger.debug("GET others creatures for area with id=" + id);
