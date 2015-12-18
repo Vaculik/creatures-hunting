@@ -77,6 +77,8 @@ app.config(['$routeProvider', function ($routeProvider) {
                     templateUrl: 'pages/particular/creature.html',
                     controller: 'ParticularCreatureController'}).
                 when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
+                when('/weapons/new', {templateUrl: 'pages/new/new-weapon.html', controller: 'NewWeaponController'}).
+                when('/weapons/:weaponId', {templateUrl: 'pages/particular/weapon.html', controller: 'ParticularWeaponController'}).
                 when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
                 when('/areas/nocreature', {templateUrl: 'pages/areas.html', controller: 'NoCreatureAreaController'}).
                 when('/areas/anycreature', {templateUrl: 'pages/areas.html', controller: 'AnyCreatureAreaController'}).
