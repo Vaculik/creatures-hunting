@@ -1,5 +1,5 @@
 <h2>{{title}}</h2>
-<a href="#user/new">
+<a href="#user/new" ng-if="isAuthenticated()">
     <button type="button" class="btn btn-default">New user</button>
 </a>
 <div class="btn-group">

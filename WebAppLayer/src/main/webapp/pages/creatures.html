@@ -1,5 +1,5 @@
 <h2>{{title}}</h2>
-<a href="#creature/new">
+<a href="#creature/new" ng-if="isAuthenticated()">
     <button type="button" class="btn btn-default">New creature</button>
 </a>
 <div class="btn-group">

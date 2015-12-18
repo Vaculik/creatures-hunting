@@ -1,5 +1,5 @@
 <h2>{{title}}</h2>
-<a href="#weapons/new">
+<a href="#weapons/new" ng-if="isAuthenticated()">
     <button type="button" class="btn btn-default">New weapon</button>
 </a>
 <div class="btn-group">

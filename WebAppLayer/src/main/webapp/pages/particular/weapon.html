@@ -14,8 +14,11 @@
             {{weapon.description}}
         </p>
         <br>
-        <button class="btn btn-default" type="submit" ng-click="delete(weapon.id)">Delete</button>
+        <div ng-if="isAuthorized(userRoles.admin)">
+            <button class="btn btn-default" type="submit" ng-click="delete(weapon.id)">Delete</button>
+        </div>
     </div>
+
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <table class="table">
             <caption>Best used against:</caption>

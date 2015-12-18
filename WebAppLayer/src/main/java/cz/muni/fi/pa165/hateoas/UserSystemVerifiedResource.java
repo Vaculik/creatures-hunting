@@ -10,7 +10,7 @@ import org.springframework.hateoas.core.Relation;
  * @author Karel Vaculik
  */
 
-@Relation(value = "user-verified", collectionRelation = "users-verified")
+@Relation(value = "userVerified", collectionRelation = "usersVerified")
 @JsonPropertyOrder(value = {"userId", "loginName", "admin"})
 public class UserSystemVerifiedResource extends ResourceSupport {
 
