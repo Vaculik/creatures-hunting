@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
 
     <script src="js/creaturesHuntingApp.js"></script>
+    <script src="js/weaponControllers.js"></script>
 
     <link rel="stylesheet" href="index.css">
 </head>

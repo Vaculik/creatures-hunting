@@ -79,21 +79,44 @@ public class WeaponRestController {
         weaponDTOs = weaponFacade.getAllWeapons();
 
         Link createLink = linkTo(WeaponRestController.class).slash("create").withRel("create");
-//        Link maxHeightLink = linkTo(CreatureRestController.class).slash("max-height").withRel("max-height");
-//        Link maxWeightLink = linkTo(CreatureRestController.class).slash("max-weight").withRel("max-weight");
-
         Resources<WeaponResource> weaponResources = new Resources<>(
                 weaponResourceAssembler.toResources(weaponDTOs),
                 linkTo(WeaponRestController.class).withSelfRel(),
                 createLink
-        //                maxHeightLink,
-        //                maxWeightLink
         );
         Arrays.stream(WeaponType.values()).forEach((type -> weaponResources.
                 add(linkTo(WeaponRestController.class).slash("type").slash(type).withRel(type.name()))));
         Arrays.stream(AmmoType.values()).forEach((type -> weaponResources.
                 add(linkTo(WeaponRestController.class).slash("type").slash(type).withRel(type.name()))));
 
+        return new ResponseEntity<>(weaponResources, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
+    public HttpEntity<Resources<WeaponResource>> getAllWeaponsOfType(@PathVariable WeaponType type) {
+        List<WeaponDTO> weaponDTOs;
+
+        logger.debug("GET all creatures of type " + type + ".");
+        weaponDTOs = weaponFacade.getWeaponsOfType(type);
+
+        Resources<WeaponResource> weaponResources = new Resources<>(
+                weaponResourceAssembler.toResources(weaponDTOs),
+                linkTo(WeaponRestController.class).withSelfRel()
+        );
+        return new ResponseEntity<>(weaponResources, HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = "/ammotype/{ammoType}", method = RequestMethod.GET)
+    public HttpEntity<Resources<WeaponResource>> getAllWeaponsOfAmmoType(@PathVariable AmmoType ammoType) {
+        List<WeaponDTO> weaponDTOs;
+
+        logger.debug("GET all creatures of type " + ammoType + ".");
+        weaponDTOs = weaponFacade.getWeaponsOfAmmoType(ammoType);
+
+        Resources<WeaponResource> weaponResources = new Resources<>(
+                weaponResourceAssembler.toResources(weaponDTOs),
+                linkTo(WeaponRestController.class).withSelfRel()
+        );
         return new ResponseEntity<>(weaponResources, HttpStatus.OK);
     }
 
@@ -139,4 +162,5 @@ public class WeaponRestController {
         }
         weaponFacade.deleteWeapon(weaponDTO);
     }
+
 }
