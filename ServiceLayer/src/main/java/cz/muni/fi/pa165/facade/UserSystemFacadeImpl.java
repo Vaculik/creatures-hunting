@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
 import cz.muni.fi.pa165.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +70,9 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
     }
 
     @Override
-    public UserSystemVerifiedDTO login(String loginName, String password) {
+    public UserSystemVerifiedDTO login(UserSystemLoginDTO userSystemLoginDTO) {
+        String loginName = userSystemLoginDTO.getLoginName();
+        String password = userSystemLoginDTO.getPassword();
         UserSystem verifiedUser = userSystemService.login(loginName, password);
         if (verifiedUser == null) {
             return null;

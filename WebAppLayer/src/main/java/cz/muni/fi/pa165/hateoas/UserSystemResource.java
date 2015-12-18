@@ -20,7 +20,7 @@ public class UserSystemResource extends ResourceSupport {
     private SexType sex;
     private Date dateOfBirth;
     private String userName;
-    private Integer password;
+    private String password;
     
     public UserSystemResource(UserSystemDTO userDTO) {
     	this.id = userDTO.getId();
@@ -72,11 +72,11 @@ public class UserSystemResource extends ResourceSupport {
 		this.userName = userName;
 	}
 
-	public Integer getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(Integer password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 }

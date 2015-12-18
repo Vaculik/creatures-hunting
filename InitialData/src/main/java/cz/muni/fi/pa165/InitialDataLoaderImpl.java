@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165;
 
-import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.Creature;
-import cz.muni.fi.pa165.entity.Weapon;
-import cz.muni.fi.pa165.entity.WeaponEfficiency;
+import cz.muni.fi.pa165.entity.*;
 import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.enums.WeaponType;
@@ -116,4 +113,5 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         return newArea;
 
     }
+
 }

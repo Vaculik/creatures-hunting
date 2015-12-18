@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
+import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
+import cz.muni.fi.pa165.hateoas.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +33,6 @@ import cz.muni.fi.pa165.enums.UserType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.UserSystemFacade;
-import cz.muni.fi.pa165.hateoas.CreatureResource;
-import cz.muni.fi.pa165.hateoas.UserSystemResource;
-import cz.muni.fi.pa165.hateoas.UserSystemResourceAssembler;
 
 @RestController
 @RequestMapping("/users")
@@ -45,6 +46,9 @@ public class UserSystemRestController {
 	
 	@Autowired
 	private UserSystemResourceAssembler userResourceAssembler;
+
+	@Autowired
+	private UserSystemVerifiedResourceAssembler userVerifiedResourceAssembler;
 	
 	public HttpEntity<Resources<UserSystemResource>> getAllUsers() {
 		logger.debug("GET all users.");
@@ -77,18 +81,37 @@ public class UserSystemRestController {
     	return new ResponseEntity<>(userResource, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/login-name/{name}", method = RequestMethod.GET)
     public HttpEntity<UserSystemResource> getCreature(@PathVariable String name) {
     	logger.debug("GET user with name=" + name);
-    	UserSystemDTO userDTO = userFacade.getUserByName(name);
+    	UserSystemDTO userDTO = userFacade.getUserByUserName(name);
     	if (userDTO == null) {
-            String msg = "User with name=" + name + " not found.";
+            String msg = "User with userName=" + name + " not found.";
             logger.debug(msg);
             throw new ResourceNotFoundException(msg);
     	}
     	UserSystemResource userResource = userResourceAssembler.toResource(userDTO);
     	return new ResponseEntity<>(userResource, HttpStatus.OK);
     }
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public HttpEntity<UserSystemVerifiedResource> loginUser(@RequestBody @Valid UserSystemLoginDTO userLoginDTO,
+															BindingResult bindingResult) {
+		logger.debug("Authenticate user with login name={}", userLoginDTO.getLoginName());
+		if (bindingResult.hasErrors()) {
+			String msg = "Validation failed when authenticate user with login name=" + userLoginDTO.getLoginName();
+			logger.error(msg);
+			throw new InvalidRequestFormatException(msg);
+		}
+		UserSystemVerifiedDTO userVerifiedDTO = userFacade.login(userLoginDTO);
+		if (userVerifiedDTO == null) {
+			String msg = "Authentication of user with login name=" + userLoginDTO.getLoginName() + " has failed.";
+			logger.debug(msg);
+			throw new AuthenticationFailedException(msg);
+		}
+		UserSystemVerifiedResource userVerifiedResource = userVerifiedResourceAssembler.toResource(userVerifiedDTO);
+		return new ResponseEntity<>(userVerifiedResource, HttpStatus.OK);
+	}
     
 //    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    public HttpEntity<UserSystemResource> createUser(@RequestBody @Valid UserSystemDTO userDTO,

@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.dto;
 
 /**
- * Created by vaculik on 18.12.15.
+ * @author Karel Vaculik
  */
 public class UserSystemVerifiedDTO {
 

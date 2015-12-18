@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.facade;
 import java.util.List;
 
 import cz.muni.fi.pa165.dto.UserSystemDTO;
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
@@ -70,11 +71,10 @@ public interface UserSystemFacade {
     UserSystemDTO getUserByUserName(String userName);
 
     /**
-     * Authenticate a user with given login name and password.
+     * Authenticate a user with given user login information in userSystemLoginDTO.
      *
-     * @param loginName the login name
-     * @param password the password
-     * @return the authenticated UserSystemDTO or null, if authentication failed
+     * @param userSystemLoginDTO the userSystemLoginDTO
+     * @return the UserSystemVerifiedDTO or null, if authentication failed
      */
-    UserSystemVerifiedDTO login(String loginName, String password);
+    UserSystemVerifiedDTO login(UserSystemLoginDTO userSystemLoginDTO);
 }
