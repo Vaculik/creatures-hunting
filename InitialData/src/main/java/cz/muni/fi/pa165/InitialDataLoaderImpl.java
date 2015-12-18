@@ -76,6 +76,9 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         winterfell.addCreature(dracula);
         winterfell.addCreature(jacobBlack);
         wall.addCreature(frankenstein);
+        areaService.updateArea(wall);
+        areaService.updateArea(winterfell);
+        
 
         loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
         loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
