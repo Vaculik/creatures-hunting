@@ -1,14 +1,11 @@
 package cz.muni.fi.pa165.controllers;
 
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.WeaponDTO;
 import cz.muni.fi.pa165.enums.AmmoType;
-import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.WeaponFacade;
-import cz.muni.fi.pa165.hateoas.CreatureResource;
 import cz.muni.fi.pa165.hateoas.WeaponResource;
 import cz.muni.fi.pa165.hateoas.WeaponResourceAssembler;
 import java.security.InvalidParameterException;

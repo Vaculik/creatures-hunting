@@ -21,12 +21,12 @@
             </select>
             <p class="help-block" ng-show="form.type.$error.required">Type is required</p>
         </div>
-        <div class="form-group" ng-class="{'has-error': !form.height.$valid}">
+        <div class="form-group" ng-class="{'has-error': !form.range.$valid}">
             <label for="range">Effective range in metres:</label>
             <input placeholder="0" type="number" ng-min="0" ng-pattern="/^-?\d*$/" required class="form-control" name="range" ng-model="weapon.range" id="range">
-            <p class="help-block" ng-show="form.height.$error.required">Range is required</p>
-            <p class="help-block" ng-show="form.height.$error.min">Range must be at least 0</p>
-            <p class="help-block" ng-show="form.height.$error.pattern">Range must be integer</p>
+            <p class="help-block" ng-show="form.range.$error.required">Range is required</p>
+            <p class="help-block" ng-show="form.range.$error.min">Range must be at least 0</p>
+            <p class="help-block" ng-show="form.range.$error.pattern">Range must be integer</p>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
