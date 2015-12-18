@@ -17,6 +17,7 @@
     <script src="js/creaturesHuntingApp.js"></script>
     <script src="js/weaponControllers.js"></script>
     <script src="js/areaControllers.js"></script>
+    <script src="js/userControllers.js"></script>
     <script src="js/security.js"></script>
 
     <link rel="stylesheet" href="index.css">
