@@ -11,6 +11,7 @@ import cz.muni.fi.pa165.facade.WeaponFacade;
 import cz.muni.fi.pa165.hateoas.CreatureResource;
 import cz.muni.fi.pa165.hateoas.WeaponResource;
 import cz.muni.fi.pa165.hateoas.WeaponResourceAssembler;
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.List;
 import javax.validation.Valid;
@@ -49,28 +50,6 @@ public class WeaponRestController {
     @Autowired
     private WeaponResourceAssembler weaponResourceAssembler;
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public HttpEntity<Resources<WeaponResource>> getAllWeapons() {
-//        List <WeaponDTO> weaponDTOs;
-//        logger.debug("GET all weapons");
-//        weaponDTOs = weaponFacade.getAllWeapons();
-//        logger.debug("weapons len = " + Integer.toString(weaponDTOs.size()));
-//        
-//        Link createLink = linkTo(WeaponRestController.class).slash("create").withRel("create");
-//
-//        Resources<WeaponResource> weaponResources = new Resources<>(
-//                weaponResourceAssembler.toResources(weaponDTOs),
-//                linkTo(WeaponRestController.class).withSelfRel(),
-//                createLink);
-//        
-//        
-//        Arrays.stream(WeaponType.values()).forEach( (type -> weaponResources.
-//                add(linkTo(WeaponRestController.class).slash("type").slash(type).withRel(type.name()))) );
-//        Arrays.stream(AmmoType.values()).forEach( (type -> weaponResources.
-//                add(linkTo(WeaponRestController.class).slash("type").slash(type).withRel(type.name()))) );
-//
-//        return new ResponseEntity<>(weaponResources, HttpStatus.OK);
-//    }
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> getAllWeapons() {
         List<WeaponDTO> weaponDTOs;
@@ -105,7 +84,7 @@ public class WeaponRestController {
         );
         return new ResponseEntity<>(weaponResources, HttpStatus.OK);
     }
-    
+
     @RequestMapping(value = "/ammotype/{ammoType}", method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> getAllWeaponsOfAmmoType(@PathVariable AmmoType ammoType) {
         List<WeaponDTO> weaponDTOs;
@@ -163,4 +142,21 @@ public class WeaponRestController {
         weaponFacade.deleteWeapon(weaponDTO);
     }
 
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void editWeapon(@PathVariable long id, @RequestBody @Valid WeaponDTO weaponDTO,
+            BindingResult bindingResult) {
+        if (weaponDTO.getId() != id) {
+            String msg = "Weapon edit id mismatch.";
+            logger.error(msg);
+            throw new InvalidParameterException(msg);
+        }
+        logger.debug("POST edit weapon id=" + weaponDTO.getId().toString());
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed: editing weapon id=" + weaponDTO.getId().toString() + ": " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
+
+        weaponFacade.updateWeapon(weaponDTO);
+    }
 }

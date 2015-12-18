@@ -81,12 +81,35 @@ controllers.controller('NewWeaponController', function ($http, $rootScope, $loca
     $scope.create = function (weapon) {
         console.log("Create weapon " + weapon.name);
         $http.post('/creatures-hunting/rest/weapons/create', weapon).then(function (response) {//Request successful
-            $rootScope.succesAllert("Weapon " + weapon.name + " created");
-            $location.path('/weapons/');
+//            $rootScope.succesAllert("Weapon " + weapon.name + " created");
+            $location.path('/weapons');
         }, function (response) {//Request failed
             console.log("CREATE weapon failed");
             console.log(response);
             $rootScope.errorAlert("Weapon could not be created.");
+        });
+    };
+});
+
+controllers.controller('EditWeaponController', function ($http, $routeParams, $rootScope, $location, $scope) {
+    var weaponId = $routeParams.weaponId;
+    $scope.types = ["MELEE", "GUN", "ENERGY", "EXPLOSIVE"];
+    $scope.ammoTypes = ["NONE", "BULLET_9MM", "BULLET_NATO", "BATTERY", "MAGNUM_44"];
+    console.log('GET weapon by id=' + weaponId);
+    $http.get('/creatures-hunting/rest/weapons/' + weaponId).then(function (response) {//Request successful
+        $scope.weapon = response.data;
+    }, function (data) {//Request failed
+        $rootScope.warningAlert = "Could not load weapon: " + data.message;
+    });
+    $scope.edit = function (weapon) {
+        console.log("EDIT weapon " + weapon.name);
+        $http.post('/creatures-hunting/rest/weapons/edit/'+weapon.id, weapon).then(function (response) {//Request successful
+//            $rootScope.succesAllert("Weapon " + weapon.name + " edited");
+            $location.path('/weapons/' + weapon.id);
+        }, function (response) {//Request failed
+            console.log("EDIT weapon failed");
+            console.log(response);
+            $rootScope.errorAlert("Weapon could not be edited.");
         });
     };
 });
