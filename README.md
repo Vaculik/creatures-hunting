@@ -1,105 +1,117 @@
-REST layer
-Included in module WebAppLayer.
+# Creature hunting information system<br>
+Startable with the command: _mvn clean install && cd WebAppLayer && mvn tomcat7:run<br>
+Accesible under the link: _http://localhost:8080/pa165_<br>
+Login and password:<br>
+- Ordinary user: _Jakub, user_<br>
+- Admin: _Martin, admin_<br>
+<br>
+More information about the system on <a href="https://github.com/Vaculik/creatures-hunting/wiki">the wiki page of project</a>
 
-Entities with attributes:
-1. Area
-	- id (long)
-	- name (String)
-	- description (String)
-	- creatures (list of creatures)
-2. Creature
-	- id (long)
-	- name (String) 
-	- height (integer)
-	- weight (integer)
-	- type (CreatureType) - values: UNDEAD, VAMPIRE, BEAST	
-	- description (String)
-3. User
-	- id (long)
-	- name (String)
-	- type (UserType) - values: ADMIN, ORDINARY
-	- sex (SexType) - values: MALE, FEMALE
-	- dateOfBirth (Date)
-	- userName (String)
-	- password (String)
-4. Weapon
-	- id (long)
-	- name (String)
-	- type (WeaponType) - values: MELEE, GUN, ENERGY, EXPLOSIVE
-	- range (integer)
-	- ammoType (AmmoType) - values:  NONE, BULLET_9MM, BULLET_NATO, BATTERY, MAGNUM_44
-	- description (String)
-5. WeaponEfficiency
-	- id (long)
-	- efficiency (integer)
-	- creature (Creature)
-	- weapon (Weapon)
+# REST layer<br>
+Included in module WebAppLayer.<br>
+<br>
+**Entities with attributes:**<br>
+**1. Area<br>**
+	- id (long)<br>
+	- name (String)<br>
+	- description (String)<br>
+	- creatures (list of creatures)<br>
+**2. Creature<br>**
+	- id (long)<br>
+	- name (String) <br>
+	- height (integer)<br>
+	- weight (integer)<br>
+	- type (CreatureType) - values: UNDEAD, VAMPIRE, BEAST	<br>
+	- description (String)<br>
+**3. User<br>**
+	- id (long)<br>
+	- name (String)<br>
+	- type (UserType) - values: ADMIN, ORDINARY<br>
+	- sex (SexType) - values: MALE, FEMALE<br>
+	- dateOfBirth (Date)<br>
+	- userName (String)<br>
+	- password (String)<br>
+**4. Weapon<br>**
+	- id (long)<br>
+	- name (String)<br>
+	- type (WeaponType) - values: MELEE, GUN, ENERGY, EXPLOSIVE<br>
+	- range (integer)<br>
+	- ammoType (AmmoType) - values:  NONE, BULLET_9MM, BULLET_NATO, BATTERY, MAGNUM_44<br>
+	- description (String)<br>
+**5. WeaponEfficiency<br>**
+	- id (long)<br>
+	- efficiency (integer)<br>
+	- creature (Creature)<br>
+	- weapon (Weapon)<br>
+<br>
+**On REST layer are accesible following links:<br>**
+1. _http://localhost:8080/creatures-hunting/rest/areas<br>_
+2. _http://localhost:8080/creatures-hunting/rest/creatures<br>_
+3. _http://localhost:8080/creatures-hunting/rest/users<br>_
+4. _http://localhost:8080/creatures-hunting/rest/weapons<br>_
+5. _http://localhost:8080/creatures-hunting/rest/weapon-efficiencies/<br>_
+<br>
 
-On REST layer are accesible following links:
-1. http://localhost:8080/creatures-hunting/rest/areas
-2. http://localhost:8080/creatures-hunting/rest/creatures
-3. http://localhost:8080/creatures-hunting/rest/users
-4. http://localhost:8080/creatures-hunting/rest/weapons
-5. http://localhost:8080/creatures-hunting/rest/weapon-efficiencies/
+## GET<br>
 
-**GET**
+<br>
 
-****Entities****
-The command for retrieving data is:
-curl -i -X GET http://localhost:8080/creatures-hunting/rest/ENTITY
-
-Each entity has some functions which choose only specific instances of entities.
-Adress of each entity starts:
-curl -i -X GET http://localhost:8080/creatures-hunting/rest/...
-
-Dots are replaced by:
-********Area********
-areas/no-creature
-areas/any-creature
-areas/most-creatures
-areas/fewest-creatures
-	
-********Creature********
-creatures/max-height
-creatures/max-weight
-creatures/type/UNDEAD ...creature's type
-creatures/type/VAMPIRE ...creature's type
-creatures/type/BEAST ...creature's type
-
-********Weapon********
-weapons/type/MELEE ... weapon's type
-weapons/type/GUN ... weapon's type
-weapons/type/ENERGY ... weapon's type
-weapons/type/EXPLOSIVE ... weapon's type
-weapons/type/NONE ... ammo's type
-weapons/type/BULLET_NATO ... ammo's type
-weapons/type/BATTERY ... ammo's type
-weapons/type/MAGNUM_44 ... ammo's type
-
-
-**CREATE**
-An instance is possible to create with following command:
-curl -X POST -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/creatures-hunting/rest/ENTITY/create
-
-where ENTITY is: areas, creatures, users, weapons, weapon-efficiencies
-and dots area specific attributes with its values for each entity in the pattern of: "name":"King","description":"The king of all"
-
-Atributes are seen above.
-
-**DELETE**
-Each instance is possible to delete with following command: 
-curl -i -X DELETE http://localhost:8080/creatures-hunting/rest/ENTITY/ID
-
-where ENTITY is: areas, creatures, users, weapons, weapon-efficiencies
-and ID is ID number of an instance of an entity
-
-**UPDATE**
-An instance is possible to create with following command:
-curl -X PUT -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/creatures-hunting/rest/ENTITY/ID
-
-where ENTITY is: areas, creatures, users, weapons, weapon-efficiencies
-ID is ID number of an instance of an entity
-and dots area specific attributes with its values for each entity in the pattern of: "name":"King","description":"The king of all"
-
-Atributes are seen above.
+###Entities<br>
+The command for retrieving data is:<br>
+_curl -i -X GET http://localhost:8080/creatures-hunting/rest/ENTITY_<br>
+<br>
+Each entity has some functions which choose only specific instances of entities.<br>
+Adress of each entity starts:<br>
+_curl -i -X GET http://localhost:8080/creatures-hunting/rest/...<br>_
+<br>
+Dots are replaced by:<br>
+**Area**<br>
+_areas/no-creature<br>
+areas/any-creature<br>
+areas/most-creatures<br>
+areas/fewest-creatures<br>_
+	<br>
+**Creature**<br>
+_creatures/max-height<br>
+creatures/max-weight<br>
+creatures/type/UNDEAD ...creature's type<br>
+creatures/type/VAMPIRE ...creature's type<br>
+creatures/type/BEAST ...creature's type<br>_
+<br>
+**Weapon**<br>
+_weapons/type/MELEE ... weapon's type<br>
+weapons/type/GUN ... weapon's type<br>
+weapons/type/ENERGY ... weapon's type<br>
+weapons/type/EXPLOSIVE ... weapon's type<br>
+weapons/type/NONE ... ammo's type<br>
+weapons/type/BULLET_NATO ... ammo's type<br>
+weapons/type/BATTERY ... ammo's type<br>
+weapons/type/MAGNUM_44 ... ammo's type<br>_
+<br>
+<br>
+##CREATE<br>
+An instance is possible to create with following command:<br>
+_curl -X POST -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/creatures-hunting/rest/ENTITY/create<br>_
+<br>
+where ENTITY is: _areas, creatures, users, weapons, weapon-efficiencies<br>_
+and dots area specific attributes with its values for each entity in the pattern of: "name":"King","description":"The king of all"<br>
+<br>
+Atributes are seen above.<br>
+<br>
+##DELETE<br>
+Each instance is possible to delete with following command: <br>
+_curl -i -X DELETE http://localhost:8080/creatures-hunting/rest/ENTITY/ID<br>_
+<br>
+where ENTITY is: _areas, creatures, users, weapons, weapon-efficiencies<br>_
+and ID is ID number of an instance of an entity<br>
+<br>
+##UPDATE<br>
+An instance is possible to create with following command:<br>
+_curl -X PUT -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/creatures-hunting/rest/ENTITY/ID<br>_
+<br>
+where ENTITY is: _areas, creatures, users, weapons, weapon-efficiencies<br>_
+ID is ID number of an instance of an entity<br>
+and dots area specific attributes with its values for each entity in the pattern of: "name":"King","description":"The king of all"<br>
+<br>
+Atributes are seen above.<br>
 
