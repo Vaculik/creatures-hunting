@@ -12,7 +12,7 @@
             Date of birth: {{user.dateOfBirth}}
         </p>
         <br>
-        <div>
+        <div ng-if="isAuthenticated()">
         <a href="#user/edit/{{user.id}}">
             <!--ng-if="isAuthenticated()"-->
             <button type="button" class="btn btn-default">Edit user</button>
