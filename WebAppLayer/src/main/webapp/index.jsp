@@ -37,7 +37,7 @@
                 <li><a href="#/creatures/all">Creatures</a></li>
                 <li><a href="#/weapons">Weapons</a></li>
                 <li><a href="#/areas">Areas</a></li>
-                <li><a href="#/users">Users</a></li>
+                <li><a href="#/users/all">Users</a></li>
             </ul>
             <ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">
                 <li>

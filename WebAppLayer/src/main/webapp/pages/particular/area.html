@@ -1,13 +1,54 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <h1>{{area.name}}</h1>
-        <p>
-            Description: {{area.description}}
+        <p><b>
+                Amount of creatures: </b>{{creatures.length}}
+        </p>
+        <p><b>
+                Description:</b> {{area.description}}
         </p>
         <br>
-        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button>
-        <button class="btn btn-default" type="submit" ng-click="addCreature(creature.id)">Add creature</button>
+        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button><br><br>                
+
+        <h3>Add Creature</h3>
+        <form name="form2" novalidate role="form">
+        <div class="form-group" ng-class="{'has-error': !form2.name.$valid}">
+            <label for="name">Creature:</label>
+            <select class="form-control" name="name" ng-model="creatureChosenAddCreature.name" id="creature" required>
+                <option ng-repeat="othersCreature in othersCreatures | orderBy:'+name' ">{{othersCreature.name}}</option>                
+            </select>
+            <p class="help-block" ng-show="form2.name.$error.required"></p>
+        </div>
+        <br>        
+        <button ng-disabled="!form2.$valid" class="btn btn-default" type="submit" ng-click="addCreature(creatureChosenAddCreature.name)">Add Creature</button><br><br>  
+        </form>
+        
+        <h3>Move Creature</h3>
+        <form name="form" novalidate role="form">
+
+        <div class="form-group" ng-class="{'has-error': !form.name.$valid}">
+            <label for="name">Creature:</label>
+            <select class="form-control" name="name" ng-model="creatureChosenMoveCreature.name" id="creature" required>
+                <option ng-repeat="creature in creatures | orderBy:'+name' ">{{creature.name}}</option>                
+            </select>
+            <p class="help-block" ng-show="form.name.$error.required"></p>
+        </div>
+        <div class="form-group" ng-class="{'has-error': !form.type.$valid}">
+            <label for="namearea">To area:</label>
+            <select class="form-control" name="areaMove" ng-model="areaChosenMoveCreature.name" id="area.name" required>
+                <option ng-repeat="otherArea in othersAreas | orderBy:'+name' ">{{otherArea.name}}</option>                
+            </select>            
+            <p class="help-block" ng-show="form.type.$error.required"></p>
+        </div>
+
+        <br>
+        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="moveCreature(creatureChosenMoveCreature.name,areaChosenMoveCreature.name)">Move Creature</button><br><br>          
+        </form>
+
     </div>
+
+
+
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <table class="table">
             <caption>Creatures in area {{area.name}}:</caption>
@@ -18,7 +59,7 @@
                 </tr>
             </thread>
             <tbody>
-                <tr ng-repeat="creature in creatures">
+                <tr ng-repeat="creature in creatures| orderBy:'+type'">
                     <td><a href="#/creature/{{creature.id}}">{{creature.name}}</td>
                     <td>{{creature.type}}</td>
                 </tr>

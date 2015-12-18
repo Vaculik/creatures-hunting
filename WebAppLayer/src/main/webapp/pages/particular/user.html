@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <h1>{{user.userName}}</h1>
+        <p>
+            <strong>
+                {{user.name}}
+            </strong>
+        </p>
+        <p>
+            User type: {{user.type}} <br>
+            User sex: {{user.sex}} <br>
+            Date of birth: {{user.dateOfBirth}}
+        </p>
+        <br>
+        <button class="btn btn-default" type="submit" ng-click="delete(user.id)">Delete</button>
+    </div>
+</div>

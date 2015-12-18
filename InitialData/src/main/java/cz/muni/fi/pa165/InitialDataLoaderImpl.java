@@ -1,10 +1,19 @@
 package cz.muni.fi.pa165;
 
-import cz.muni.fi.pa165.entity.*;
+import java.sql.Date;
+
+import cz.muni.fi.pa165.entity.Area;
+import cz.muni.fi.pa165.entity.Creature;
+import cz.muni.fi.pa165.entity.UserSystem;
+import cz.muni.fi.pa165.entity.Weapon;
+import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.CreatureType;
+import cz.muni.fi.pa165.enums.SexType;
+import cz.muni.fi.pa165.enums.UserType;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.service.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +76,11 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         winterfell.addCreature(dracula);
         winterfell.addCreature(jacobBlack);
         wall.addCreature(frankenstein);
+
+        loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
+        loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
+        loadUser("Vlasta Plaminkova", "12345", SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
+        loadUser("Coco Jambo", "12345", SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
     }
 
 
@@ -114,4 +128,17 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
     }
 
+    private UserSystem loadUser(String name, String password, SexType sex, UserType type, String userName, Date dateOfBirth) {
+    	logger.debug("Create user with name=" + name);
+    	UserSystem user = new UserSystem();
+        user.setName(name);
+        user.setPassword(password);
+        user.setSex(sex);
+        user.setType(type);
+        user.setUserName(userName);
+        user.setDateOfBirth(dateOfBirth);
+        userSystemService.createUser(user);
+        
+        return user;
+    }
 }
