@@ -77,6 +77,9 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session) {
                 Session.create(response.data.userId, role);
                 $rootScope.successAlert = 'User has been authenticated.';
                 return response.data;
+            }, function(response) {
+                console.log("User hasn't been  authenticated");
+                $rootScope.errorAlert = 'Authentication has failed.';
             });
     };
     // If id is null then boolean value is false -> return false;
@@ -94,8 +97,8 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session) {
     };
 
     authService.logout = function() {
-        Session.destroy();
         $rootScope.successAlert = 'User has been logged out.';
+        Session.destroy();
     };
 
     return authService;

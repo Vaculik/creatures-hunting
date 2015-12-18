@@ -1,5 +1,5 @@
 <h2>{{page}}</h2>
-<a href="#areas/new">
+<a href="#areas/new" ng-if="isAuthenticated()">
     <button type="button" class="btn btn-default">New area</button>
 </a>
 <div class="btn-group">

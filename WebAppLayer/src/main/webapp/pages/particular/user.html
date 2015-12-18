@@ -12,6 +12,8 @@
             Date of birth: {{user.dateOfBirth}}
         </p>
         <br>
-        <button class="btn btn-default" type="submit" ng-click="delete(user.id)">Delete</button>
+        <div ng-if="isAuthorized(userRoles.admin)">
+            <button class="btn btn-default" type="submit" ng-click="delete(user.id)">Delete</button>
+        </div>
     </div>
 </div>
