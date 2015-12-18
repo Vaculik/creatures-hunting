@@ -1,12 +1,12 @@
-REST layer
-Included in module WebAppLayer.
-
-Entities with attributes:
-1. Area
-	- id (long)
-	- name (String)
-	- description (String)
-	- creatures (list of creatures)
+REST layer<br>
+Included in module WebAppLayer.<br>
+<br>
+Entities with attributes:<br>
+1. Area<br>
+	- id (long)<br>
+	- name (String)<br>
+	- description (String)<br>
+	- creatures (list of creatures)<br>
 2. Creature
 	- id (long)
 	- name (String) 
