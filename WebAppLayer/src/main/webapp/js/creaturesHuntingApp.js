@@ -1,7 +1,6 @@
-/* global difference_ */
 
 /**
- * Created by vaculik on 14.12.15.
+ * @author Karel Vaculik
  */
 
 var app = angular.module('creaturesHuntingApp', ['ngRoute', 'controllers']);
@@ -22,33 +21,63 @@ app.constant('USER_ROLES', {
 });
 
 
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+        when('/home', {templateUrl: 'pages/home.html'}).
+        when('/creatures/:viewType', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
+        when('/creature/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
+        when('/creature/:creatureId', {
+            templateUrl: 'pages/particular/creature.html',
+            controller: 'ParticularCreatureController'}).
+        when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
+        when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
+        when('/areas/nocreature', {templateUrl: 'pages/areas.html', controller: 'NoCreatureAreaController'}).
+        when('/areas/anycreature', {templateUrl: 'pages/areas.html', controller: 'AnyCreatureAreaController'}).
+        when('/areas/mostcreatures', {templateUrl: 'pages/areas.html', controller: 'MostCreaturesAreaController'}).
+        when('/areas/fewestcreatures', {templateUrl: 'pages/areas.html', controller: 'FewestCreaturesAreaController'}).
+        when('/areas/new', {templateUrl: 'pages/new/new-area.html', controller: 'NewAreaController'}).
+        when('/area/:areaId', {
+            templateUrl: 'pages/particular/area.html',
+            controller: 'ParticularAreaController'}).
+        when('/login', {templateUrl: 'pages/login.html', controller: 'LoginController'}).
+        when('/users/:viewType', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
+        when('/user/new', {templateUrl: 'pages/new/new-user.html', controller: 'NewUserController'}).
+        when('/user/:userId', {templateUrl: 'pages/particular/user.html', controller: 'ParticularUserController'}).
+        otherwise({redirectTo: '/home'});
+}]);
+
+
 app.service('Session', function () {
-    this.create = function (sessionId, userId, userRole) {
-        this.id = sessionId;
+    this.create = function (userId, userRole) {
+        console.log('Create session:', userId, userRole);
         this.userId = userId;
         this.userRole = userRole;
     };
     this.destroy = function () {
-        this.id = null;
+        console.log('Destroy session');
         this.userId = null;
         this.userRole = null;
     };
 });
 
 
-app.factory('AuthService', function ($http, Session) {
+app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session) {
     var authService = {};
 
     authService.login = function (credentials) {
-        return {'id': '1',
-        'name': 'Karel'};
-        //return $http
-        //    .post('/login', credentials)
-        //    .then(function (response) {
-        //        Session.create(response.data.id, response.data.user.id,
-        //            response.data.user.role);
-        //        return response.data.user;
-        //    });
+        console.log('Authenticate user with loginName=' + credentials.logiName);
+        return $http
+            .post('/creatures-hunting/rest/users/login', credentials)
+            .then(function (response) {
+                console.log('User has been authenticated');
+                var role = USER_ROLES.user;
+                if (response.data.admin) {
+                    role = USER_ROLES.admin;
+                }
+                Session.create(response.data.userId, role);
+                $rootScope.successAlert = 'User has been authenticated.';
+                return response.data;
+            });
     };
     // If id is null then boolean value is false -> return false;
     // If id != 0 then boolean value is true -> return true;
@@ -61,37 +90,16 @@ app.factory('AuthService', function ($http, Session) {
             authorizedRoles = [authorizedRoles];
         }
         return (authService.isAuthenticated() &&
-        authorizedRoles.indexOf(Session.userRole) !== -1);
+        authorizedRoles.indexOf(Session.userRole) != -1);
+    };
+
+    authService.logout = function() {
+        Session.destroy();
+        $rootScope.successAlert = 'User has been logged out.';
     };
 
     return authService;
 });
-
-
-app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.
-                when('/home', {templateUrl: 'pages/home.html'}).
-                when('/creatures/:viewType', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
-                when('/creature/new', {templateUrl: 'pages/new/new-creature.html', controller: 'NewCreatureController'}).
-                when('/creature/:creatureId', {
-                    templateUrl: 'pages/particular/creature.html',
-                    controller: 'ParticularCreatureController'}).
-                when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
-                when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
-                when('/areas/nocreature', {templateUrl: 'pages/areas.html', controller: 'NoCreatureAreaController'}).
-                when('/areas/anycreature', {templateUrl: 'pages/areas.html', controller: 'AnyCreatureAreaController'}).
-                when('/areas/mostcreatures', {templateUrl: 'pages/areas.html', controller: 'MostCreaturesAreaController'}).
-                when('/areas/fewestcreatures', {templateUrl: 'pages/areas.html', controller: 'FewestCreaturesAreaController'}).
-                when('/areas/new', {templateUrl: 'pages/new/new-area.html', controller: 'NewAreaController'}).                
-                when('/area/:areaId', {
-                    templateUrl: 'pages/particular/area.html',
-                    controller: 'ParticularAreaController'}).
-                when('/login', {templateUrl: 'pages/login.html', controller: 'LoginController'}).
-                when('/users/:viewType', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
-                when('/user/new', {templateUrl: 'pages/new/new-user.html', controller: 'NewUserController'}).
-                when('/user/:userId', {templateUrl: 'pages/particular/user.html', controller: 'ParticularUserController'}).
-                otherwise({redirectTo: '/home'});
-    }]);
 
 
 app.run(function ($rootScope) {
@@ -107,7 +115,7 @@ app.run(function ($rootScope) {
 });
 
 
-controllers.controller('NavbarController', function($scope, USER_ROLES, AuthService) {
+controllers.controller('ApplicationController', function($scope, USER_ROLES, AuthService) {
     // Initialize the scope properties for authentization
     $scope.currentUser = null;
     $scope.userRoles = USER_ROLES;
@@ -117,19 +125,21 @@ controllers.controller('NavbarController', function($scope, USER_ROLES, AuthServ
     // because that would result in a shadow property.
     $scope.setCurrentUser = function(user) {
         $scope.currentUser = user;
-    }
+    };
+    $scope.logout = AuthService.logout;
 });
 
 
-controllers.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+controllers.controller('LoginController', function ($scope, $rootScope, AUTH_EVENTS, AuthService, $location) {
     $scope.credentials = {
-        username: '',
+        loginName: '',
         password: ''
     };
     $scope.login = function (credentials) {
         AuthService.login(credentials).then(function (user) {
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
             $scope.setCurrentUser(user);
+            $location.path('/home');
         }, function () {
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
         });
@@ -160,6 +170,7 @@ var creaturesOfType = function (type, $http, $scope) {
                 $scope.typeCreatures = response.data['_embedded']['creatures'];
             });
 };
+
 
 controllers.controller('ParticularCreatureController', function ($http, $rootScope, $location, $routeParams, $scope) {
     var creatureId = $routeParams.creatureId;
@@ -344,14 +355,12 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
 
     $http.get('/creatures-hunting/rest/areas').
             then(function (response) {
-                $scope.areas = response.data['_embedded']['areas'];                                            
-                ;
+                $scope.areas = response.data['_embedded']['areas'];
             });
             
     $http.get('/creatures-hunting/rest/creatures').
             then(function (response) {
-            $scope.creatures2 = response.data['_embedded']['creatures'];                       
-                ;
+            $scope.creatures2 = response.data['_embedded']['creatures'];
             });        
     
     console.log('GET others creatures to area with id=' + id);

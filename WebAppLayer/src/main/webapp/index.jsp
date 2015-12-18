@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-<body ng-app="creaturesHuntingApp">
+<body ng-app="creaturesHuntingApp"  ng-controller="ApplicationController">
 <div id="wrapper">
-<nav id="navbar" class="navbar navbar-inverse navbar-static-top" ng-controller="NavbarController">
+<nav id="navbar" class="navbar navbar-inverse navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -45,11 +45,14 @@
                 </li>
             </ul>
             <ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#/user/{{currentUser.id}}">{{currentUser.name}}</a>
+                <li ng-if="isAuthorized(userRoles.user)">
+                    <a href="#/user/{{currentUser.userId}}">{{currentUser.loginName}}</a>
+                </li>
+                <li ng-if="isAuthorized(userRoles.admin)">
+                    <a href="#/user/{{currentUser.userId}}">Admin: {{currentUser.loginName}}</a>
                 </li>
                 <li>
-                    <a href="#/home"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    <a href="#/home" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                 </li>
             </ul>
         </div>
