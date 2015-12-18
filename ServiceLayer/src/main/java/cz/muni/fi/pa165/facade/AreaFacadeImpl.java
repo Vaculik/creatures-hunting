@@ -84,21 +84,6 @@ public class AreaFacadeImpl implements AreaFacade {
          }            
         }
     
-//    @Override
-//    public void removeCreature(AreaDTO area, CreatureDTO creature) {
-//        area.removeCreature(creature);
-//        Area ar = entityMapper.map(area, Area.class);
-//        areaService.updateArea(ar);
-//    }
-//
-//    @Override
-//    public boolean containAreaCreature(AreaDTO area, CreatureDTO creature) {
-//        if (area.getCreatures().contains(creature)) {
-//            return true;
-//        }
-//        return false;
-//    }
-
     @Override
     public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {
         return areaService.moveCreature(entityMapper.map(creature, Creature.class), entityMapper.map(fromArea, Area.class), entityMapper.map(toArea, Area.class));
