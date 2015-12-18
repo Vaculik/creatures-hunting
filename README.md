@@ -1,5 +1,5 @@
 # Creature hunting information system<br>
-Startable with the command: _mvn clean install && cd web && mvn tomcat7:run_<br>
+Startable with the command: _mvn clean install && cd WebAppLayer && mvn tomcat7:run<br>
 Accesible under the link: _http://localhost:8080/pa165_<br>
 Login and password:<br>
 - Ordinary user: _petrParek, 12345_<br>
