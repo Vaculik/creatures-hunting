@@ -1,16 +1,12 @@
 package cz.muni.fi.pa165.config;
 
 import cz.muni.fi.pa165.InMemoryDatabaseApplicationContext;
-import cz.muni.fi.pa165.facade.CreatureFacadeImpl;
-import cz.muni.fi.pa165.facade.UserSystemFacadeImpl;
-import cz.muni.fi.pa165.facade.WeaponFacadeImpl;
-import cz.muni.fi.pa165.service.CreatureServiceImpl;
-import cz.muni.fi.pa165.service.UserSystemServiceImpl;
-import cz.muni.fi.pa165.service.WeaponServiceImpl;
-import cz.muni.fi.pa165.util.EntityMapperImpl;
+import cz.muni.fi.pa165.dto.CreatureDTO;
+import cz.muni.fi.pa165.entity.Creature;
 
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
+import org.dozer.loader.api.BeanMappingBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,3 +26,4 @@ public class ServiceApplicationContext {
         return dozer;
     }
 }
+

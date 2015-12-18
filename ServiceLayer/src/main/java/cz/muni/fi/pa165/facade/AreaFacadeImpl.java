@@ -76,10 +76,13 @@ public class AreaFacadeImpl implements AreaFacade {
     @Override
     public void addCreature(AreaDTO area, CreatureDTO creature){
          if(creature != null){
-            if(area.getCreatures().contains(creature) == false){
-            area.addCreature(creature);
-            Area ar = entityMapper.map(area, Area.class);
-            areaService.updateArea(ar);
+            if(!area.getCreatures().contains(creature)){
+                area.addCreature(creature);
+                System.out.println("ABAA");
+                System.out.println(area.getCreatures());
+                Area ar = entityMapper.map(area, Area.class);
+                System.out.println(ar.getCreatures());
+                areaService.updateArea(ar);
             }
          }            
         }
