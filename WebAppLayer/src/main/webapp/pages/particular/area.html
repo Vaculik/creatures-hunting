@@ -8,8 +8,8 @@
                 Description:</b> {{area.description}}
         </p>
         <br>
-        <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button><br><br>                
-
+        <div ng-if="isAuthorized(userRoles.admin)">
+            <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button><br><br>
         <h3>Add Creature</h3>
         <form name="form2" novalidate role="form">
         <div class="form-group" ng-class="{'has-error': !form2.name.$valid}">
@@ -44,7 +44,7 @@
         <br>
         <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="moveCreature(creatureChosenMoveCreature.name,areaChosenMoveCreature.name)">Move Creature</button><br><br>          
         </form>
-
+        </div>
     </div>
 
 
