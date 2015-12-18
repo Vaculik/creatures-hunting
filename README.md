@@ -4,7 +4,8 @@ Accesible under the link: _http://localhost:8080/pa165_<br>
 Login and password:<br>
 - Ordinary user: _petrParek, 12345_<br>
 - Admin: _cocoJambo, 12345_<br>
-More information about the system on <a href="https://github.com/Vaculik/creatures-hunting/wiki">wiki</a>
+<br>
+More information about the system on <a href="https://github.com/Vaculik/creatures-hunting/wiki">the wiki page of project</a>
 
 # REST layer<br>
 Included in module WebAppLayer.<br>
