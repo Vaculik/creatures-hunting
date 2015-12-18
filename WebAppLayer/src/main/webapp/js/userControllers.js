@@ -94,3 +94,29 @@ controllers.controller('NewUserController', function ($http, $rootScope, $locati
                 });
     };
 });
+
+controllers.controller('EditUserController', function ($http, $routeParams, $rootScope, $location, $scope) {
+    var userId = $routeParams.userId;
+    $scope.types = ['ADMIN', 'ORDINARY'];
+    $scope.sexes = ['MALE', 'FEMALE'];
+    console.log('GET user by id=' + userId);
+    $http.get('/creatures-hunting/rest/users/' + userId).
+    then(function (response) {
+        $scope.user = response.data;
+    },
+            function error(response) {
+                $rootScope.warningAlert = 'Problem occured when loading user ' + response.data.message;
+            });
+    
+    $scope.edit = function (user) {
+        console.log("EDIT user " + user.name);
+        $http.post('/creatures-hunting/rest/users/edit/'+user.id, user).then(function (response) {//Request successful
+        	$rootScope.succesAllert = 'User was changed.';
+        	$location.path('/user/' + user.id);
+        }, function (response) {//Request failed
+            console.log("EDIT user failed");
+            console.log(response);
+            $rootScope.errorAlert("User could not be edited.");
+        });
+    };
+});

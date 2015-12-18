@@ -31,6 +31,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'ParticularCreatureController'}).
         when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
         when('/weapons/new', {templateUrl: 'pages/new/new-weapon.html', controller: 'NewWeaponController'}).
+        when('/efficiency/new', {templateUrl: 'pages/new/new-efficiency.html', controller: 'NewWeaponEfficiencyController'}).//In WeaponControllers
         when('/weapons/edit/:weaponId', {templateUrl: 'pages/edit/edit-weapon.html', controller: 'EditWeaponController'}).
         when('/weapons/:weaponId', {templateUrl: 'pages/particular/weapon.html', controller: 'ParticularWeaponController'}).
         when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).
@@ -45,6 +46,7 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/login', {templateUrl: 'pages/login.html', controller: 'LoginController'}).
         when('/users/:viewType', {templateUrl: 'pages/users.html', controller: 'UsersController'}).
         when('/user/new', {templateUrl: 'pages/new/new-user.html', controller: 'NewUserController'}).
+        when('/user/edit/:userId', {templateUrl: 'pages/edit/edit-user.html', controller: 'EditUserController'}).
         when('/user/:userId', {templateUrl: 'pages/particular/user.html', controller: 'ParticularUserController'}).
         otherwise({redirectTo: '/home'});
 }]);

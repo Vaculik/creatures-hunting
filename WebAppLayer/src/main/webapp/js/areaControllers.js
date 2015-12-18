@@ -61,6 +61,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         'areaId': id,
         'creatureName': ''
     };
+
     console.log('GET particular area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
@@ -103,19 +104,6 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                     $rootScope.errorAlert('Error when adding creature with name=', $scope.addCreatureDTO.creatureName);
                 });
 
-    };
-
-
-    $scope.moveCreature = function (name, nameArea) {        
-        console.log('Move creature with name=' + name + ' from area with id=' + id + ' to area with name ' + nameArea);
-        $http.post('/creatures-hunting/rest/areas/' + id + '/' + nameArea + '/' + name + '/movecreature').
-                then(function success(response) {
-                    console.log('Creature with name=' + name + ' was moved.');
-                    $location.path('/areas');
-                }, function error(response) {
-                    console.log('Error when moving creature with name=' + name);
-                    console.log(response);
-                });
     };
 
     $http.get('/creatures-hunting/rest/areas').

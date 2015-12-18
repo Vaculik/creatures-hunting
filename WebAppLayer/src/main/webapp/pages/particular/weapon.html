@@ -21,6 +21,33 @@
             <!--ng-if="isAuthenticated()"-->
             <button type="button" class="btn btn-default">Edit weapon</button>
         </a>
+        <table class="table">
+            <caption>Efficiency of {{weapon.name}}:</caption>
+            <thread>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Efficiency</th>
+                    <th></th>
+                </tr>
+            </thread>
+            <tbody>
+                <tr ng-repeat="efficiency in efficiencies">
+                    <td><a href="#/creature/{{efficiency.creatureDTO.id}}">{{efficiency.creatureDTO.name}}</a></td>
+                    <td>{{efficiency.creatureDTO.type}}</td>
+                    <td>{{efficiency.efficiency}}</td>
+                    <td>
+                        <!--<div ng-if="isAuthorized(userRoles.admin)">-->
+                            <button class="btn btn-default" type="submit" ng-click="deleteEff(efficiency.id)">Delete efficiency</button>
+                        <!--</div>-->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#efficiency/new/{{weapon.id}}">
+            <!--ng-if="isAuthenticated()"-->
+            <button type="button" class="btn btn-default">New efficiency</button>
+        </a>
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

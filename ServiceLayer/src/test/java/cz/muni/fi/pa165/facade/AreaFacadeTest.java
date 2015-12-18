@@ -179,22 +179,6 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
     }
 
 
-    @Test
-    public void moveCreatureTest() {
-        CreatureDTO crDTO = createCreatureDTO(creature);
-        Area area2 = createArea(1l, "Highgarden", "House of Tyrell");
-        AreaDTO areaDTO2 = createAreaDTO(area2);
-        when(entityMapper.map(crDTO, Creature.class)).thenReturn(creature);
-        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
-        when(entityMapper.map(areaDTO2, Area.class)).thenReturn(area2);
-        when(areaService.moveCreature(creature, area, area2)).thenReturn(true);
-        Assert.assertTrue(areaFacade.moveCreature(crDTO, areaDTO, areaDTO2));
-        verify(entityMapper).map(crDTO, Creature.class);
-        verify(entityMapper).map(areaDTO, Area.class);
-        verify(entityMapper).map(areaDTO2, Area.class);
-        verify(areaService).moveCreature(creature, area, area2);
-    }
-
     private AreaDTO createAreaDTO(Area area) {
         AreaDTO tmp = new AreaDTO();
         tmp.setId((area.getId()));

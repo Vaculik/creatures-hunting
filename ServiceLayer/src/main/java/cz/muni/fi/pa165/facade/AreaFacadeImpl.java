@@ -79,9 +79,4 @@ public class AreaFacadeImpl implements AreaFacade {
         areaService.addCreature(areaAddCreatureDTO.getAreaId(), areaAddCreatureDTO.getCreatureName());
     }
     
-    @Override
-    public boolean moveCreature(CreatureDTO creature, AreaDTO fromArea, AreaDTO toArea) {
-        return areaService.moveCreature(entityMapper.map(creature, Creature.class), entityMapper.map(fromArea, Area.class), entityMapper.map(toArea, Area.class));
-
-    }
 }

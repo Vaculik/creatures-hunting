@@ -6,7 +6,7 @@ controllers.controller('WeaponsController', function ($http, $scope) { //$routeP
     $scope.title = "All weapons";
 });
 
-controllers.controller('ParticularWeaponController', function ($http, $rootScope, $location, $routeParams, $scope) {
+controllers.controller('ParticularWeaponController', function ($http, $rootScope, $location, $routeParams, $scope, $route) {
     var weaponId = $routeParams.weaponId;
     console.log('GET weapon by id=' + weaponId);
     $http.get('/creatures-hunting/rest/weapons/' + weaponId).then(function (response) {//Request successful
@@ -23,6 +23,13 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
         $scope.mostVulnerable = response.data['_embedded']['creatures'];
     }, function (response) {
         $rootScope.warningAlert = "Could not load most vulnerable creature: " + data.message;
+    });
+
+    $http.get('rest/weapon-efficiencies/weapon/' + weaponId).then(function (response) {
+        console.log('GET all efficiencies of weapon ' + weaponId + ' SUCCESS');
+        $scope.efficiencies = response.data['_embedded']['weapon-efficiencies'];
+    }, function (response) {
+        $rootScope.warningAlert = "Could not load weapon efficiencies: " + data.message;
     });
 
     $scope.delete = function (id) {
@@ -51,6 +58,13 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
             return;
         });
     };
+
+    $scope.deleteEff = function (id) {
+        console.log('DELETE weapon efficiency request');
+        $http.delete('rest/weapon-efficiencies/' + id).then(function (response) {
+            $route.reload();
+        })
+    }
 });
 
 var weaponsByAmmoType = function (ammoType, $http, $scope) {
@@ -103,7 +117,7 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
     });
     $scope.edit = function (weapon) {
         console.log("EDIT weapon " + weapon.name);
-        $http.post('/creatures-hunting/rest/weapons/edit/'+weapon.id, weapon).then(function (response) {//Request successful
+        $http.post('/creatures-hunting/rest/weapons/edit/' + weapon.id, weapon).then(function (response) {//Request successful
 //            $rootScope.succesAllert("Weapon " + weapon.name + " edited");
             $location.path('/weapons/' + weapon.id);
         }, function (response) {//Request failed
@@ -113,3 +127,54 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
         });
     };
 });
+
+
+controllers.controller('NewWeaponEfficiencyController', function ($http, $rootScope, $location, $scope) {
+    console.log('GET creatures request viewType=all');
+    $http.get('/creatures-hunting/rest/creatures/?view=all').then(function (response) {
+        $scope.creatureDTOs = response.data['_embedded']['creatures'];
+    });
+    console.log('GET weapons request');
+    $http.get('/creatures-hunting/rest/weapons/').then(function (response) {
+        $scope.weaponDTOs = response.data['_embedded']['weapons'];
+    });
+    $scope.efficiency = {
+        'creatureDTO': null,
+        'weaponDTO': null,
+        'efficiency': 1
+    };
+    $scope.create = function (efficiency) {
+        console.log("Create efficiency");
+        $http.post('/creatures-hunting/rest/weapons/create', efficiency).then(function (response) {//Request successful
+//            $rootScope.succesAllert("Weapon " + weapon.name + " created");
+            $location.path('rest/weapon-efficiencies/create');
+        }, function (response) {//Request failed
+            console.log("CREATE efficiency failed");
+            console.log(response);
+            $rootScope.errorAlert("Efficiency could not be created.");
+        });
+    };
+});
+//controllers.controller('EditWeaponEffController', function ($http, $routeParams, $rootScope, $location, $scope) {
+//    var weaponId = $routeParams.weaponId;
+//    $http.get('rest/weapon-efficiencies/weapon/' + weaponId).then(function (response) {
+//        console.log('GET all efficiencies of weapon ' + weaponId + ' SUCCESS');
+//        $scope.efficiencies = response.data['_embedded']['weapon-efficiencies'];
+//    }, function (response) {
+//        $rootScope.warningAlert = "Could not load weapon efficiencies: " + data.message;
+//    });
+//
+//
+//
+//    console.log('GET creatures request viewType=all');
+//    $http.get('/creatures-hunting/rest/creatures/?view=all').
+//            then(function (response) {
+//                $scope.creatureDTOs = response.data['_embedded']['creatures'];
+//            });
+//
+//    $scope.editEff = function (efficiencies) {
+//        for (efficiency in efficiencies) {
+//            
+//        }
+//    };
+//});

@@ -58,15 +58,6 @@ public interface AreaService {
      */
     List<Area> findAllAreas();
 
-    /**
-     * This method moves the creature from one area to another area
-     *
-     * @param cr creature to be moved
-     * @param fromAr area to be moved from
-     * @param toAr area to be moved to
-     * @return True - moving was successful, False - was not
-     */
-    boolean moveCreature(Creature cr, Area fromAr, Area toAr);
 
     /**
      * This method gets areas with no creature in
