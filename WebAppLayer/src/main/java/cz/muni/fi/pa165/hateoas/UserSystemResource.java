@@ -3,13 +3,17 @@ package cz.muni.fi.pa165.hateoas;
 import java.sql.Date;
 
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
+@Relation(value = "user", collectionRelation = "users")
+@JsonPropertyOrder(value = {"id", "name", "type", "sex", "dateOfBirth", "userName", "password"})
 public class UserSystemResource extends ResourceSupport {
 	
 	@JsonProperty("id")
