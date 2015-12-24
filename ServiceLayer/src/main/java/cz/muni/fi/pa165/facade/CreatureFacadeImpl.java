@@ -66,4 +66,9 @@ public class CreatureFacadeImpl implements CreatureFacade {
     public List<CreatureDTO> getCreaturesWithMaxWeight() {
         return entityMapper.map(creatureService.getCreaturesWithMaxWeight(), CreatureDTO.class);
     }
+
+    @Override
+    public List<CreatureDTO> getCreaturesInNoArea() {
+        return entityMapper.map(creatureService.getCreaturesInNoArea(), CreatureDTO.class);
+    }
 }

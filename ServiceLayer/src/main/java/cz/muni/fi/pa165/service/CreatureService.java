@@ -73,4 +73,11 @@ public interface CreatureService {
      * @return list of the results
      */
     List<Creature> getCreaturesWithMaxWeight();
+
+    /**
+     * Find all Creature entities which are not in any area.
+     *
+     * @return list of the results
+     */
+    List<Creature> getCreaturesInNoArea();
 }

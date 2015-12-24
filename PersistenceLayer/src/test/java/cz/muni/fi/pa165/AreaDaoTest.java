@@ -128,6 +128,7 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(0, areaDao.findAll().size());
     }
 
+
     private Area createArea(String name, String description) {
         Area area = new Area();
         area.setName(name);

@@ -31,7 +31,7 @@ public class Area {
     String description;
     
     // Mapping by Id causes Creature to crash on persist
-    @OneToMany
+    @OneToMany(mappedBy = "area")
     List<Creature> creatures = new ArrayList<>();
 
     public Long getId() {
@@ -79,10 +79,12 @@ public class Area {
 
     public void addCreature(Creature creature) {
         creatures.add(creature);
+        creature.setArea(this);
     }
     
     public void removeCreature(Creature creature) {
         creatures.remove(creature);
+        creature.setArea(null);
     }
 
     public void setCreatures(List<Creature> creatures) {

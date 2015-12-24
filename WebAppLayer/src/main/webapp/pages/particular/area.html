@@ -2,7 +2,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <h1>{{area.name}}</h1>
         <p><b>
-                Amount of creatures: </b>{{creatures.length}}
+                Amount of creatures: </b>{{area.creatures.length}}
         </p>
         <p><b>
                 Description:</b> {{area.description}}
@@ -12,12 +12,11 @@
             <button class="btn btn-default" type="submit" ng-click="delete(area.id)">Delete</button><br><br>
         <h3>Add Creature</h3>
         <form name="form2" novalidate role="form">
-        <div class="form-group" ng-class="{'has-error': !form2.name.$valid}">
+        <div class="form-group">
             <label for="addCreature">Creature:</label>
             <select class="form-control" name="name" ng-model="addCreatureDTO.creatureName" id="addCreature" required>
-                <option ng-repeat="othersCreature in othersCreatures | orderBy:'+name' ">{{othersCreature.name}}</option>                
+                <option ng-repeat="creature in addCreatures | orderBy:'+name' ">{{creature.name}}</option>
             </select>
-            <p class="help-block" ng-show="form2.name.$error.required"></p>
         </div>
         <br>        
         <button ng-disabled="!form2.$valid" class="btn btn-default" type="submit" ng-click="addCreature()">Add Creature</button><br><br>
@@ -37,7 +36,7 @@
                 </tr>
             </thread>
             <tbody>
-                <tr ng-repeat="creature in creatures| orderBy:'+type'">
+                <tr ng-repeat="creature in area.creatures| orderBy:'+type'">
                     <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
                     <td>{{creature.type}}</td>
                 </tr>

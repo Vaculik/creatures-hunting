@@ -97,4 +97,12 @@ public class CreatureServiceImpl implements CreatureService {
                 });
         return results;
     }
+
+    @Override
+    public List<Creature> getCreaturesInNoArea() {
+        return creatureDao.findAll()
+                .stream()
+                .filter(c -> c.getArea() == null)
+                .collect(Collectors.toList());
+    }
 }

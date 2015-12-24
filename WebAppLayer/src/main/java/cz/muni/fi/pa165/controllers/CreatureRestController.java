@@ -51,7 +51,8 @@ public class CreatureRestController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public HttpEntity<Resources<CreatureResource>> getAllCreatures(@RequestParam(value="view", defaultValue = "all") String viewType) {
+    public HttpEntity<Resources<CreatureResource>> getAllCreatures(
+            @RequestParam(value="view", defaultValue = "all") String viewType) {
         List<CreatureDTO> creatureDTOs;
         switch(viewType) {
             case "all": {
@@ -69,6 +70,11 @@ public class CreatureRestController {
                 creatureDTOs = creatureFacade.getCreaturesWithMaxWeight();
                 break;
             }
+            case "no-area": {
+                logger.debug("GET creatures in no area.");
+                creatureDTOs = creatureFacade.getCreaturesInNoArea();
+                break;
+            }
             default: {
                 String msg = "View request parameter value=" + viewType + " is invalid.";
                 logger.error(msg);
@@ -76,17 +82,11 @@ public class CreatureRestController {
             }
         }
         Link createLink = linkTo(CreatureRestController.class).slash("create").withRel("create");
-        Link maxHeightLink = linkTo(CreatureRestController.class).slash("max-height").withRel("max-height");
-        Link maxWeightLink = linkTo(CreatureRestController.class).slash("max-weight").withRel("max-weight");
 
         Resources<CreatureResource> creatureResources = new Resources<>(
                 creatureResourceAssembler.toResources(creatureDTOs),
                 linkTo(CreatureRestController.class).withSelfRel(),
-                createLink,
-                maxHeightLink,
-                maxWeightLink);
-        Arrays.stream(CreatureType.values()).forEach( (type -> creatureResources.
-                add(linkTo(CreatureRestController.class).slash("type").slash(type).withRel(type.name()))) );
+                createLink);
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }

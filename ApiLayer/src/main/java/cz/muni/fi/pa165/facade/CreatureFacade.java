@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
+import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 
 import java.util.List;
@@ -72,4 +73,11 @@ public interface CreatureFacade {
      * @return list of the results
      */
     List<CreatureDTO> getCreaturesWithMaxWeight();
+
+    /**
+     * Find all CreatureDTOs which are not in any area.
+     *
+     * @return list of the results
+     */
+    List<CreatureDTO> getCreaturesInNoArea();
 }

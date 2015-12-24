@@ -93,10 +93,6 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         calendar.set(1991, Calendar.DECEMBER, 3);
         loadUser("Pavel Veselý", userPasswordHash, SexType.MALE, UserType.ORDINARY, "Pavel", calendar.getTime());
 
-//        loadUser("Petr Parku", "12345", SexType.MALE, UserType.ORDINARY, "petrParek", new Date(1968, 3, 6));
-//        loadUser("Janek Neprustrelny", "12345", SexType.MALE, UserType.ORDINARY, "neprustrelnyJanek", new Date(1901, 5, 8));
-//        loadUser("Vlasta Plaminkova", "12345", SexType.FEMALE, UserType.ORDINARY, "vlastaP", new Date(1991, 3, 18));
-//        loadUser("Coco Jambo", "12345", SexType.MALE, UserType.ADMIN, "cocoJambo", new Date(2012, 12, 21));
     }
 
 

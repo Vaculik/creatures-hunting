@@ -31,6 +31,10 @@ public class Creature {
     @Enumerated
     @NotNull
     private CreatureType type;
+
+    @ManyToOne
+    @JoinColumn(name = "areId")
+    private Area area;
     
     // Parameter description is not relevant for distinguishing two creatures
     private String description;
@@ -86,6 +90,14 @@ public class Creature {
 
     public String getDescription() {
         return description;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     @Override

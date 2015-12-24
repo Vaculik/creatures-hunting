@@ -116,10 +116,7 @@ public class AreaServiceImpl implements AreaService {
     public boolean addCreature(Long areaId, String creatureName) {
         Area area = areaDao.getById(areaId);
         Creature creature = creatureDao.getByName(creatureName);
-        if (area == null || creatureName == null) {
-            return false;
-        }
-        if (area.getCreatures().contains(creature)) {
+        if (creature.getArea() != null) {
             return false;
         }
         area.addCreature(creature);

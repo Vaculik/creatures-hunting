@@ -49,7 +49,7 @@ controllers.controller('FewestCreaturesAreaController', function ($http, $scope)
             });
 });
 
-controllers.controller('ParticularAreaController', function ($http, $rootScope, $routeParams,  $location,$scope) {
+controllers.controller('ParticularAreaController', function ($http, $rootScope, $route, $routeParams, $location, $scope) {
     var id = $routeParams.areaId;
     $scope.creatureChosenMoveCreature = {
         'name': ''
@@ -61,22 +61,17 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         'areaId': id,
         'creatureName': ''
     };
+    $scope.creatures = {};
 
     console.log('GET particular area with id=' + id);
     $http.get('/creatures-hunting/rest/areas/' + id).
             then(function (response) {
                 $scope.area = response.data;
-
             },
                     function error(response) {
                         $rootScope.warningAlert = 'Problem occured when load area ' + response.data.message;
                     });
-    console.log('GET creatures to area with id=' + id);
-    $http.get('/creatures-hunting/rest/areas/' + id).
-            then(function (response) {
-                $scope.creatures = response.data['creatures'];
-            });
-            
+
     $scope.delete = function (id) {
         console.log('Delete area with id=' + id);
         $http.delete('/creatures-hunting/rest/areas/' + id).
@@ -89,7 +84,6 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                     console.log(response);
                     $rootScope.errorAlert('Problem has occured when deleting area!');
                 });
-                
     };
     
     
@@ -98,6 +92,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
          $http.post('/creatures-hunting/rest/areas/add-creature', $scope.addCreatureDTO).
                 then(function success(response) {
                     console.log('Creature with name=' + $scope.addCreatureDTO.creatureName + ' was added.');
+                    $route.reload();
                 }, function error(response) {
                     console.log('Error when adding creature with name=' + $scope.addCreatureDTO.creatureName);
                     console.log(response);
@@ -116,11 +111,12 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
             $scope.creatures2 = response.data['_embedded']['creatures'];
             });        
     
-    console.log('GET others creatures to area with id=' + id);
-    $http.get('/creatures-hunting/rest/areas/' + id +'/otherscreatures').
+    console.log('GET creatures in no area');
+    $http.get('/creatures-hunting/rest/creatures/?view=no-area').
             then(function (response) {
-                $scope.othersCreatures = response.data['_embedded']['creatures']
-                ;
+                if ('_embedded' in response.data) {
+                    $scope.addCreatures = response.data['_embedded']['creatures'];
+                }
             });
     
     console.log('GET others areas to area with id=' + id);
@@ -130,6 +126,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 ;
             });
 });
+
 
 controllers.controller('NewAreaController', function ($http, $rootScope, $location, $scope) {
     console.log('New area controller');

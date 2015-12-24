@@ -7,6 +7,8 @@ package cz.muni.fi.pa165.dao;
 
 import cz.muni.fi.pa165.entity.Area;
 import java.util.List;
+
+import cz.muni.fi.pa165.entity.Creature;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Martin Zboril
  */
-@Transactional
 public interface AreaDao {
 
     /**
@@ -61,4 +62,5 @@ public interface AreaDao {
      * @return area with specific name
      */
     Area getByName(String name);
+
 }
