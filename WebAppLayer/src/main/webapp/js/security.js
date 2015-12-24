@@ -22,7 +22,7 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session) {
     authService.login = function (credentials) {
         console.log('Authenticate user with loginName=' + credentials.logiName);
         return $http
-            .post('/creatures-hunting/rest/users/login', credentials)
+            .post('rest/users/login', credentials)
             .then(function (response) {
                 console.log('User has been authenticated');
                 var role = USER_ROLES.user;

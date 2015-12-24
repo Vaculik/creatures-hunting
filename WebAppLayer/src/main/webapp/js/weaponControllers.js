@@ -1,6 +1,6 @@
 controllers.controller('WeaponsController', function ($http, $scope) { //$routeParams
     console.log('GET weapons request');
-    $http.get('/creatures-hunting/rest/weapons/').then(function (response) {
+    $http.get('rest/weapons/').then(function (response) {
         $scope.weapons = response.data['_embedded']['weapons'];
     });
     $scope.title = "All weapons";
@@ -9,7 +9,7 @@ controllers.controller('WeaponsController', function ($http, $scope) { //$routeP
 controllers.controller('ParticularWeaponController', function ($http, $rootScope, $location, $routeParams, $scope, $route) {
     var weaponId = $routeParams.weaponId;
     console.log('GET weapon by id=' + weaponId);
-    $http.get('/creatures-hunting/rest/weapons/' + weaponId).then(function (response) {//Request successful
+    $http.get('rest/weapons/' + weaponId).then(function (response) {//Request successful
         $scope.weapon = response.data;
         var ammoWeapons = weaponsByAmmoType(response.data.ammoType, $http, $scope);
         $scope.ammoWeapons = ammoWeapons;
@@ -43,7 +43,7 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
             }
             if (promises.length > 0)
                 $q.all(promises);
-            $http.delete('/creatures-hunting/rest/weapons/' + weaponId).then(function (response) {//Request succesful
+            $http.delete('rest/weapons/' + weaponId).then(function (response) {//Request succesful
                 console.log('DELETE weapon id=' + weaponId + 'SUCCESS');
                 $rootScope.succesAllert = "Weapon " + $scope.weapon.name + "deleted.";
                 $location.path('/weapons/');
@@ -69,14 +69,14 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
 
 var weaponsByAmmoType = function (ammoType, $http, $scope) {
     console.log('GET weapons request');
-    $http.get('/creatures-hunting/rest/weapons/ammotype/' + ammoType).then(function (response) {
+    $http.get('rest/weapons/ammotype/' + ammoType).then(function (response) {
         $scope.ammoWeapons = response.data['_embedded']['weapons'];
     });
 };
 
 var weaponsByType = function (type, $http, $scope) {
     console.log('GET weapons request');
-    $http.get('/creatures-hunting/rest/weapons/type/' + type).then(function (response) {
+    $http.get('rest/weapons/type/' + type).then(function (response) {
         $scope.typeWeapons = response.data['_embedded']['weapons'];
     });
 };
@@ -94,7 +94,7 @@ controllers.controller('NewWeaponController', function ($http, $rootScope, $loca
     };
     $scope.create = function (weapon) {
         console.log("Create weapon " + weapon.name);
-        $http.post('/creatures-hunting/rest/weapons/create', weapon).then(function (response) {//Request successful
+        $http.post('rest/weapons/create', weapon).then(function (response) {//Request successful
 //            $rootScope.succesAllert("Weapon " + weapon.name + " created");
             $location.path('/weapons');
         }, function (response) {//Request failed
@@ -110,14 +110,14 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
     $scope.types = ["MELEE", "GUN", "ENERGY", "EXPLOSIVE"];
     $scope.ammoTypes = ["NONE", "BULLET_9MM", "BULLET_NATO", "BATTERY", "MAGNUM_44"];
     console.log('GET weapon by id=' + weaponId);
-    $http.get('/creatures-hunting/rest/weapons/' + weaponId).then(function (response) {//Request successful
+    $http.get('rest/weapons/' + weaponId).then(function (response) {//Request successful
         $scope.weapon = response.data;
     }, function (data) {//Request failed
         $rootScope.warningAlert = "Could not load weapon: " + data.message;
     });
     $scope.edit = function (weapon) {
         console.log("EDIT weapon " + weapon.name);
-        $http.post('/creatures-hunting/rest/weapons/edit/' + weapon.id, weapon).then(function (response) {//Request successful
+        $http.post('rest/weapons/edit/' + weapon.id, weapon).then(function (response) {//Request successful
 //            $rootScope.succesAllert("Weapon " + weapon.name + " edited");
             $location.path('/weapons/' + weapon.id);
         }, function (response) {//Request failed
@@ -131,11 +131,11 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
 
 controllers.controller('NewWeaponEfficiencyController', function ($http, $rootScope, $location, $scope) {
     console.log('GET creatures request viewType=all');
-    $http.get('/creatures-hunting/rest/creatures/?view=all').then(function (response) {
+    $http.get('rest/creatures/?view=all').then(function (response) {
         $scope.creatureDTOs = response.data['_embedded']['creatures'];
     });
     console.log('GET weapons request');
-    $http.get('/creatures-hunting/rest/weapons/').then(function (response) {
+    $http.get('rest/weapons/').then(function (response) {
         $scope.weaponDTOs = response.data['_embedded']['weapons'];
     });
     $scope.efficiency = {
@@ -150,7 +150,7 @@ controllers.controller('NewWeaponEfficiencyController', function ($http, $rootSc
             "creatureId": efficiency.creatureDTO.id,
             "weaponId": efficiency.weaponDTO.id
         }
-        $http.post('/creatures-hunting/rest/weapons/create', toSend).then(function (response) {//Request successful
+        $http.post('rest/weapons/create', toSend).then(function (response) {//Request successful
 //            $rootScope.succesAllert("Weapon " + weapon.name + " created");
             $location.path('rest/weapon-efficiencies/create');
         }, function (response) {//Request failed

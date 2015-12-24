@@ -19,6 +19,7 @@
     <script src="js/areaControllers.js"></script>
     <script src="js/userControllers.js"></script>
     <script src="js/security.js"></script>
+    <script src="js/creatureControllers.js"></script>
 
     <link rel="stylesheet" href="index.css">
 </head>

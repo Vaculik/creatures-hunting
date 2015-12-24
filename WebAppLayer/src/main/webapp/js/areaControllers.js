@@ -1,6 +1,6 @@
 controllers.controller('AreasController', function ($http, $scope) {
     console.log('GET all areas request');
-    $http.get('/creatures-hunting/rest/areas').
+    $http.get('rest/areas').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas";
@@ -10,7 +10,7 @@ controllers.controller('AreasController', function ($http, $scope) {
 
 controllers.controller('NoCreatureAreaController', function ($http, $scope) {
     console.log('GET the areas with no creature request');
-    $http.get('/creatures-hunting/rest/areas/no-creature').
+    $http.get('rest/areas/no-creature').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with no creature";
@@ -21,7 +21,7 @@ controllers.controller('NoCreatureAreaController', function ($http, $scope) {
 
 controllers.controller('AnyCreatureAreaController', function ($http, $scope) {
     console.log('GET the areas with any creature request');
-    $http.get('/creatures-hunting/rest/areas/any-creature').
+    $http.get('rest/areas/any-creature').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with any creature";
@@ -31,7 +31,7 @@ controllers.controller('AnyCreatureAreaController', function ($http, $scope) {
 
 controllers.controller('MostCreaturesAreaController', function ($http, $scope) {
     console.log('GET the areas with most creatures request');
-    $http.get('/creatures-hunting/rest/areas/most-creatures').
+    $http.get('rest/areas/most-creatures').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with the most creatures";
@@ -41,7 +41,7 @@ controllers.controller('MostCreaturesAreaController', function ($http, $scope) {
 
 controllers.controller('FewestCreaturesAreaController', function ($http, $scope) {
     console.log('GET the areas with fewest creatures request');
-    $http.get('/creatures-hunting/rest/areas/fewest-creatures').
+    $http.get('rest/areas/fewest-creatures').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
                 $scope.page = "Areas with the fewest creatures";
@@ -64,7 +64,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     $scope.creatures = {};
 
     console.log('GET particular area with id=' + id);
-    $http.get('/creatures-hunting/rest/areas/' + id).
+    $http.get('rest/areas/' + id).
             then(function (response) {
                 $scope.area = response.data;
             },
@@ -74,7 +74,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
 
     $scope.delete = function (id) {
         console.log('Delete area with id=' + id);
-        $http.delete('/creatures-hunting/rest/areas/' + id).
+        $http.delete('rest/areas/' + id).
                 then(function success(response) {
                     console.log('Area with id=' + id + ' was deleted.');
                     $rootScope.succesAllert = 'Area was deleted';
@@ -89,7 +89,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     
      $scope.addCreature = function () {
          console.log('Add creature with name=' + $scope.addCreatureDTO.creatureName + ' to area with id ' + $scope.addCreatureDTO.areaId);
-         $http.post('/creatures-hunting/rest/areas/add-creature', $scope.addCreatureDTO).
+         $http.post('rest/areas/add-creature', $scope.addCreatureDTO).
                 then(function success(response) {
                     console.log('Creature with name=' + $scope.addCreatureDTO.creatureName + ' was added.');
                     $route.reload();
@@ -101,18 +101,18 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
 
     };
 
-    $http.get('/creatures-hunting/rest/areas').
+    $http.get('rest/areas').
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
             });
             
-    $http.get('/creatures-hunting/rest/creatures').
+    $http.get('rest/creatures').
             then(function (response) {
             $scope.creatures2 = response.data['_embedded']['creatures'];
             });        
     
     console.log('GET creatures in no area');
-    $http.get('/creatures-hunting/rest/creatures/?view=no-area').
+    $http.get('rest/creatures/?view=no-area').
             then(function (response) {
                 if ('_embedded' in response.data) {
                     $scope.addCreatures = response.data['_embedded']['creatures'];
@@ -120,7 +120,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
             });
     
     console.log('GET others areas to area with id=' + id);
-    $http.get('/creatures-hunting/rest/areas/' + id +'/othersareas').
+    $http.get('rest/areas/' + id +'/othersareas').
             then(function (response) {
                 $scope.othersAreas = response.data['_embedded']['areas']
                 ;
@@ -136,7 +136,7 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
     };
     $scope.create = function (area) {
         console.log('Create area: ' + area.name);
-        $http.post('/creatures-hunting/rest/areas/create', area).
+        $http.post('rest/areas/create', area).
                 then(function success(response) {
                     $rootScope.succesAllert = 'The new area was created.';
                     $location.path('/areas');

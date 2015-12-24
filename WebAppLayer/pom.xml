@@ -113,8 +113,8 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/creatures-hunting</path>
-                    <url>http://localhost:8080/creatures-hunting/</url>
+                    <path>/pa165</path>
+                    <url>http://localhost:8080/</url>
                 </configuration>
             </plugin>
 

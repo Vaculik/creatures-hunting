@@ -1,6 +1,6 @@
 var usersOfType = function (type, $http, $scope) {
     console.log('GET users of type=' + type);
-    $http.get('/creatures-hunting/rest/users/type/' + type).
+    $http.get('rest/users/type/' + type).
             then(function (response) {
             	$scope.users = response.data['_embedded']['users'];
             });
@@ -8,7 +8,7 @@ var usersOfType = function (type, $http, $scope) {
 
 var usersOfSex = function (sex, $http, $scope) {
     console.log('GET users of type=' + sex);
-    $http.get('/creatures-hunting/rest/users/sex/' + sex).
+    $http.get('rest/users/sex/' + sex).
             then(function (response) {
                 $scope.users = response.data['_embedded']['users'];
             });
@@ -18,7 +18,7 @@ controllers.controller('UsersController', function ($http, $routeParams, $scope)
     var viewType = $routeParams.viewType;
     console.log('GET USERS request viewType=' + viewType);
     if (viewType == 'all') {
-    	$http.get('/creatures-hunting/rest/users/?view=' + viewType).
+    	$http.get('rest/users/?view=' + viewType).
             then(function (response) {
                 $scope.users = response.data['_embedded']['users'];
             });
@@ -45,7 +45,7 @@ controllers.controller('UsersController', function ($http, $routeParams, $scope)
 controllers.controller('ParticularUserController', function ($http, $rootScope, $location, $routeParams, $scope) {
 	var userId = $routeParams.userId;
 	console.log('GET particular user with id=' + userId);
-    $http.get('/creatures-hunting/rest/users/' + userId).
+    $http.get('rest/users/' + userId).
             then(function (response) {
                 $scope.user = response.data;
                 console.log($scope.user.name + " loaded");
@@ -56,7 +56,7 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
     
     $scope.delete = function (id) {
     	console.log('Delete user with id=' + id);
-    	$http.delete('/creatures-hunting/rest/users/' + id).
+    	$http.delete('rest/users/' + id).
           	then(function success(response) {
           		console.log('User with id=' + id + ' was deleted.');
           		$rootScope.succesAllert = 'User was deleted';
@@ -83,7 +83,7 @@ controllers.controller('NewUserController', function ($http, $rootScope, $locati
     };
     $scope.create = function (user) {
         console.log('Create user: ' + user.name);
-        $http.post('/creatures-hunting/rest/users/create', user).
+        $http.post('rest/users/create', user).
                 then(function success(response) {
                     $rootScope.succesAllert = 'New user was created.';
                     $location.path('/users/all');
@@ -100,7 +100,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $roo
     $scope.types = ['ADMIN', 'ORDINARY'];
     $scope.sexes = ['MALE', 'FEMALE'];
     console.log('GET user by id=' + userId);
-    $http.get('/creatures-hunting/rest/users/' + userId).
+    $http.get('rest/users/' + userId).
     then(function (response) {
         $scope.user = response.data;
     },
@@ -110,7 +110,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $roo
     
     $scope.edit = function (user) {
         console.log("EDIT user " + user.name);
-        $http.post('/creatures-hunting/rest/users/edit/'+user.id, user).then(function (response) {//Request successful
+        $http.post('rest/users/edit/'+user.id, user).then(function (response) {//Request successful
         	$rootScope.succesAllert = 'User was changed.';
         	$location.path('/user/' + user.id);
         }, function (response) {//Request failed

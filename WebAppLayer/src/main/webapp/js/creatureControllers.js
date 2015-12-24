@@ -5,7 +5,7 @@
 controllers.controller('CreaturesController', function ($http, $routeParams, $scope) {
     var viewType = $routeParams.viewType;
     console.log('GET creatures request viewType=' + viewType);
-    $http.get('/creatures-hunting/rest/creatures/?view=' + viewType).
+    $http.get('rest/creatures/?view=' + viewType).
         then(function (response) {
             $scope.creatures = response.data['_embedded']['creatures'];
         });
@@ -20,7 +20,7 @@ controllers.controller('CreaturesController', function ($http, $routeParams, $sc
 
 var creaturesOfType = function (type, $http, $scope) {
     console.log('GET creatures of type=' + type);
-    $http.get('/creatures-hunting/rest/creatures/type/' + type).
+    $http.get('rest/creatures/type/' + type).
         then(function (response) {
             $scope.typeCreatures = response.data['_embedded']['creatures'];
         });
@@ -30,7 +30,7 @@ var creaturesOfType = function (type, $http, $scope) {
 controllers.controller('ParticularCreatureController', function ($http, $rootScope, $location, $routeParams, $scope) {
     var creatureId = $routeParams.creatureId;
     console.log('GET particular creature with id=' + creatureId);
-    $http.get('/creatures-hunting/rest/creatures/' + creatureId).
+    $http.get('rest/creatures/' + creatureId).
         then(function (response) {
             $scope.creature = response.data;
             creaturesOfType(response.data.type, $http, $scope);
@@ -41,14 +41,14 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
         });
 
     console.log('GET most effective weapons to creature with id=' + creatureId);
-    $http.get('/creatures-hunting/rest/weapon-efficiencies/most-effective-to/creature/' + creatureId).
+    $http.get('rest/weapon-efficiencies/most-effective-to/creature/' + creatureId).
         then(function (response) {
             $scope.mostEffective = response.data['_embedded']['weapons'];
         });
 
     $scope.delete = function (id) {
         console.log('Delete creature with id=' + id);
-        $http.delete('/creatures-hunting/rest/creatures/' + id).
+        $http.delete('rest/creatures/' + id).
             then(function success(response) {
                 console.log('Creature with id=' + id + ' was deleted.');
                 $rootScope.succesAllert = 'Creature was deleted';
@@ -73,7 +73,7 @@ controllers.controller('NewCreatureController', function ($http, $rootScope, $lo
     };
     $scope.create = function (creature) {
         console.log('Create creature: ' + creature.name);
-        $http.post('/creatures-hunting/rest/creatures/create', creature).
+        $http.post('rest/creatures/create', creature).
             then(function success(response) {
                 $rootScope.succesAllert = 'The new creature was created.';
                 $location.path('/creatures/all');
