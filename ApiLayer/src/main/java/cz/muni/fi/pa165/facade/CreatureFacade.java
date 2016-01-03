@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.CreatureDTO;
-import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 
 import java.util.List;
@@ -44,6 +43,13 @@ public interface CreatureFacade {
      * @param creatureDTO the CreatureDTO to be deleted
      */
     void deleteCreature(CreatureDTO creatureDTO);
+
+    /**
+     * Update the CreatureDTO.
+     *
+     * @param creatureDTO the CreatureDTO to be updated
+     */
+    void updateCreature(CreatureDTO creatureDTO);
 
     /**
      * Find all CreatureDTOs.

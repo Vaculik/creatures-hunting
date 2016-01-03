@@ -34,7 +34,6 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
         then(function (response) {
             $scope.creature = response.data;
             creaturesOfType(response.data.type, $http, $scope);
-            console.log($scope.typeCreatures);
         },
         function error(response) {
             $rootScope.warningAlert = 'Problem occured when load creature ' + response.data.message;
@@ -61,9 +60,9 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
     };
 });
 
-controllers.controller('NewCreatureController', function ($http, $rootScope, $location, $scope) {
+controllers.controller('NewCreatureController', function ($http, $rootScope, $location, $scope, TYPES) {
     console.log('New creature controller');
-    $scope.types = ['VAMPIRE', 'BEAST', 'UNDEAD'];
+    $scope.types = TYPES.creatureTypes;
     $scope.creature = {
         'name': '',
         'height': 0,
@@ -82,5 +81,30 @@ controllers.controller('NewCreatureController', function ($http, $rootScope, $lo
                 console.log(response);
                 $rootScope.errorAlert = 'Problem has occured, cannot create new creature!';
             });
+    };
+});
+
+controllers.controller('EditCreatureController', function ($http, $routeParams, $rootScope, $location, $scope, TYPES) {
+    var creatureId = $routeParams.creatureId;
+    $scope.types = TYPES.creatureTypes;
+    console.log('GET creature by id=' + creatureId);
+    $http.get('rest/creatures/' + creatureId).
+        then(function (response) {
+            $scope.creature = response.data;
+        },
+        function error(response) {
+            $rootScope.warningAlert = 'Problem occured when loading creature ' + response.data.message;
+        });
+
+    $scope.edit = function (creature) {
+        console.log("EDIT creature " + creature.name);
+        $http.post('rest/creatures/update', creature).then(function (response) {
+            $rootScope.succesAllert = 'Creature was changed.';
+            $location.path('/creature/' + creature.id);
+        }, function (response) {//Request failed
+            console.log("EDIT creature failed");
+            console.log(response);
+            $rootScope.errorAlert("Creature could not be edited.");
+        });
     };
 });

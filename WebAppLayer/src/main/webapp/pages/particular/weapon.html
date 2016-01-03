@@ -59,7 +59,7 @@
                             <th>Name</th>
                             <th>Type</th>
                             <th>Efficiency</th>
-                            <th></th>
+                            <th ng-if="isAuthenticated()"></th>
                         </tr>
                     </thread>
                     <tbody>
@@ -67,8 +67,8 @@
                         <td><a href="#/creature/{{efficiency.creatureDTO.id}}">{{efficiency.creatureDTO.name}}</a></td>
                         <td>{{efficiency.creatureDTO.type}}</td>
                         <td>{{efficiency.efficiency}}</td>
-                        <td align="right">
-                            <button ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit" ng-click="deleteEff(efficiency.id)">
+                        <td ng-if="isAuthenticated()" align="right">
+                            <button class="btn btn-flat btn-primary" type="submit" ng-click="deleteEff(efficiency.id)">
                                 Delete efficiency
                             </button>
                         </td>

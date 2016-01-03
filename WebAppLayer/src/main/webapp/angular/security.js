@@ -85,7 +85,11 @@ controllers.controller('ApplicationController', function($scope, USER_ROLES, Aut
         $scope.currentUser = user;
     };
     $scope.logout = AuthService.logout;
-    AuthService.login({loginName: 'Karel', password: 'admin'});
+    AuthService.login({loginName: 'Pavel', password: 'user'}).then(function (user) {
+        //$rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $scope.setCurrentUser(user);
+        //$location.path('/home');
+    });
 });
 
 

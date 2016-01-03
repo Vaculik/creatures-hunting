@@ -46,6 +46,13 @@ public interface CreatureService {
     void deleteCreature(Creature creature);
 
     /**
+     * Update the Creature entity.
+     *
+     * @param creature the Creature to be updated
+     */
+    void updateCreature(Creature creature);
+
+    /**
      * Find all Creature entities.
      *
      * @return list of the results

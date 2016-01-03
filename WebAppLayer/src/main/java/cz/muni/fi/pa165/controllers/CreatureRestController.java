@@ -138,6 +138,18 @@ public class CreatureRestController {
     }
 
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateCreature(@RequestBody @Valid CreatureDTO creatureDTO, BindingResult bindingResult) {
+        logger.debug("POST update creature");
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed when update creature: " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
+        creatureFacade.updateCreature(creatureDTO);
+    }
+
+
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> getCreaturesOfType(@PathVariable CreatureType type) {
         logger.debug("GET all creatures of type=" + type);

@@ -20,6 +20,10 @@ app.constant('USER_ROLES', {
     user: 'user'
 });
 
+app.constant('TYPES', {
+    creatureTypes: ['VAMPIRE', 'BEAST', 'UNDEAD']
+});
+
 
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
@@ -29,6 +33,9 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/creature/:creatureId', {
             templateUrl: 'pages/particular/creature.html',
             controller: 'ParticularCreatureController'}).
+        when('/creature/:creatureId/edit', {
+            templateUrl: 'pages/edit/edit-creature.html',
+            controller: 'EditCreatureController'}).
         when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
         when('/weapons/new', {templateUrl: 'pages/new/new-weapon.html', controller: 'NewWeaponController'}).
         when('/efficiency/new', {templateUrl: 'pages/new/new-efficiency.html', controller: 'NewWeaponEfficiencyController'}).//In WeaponControllers

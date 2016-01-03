@@ -37,9 +37,16 @@ public class CreatureServiceImpl implements CreatureService {
         creatureDao.create(creature);
     }
 
+
+
     @Override
     public void deleteCreature(Creature creature) {
         creatureDao.delete(creature);
+    }
+
+    @Override
+    public void updateCreature(Creature creature) {
+        creatureDao.update(creature);
     }
 
     @Override
