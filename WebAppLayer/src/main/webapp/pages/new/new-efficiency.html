@@ -1,4 +1,18 @@
-<h2>New weapon</h2>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div>
+        <h1>New weapon efficiency</h1>
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="#/weapons"><i class="fa fa-dashboard"></i> Weapons</a></li>
+        <li class="active">New weapon efficiency</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
 <form name="form" novalidate role="form">
     <div class="form-group" ng-class="{'has-error': !form.weaponDTO.$valid}">
         <label for="type">Weapon:</label>
@@ -23,3 +37,4 @@
         </div>
     <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="create(efficiency)">Create efficiency</button>
 </form>
+</section>

@@ -27,7 +27,7 @@ public class CreatureDaoImpl implements CreatureDao {
     }
 
     public Creature getByName(String name) {
-        TypedQuery<Creature> query = em.createQuery("SELECT c FROM Creature as c WHERE c.name=:n",
+        TypedQuery<Creature> query = em.createQuery("SELECT c FROM Creature AS c WHERE c.name=:n",
                 Creature.class).setParameter("n", name);
         try {
             return query.getSingleResult();
