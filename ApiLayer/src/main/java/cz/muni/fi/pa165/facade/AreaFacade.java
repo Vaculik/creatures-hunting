@@ -29,6 +29,13 @@ public interface AreaFacade {
     void deleteArea(AreaDTO area);
 
     /**
+     * This method updates an area.
+     *
+     * @param area AreaDTO to be updated
+     */
+    void updateArea(AreaDTO area);
+
+    /**
      * This method finds all areas in a database
      *
      * @return list of all areas in a database

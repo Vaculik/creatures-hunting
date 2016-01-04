@@ -148,3 +148,28 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
     };
     
 });
+
+
+controllers.controller('EditAreaController', function ($http, $routeParams, $rootScope, $location, $scope, TYPES) {
+    var areaId = $routeParams.areaId;
+    console.log('GET area by id=' + areaId);
+    $http.get('rest/areas/' + areaId).
+        then(function (response) {
+            $scope.area = response.data;
+        },
+        function error(response) {
+            $rootScope.warningAlert = 'Problem occured when loading area ' + response.data.message;
+        });
+
+    $scope.edit = function (area) {
+        console.log("EDIT area " + area.name);
+        $http.post('rest/areas/update', area).then(function (response) {
+            $rootScope.succesAllert = 'Area was changed.';
+            $location.path('/area/' + area.id);
+        }, function (response) {//Request failed
+            console.log("EDIT area failed");
+            console.log(response);
+            $rootScope.errorAlert("Area could not be edited.");
+        });
+    };
+});

@@ -124,6 +124,17 @@ public class AreaRestController {
         areaFacade.deleteArea(areaDTO);
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void updateArea(@RequestBody @Valid AreaDTO areaDTO, BindingResult bindingResult) {
+        logger.debug("POST update area");
+        if (bindingResult.hasErrors()) {
+            String msg = "Validation failed when update area: " + bindingResult.toString();
+            logger.error(msg);
+            throw new InvalidRequestFormatException(msg);
+        }
+        areaFacade.updateArea(areaDTO);
+    }
+
     @RequestMapping(value = "/no-creature", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAreasWithNoCreature() {
         logger.debug("GET areas with no creature");

@@ -40,6 +40,11 @@ public class AreaFacadeImpl implements AreaFacade {
     }
 
     @Override
+    public void updateArea(AreaDTO area) {
+        areaService.updateArea(entityMapper.map(area, Area.class));
+    }
+
+    @Override
     public List<AreaDTO> getAllAreas() {
         return entityMapper.map(areaService.findAllAreas(), AreaDTO.class);
     }

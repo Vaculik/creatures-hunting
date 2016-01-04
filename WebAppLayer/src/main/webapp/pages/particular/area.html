@@ -28,7 +28,11 @@
                         Description:</b> {{area.description}}
                     </p>
                     <br>
-
+                    <a ng-if="isAuthenticated()" href="#areas/{{area.id}}/edit">
+                        <button class="btn btn-flat btn-primary" type="submit">
+                            Edit area
+                        </button>
+                    </a>
                     <div ng-if="isAuthorized(userRoles.admin)">
                         <button class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
                         </button>

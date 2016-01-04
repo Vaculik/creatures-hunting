@@ -47,6 +47,9 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/areas/mostcreatures', {templateUrl: 'pages/areas.html', controller: 'MostCreaturesAreaController'}).
         when('/areas/fewestcreatures', {templateUrl: 'pages/areas.html', controller: 'FewestCreaturesAreaController'}).
         when('/areas/new', {templateUrl: 'pages/new/new-area.html', controller: 'NewAreaController'}).
+        when('/areas/:areaId/edit', {
+            templateUrl: 'pages/edit/edit-area.html',
+            controller: 'EditAreaController'}).
         when('/area/:areaId', {
             templateUrl: 'pages/particular/area.html',
             controller: 'ParticularAreaController'}).
