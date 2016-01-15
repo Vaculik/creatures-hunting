@@ -1,12 +1,16 @@
 package cz.muni.fi.pa165.controllers;
 
+import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.facade.AreaFacade;
 import cz.muni.fi.pa165.facade.CreatureFacade;
 import cz.muni.fi.pa165.facade.WeaponEfficiencyFacade;
 import cz.muni.fi.pa165.facade.WeaponFacade;
+import cz.muni.fi.pa165.hateoas.AreaResource;
+import cz.muni.fi.pa165.hateoas.AreaResourceAssembler;
 import cz.muni.fi.pa165.hateoas.CreatureResource;
 import cz.muni.fi.pa165.hateoas.CreatureResourceAssembler;
 import org.slf4j.Logger;
@@ -48,6 +52,8 @@ public class CreatureRestController {
 
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
+    @Autowired
+    private AreaResourceAssembler areaResourceAssembler;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -159,5 +165,15 @@ public class CreatureRestController {
                 linkTo(this.getClass()).slash("type").slash(type).withSelfRel());
 
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{id}/area", method = RequestMethod.GET)
+    public HttpEntity<AreaResource> getAreaOfCreature(@PathVariable Long id) {
+        logger.debug("GET area of creature with id={}", id);
+        AreaDTO area = creatureFacade.getAreaOfCreature(id);
+        AreaResource areaResource = areaResourceAssembler.toResource(area);
+
+        return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 }

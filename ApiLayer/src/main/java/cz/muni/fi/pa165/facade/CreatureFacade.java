@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 
@@ -86,4 +87,12 @@ public interface CreatureFacade {
      * @return list of the results
      */
     List<CreatureDTO> getCreaturesInNoArea();
+
+    /**
+     * Get an AreaDTO of a creature specified by the id.
+     *
+     * @param creatureId the id of the creature
+     * @return the AreaDTO
+     */
+    AreaDTO getAreaOfCreature(Long creatureId);
 }

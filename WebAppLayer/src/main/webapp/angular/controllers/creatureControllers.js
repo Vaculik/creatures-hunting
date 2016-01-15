@@ -26,6 +26,14 @@ var creaturesOfType = function (type, $http, $scope) {
         });
 };
 
+var areaOfCreature = function (creatureId, $http, $scope) {
+    console.log('GET area of creature with id=' + creatureId);
+    $http.get('rest/creatures/'+creatureId+'/area').
+        then(function (response) {
+            $scope.creature.area = response.data;
+        })
+}
+
 
 controllers.controller('ParticularCreatureController', function ($http, $rootScope, $location, $routeParams, $scope) {
     var creatureId = $routeParams.creatureId;
@@ -34,6 +42,7 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
         then(function (response) {
             $scope.creature = response.data;
             creaturesOfType(response.data.type, $http, $scope);
+            areaOfCreature(creatureId, $http, $scope);
         },
         function error(response) {
             $rootScope.warningAlert = 'Problem occured when load creature ' + response.data.message;

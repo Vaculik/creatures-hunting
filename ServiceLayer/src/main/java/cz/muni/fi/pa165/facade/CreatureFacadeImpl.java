@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.facade;
 
+import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
@@ -75,5 +76,11 @@ public class CreatureFacadeImpl implements CreatureFacade {
     @Override
     public List<CreatureDTO> getCreaturesInNoArea() {
         return entityMapper.map(creatureService.getCreaturesInNoArea(), CreatureDTO.class);
+    }
+
+    @Override
+    public AreaDTO getAreaOfCreature(Long creatureId) {
+        Creature creature = creatureService.getCreatureById(creatureId);
+        return entityMapper.map(creature.getArea(), AreaDTO.class);
     }
 }

@@ -20,14 +20,18 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
 
     $http.get('rest/weapon-efficiencies/most-vulnerable-to/weapon/' + weaponId).then(function (response) {
         console.log('GET creature most vulnerable to weapon ' + weaponId + ' SUCCESS');
-        $scope.mostVulnerable = response.data['_embedded']['creatures'];
+        if ('_embedded' in response.data) {
+            $scope.mostVulnerable = response.data['_embedded']['creatures'];
+        }
     }, function (response) {
         $rootScope.warningAlert = "Could not load most vulnerable creature: " + data.message;
     });
 
     $http.get('rest/weapon-efficiencies/weapon/' + weaponId).then(function (response) {
         console.log('GET all efficiencies of weapon ' + weaponId + ' SUCCESS');
-        $scope.efficiencies = response.data['_embedded']['weapon-efficiencies'];
+        if ('_embedded' in response.data) {
+            $scope.efficiencies = response.data['_embedded']['weapon-efficiencies'];
+        }
     }, function (response) {
         $rootScope.warningAlert = "Could not load weapon efficiencies: " + data.message;
     });
