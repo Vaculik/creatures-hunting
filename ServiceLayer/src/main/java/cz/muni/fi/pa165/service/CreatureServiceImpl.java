@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.service;
 
+import cz.muni.fi.pa165.dao.AreaDao;
 import cz.muni.fi.pa165.dao.CreatureDao;
+import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class CreatureServiceImpl implements CreatureService {
 
     @Autowired
     private CreatureDao creatureDao;
+    @Autowired
+    private AreaDao areaDao;
 
     @Override
     public Creature getCreatureById(Long id) {
@@ -111,5 +115,15 @@ public class CreatureServiceImpl implements CreatureService {
                 .stream()
                 .filter(c -> c.getArea() == null)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeAreaOfCreature(Long creatureId) {
+        Creature creature = creatureDao.getById(creatureId);
+        Area creatureArea = creature.getArea();
+        if (creatureArea != null) {
+            creatureArea.removeCreature(creature);
+            areaDao.update(creatureArea);
+        }
     }
 }

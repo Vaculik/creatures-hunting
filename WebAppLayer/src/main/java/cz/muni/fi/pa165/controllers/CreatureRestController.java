@@ -5,10 +5,7 @@ import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
-import cz.muni.fi.pa165.facade.AreaFacade;
 import cz.muni.fi.pa165.facade.CreatureFacade;
-import cz.muni.fi.pa165.facade.WeaponEfficiencyFacade;
-import cz.muni.fi.pa165.facade.WeaponFacade;
 import cz.muni.fi.pa165.hateoas.AreaResource;
 import cz.muni.fi.pa165.hateoas.AreaResourceAssembler;
 import cz.muni.fi.pa165.hateoas.CreatureResource;
@@ -27,7 +24,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -45,10 +41,6 @@ public class CreatureRestController {
 
     @Autowired
     private CreatureFacade creatureFacade;
-    @Autowired
-    private WeaponFacade weaponFacade;
-    @Autowired
-    private WeaponEfficiencyFacade weaponEfficiencyFacade;
 
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
@@ -167,13 +159,30 @@ public class CreatureRestController {
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }
 
-
+    /**
+     * Return a http response containing an area of a creature with the given id.
+     * If there is no such an area, then return an area with an id equal -1.
+     * This auxiliary area represents null value.
+     */
     @RequestMapping(value = "/{id}/area", method = RequestMethod.GET)
     public HttpEntity<AreaResource> getAreaOfCreature(@PathVariable Long id) {
         logger.debug("GET area of creature with id={}", id);
         AreaDTO area = creatureFacade.getAreaOfCreature(id);
+        if (area == null) {
+            // Auxiliary area object representing null area
+            area = new AreaDTO();
+            area.setId(-1l);
+            area.setDescription("Null area");
+        }
         AreaResource areaResource = areaResourceAssembler.toResource(area);
 
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/{id}/remove-area", method = RequestMethod.POST)
+    public void removeCreature(@PathVariable Long id) {
+        logger.debug("POST remove area of Creature with id={}", id);
+        creatureFacade.removeAreaOfCreature(id);
     }
 }

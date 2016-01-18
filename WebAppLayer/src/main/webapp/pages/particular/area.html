@@ -79,12 +79,18 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Type</th>
+                                <th ng-if="isAuthenticated()"></th>
                             </tr>
                         </thread>
                         <tbody>
                         <tr ng-repeat="creature in area.creatures| orderBy:'+type'">
                             <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
                             <td>{{creature.type}}</td>
+                            <td ng-if="isAuthenticated()" align="right">
+                                <button class="btn btn-flat btn-primary" type="submit" ng-click="removeCreature(creature.id)">
+                                    Remove creature
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

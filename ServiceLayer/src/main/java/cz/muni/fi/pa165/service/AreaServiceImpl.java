@@ -113,20 +113,11 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
-    public boolean addCreature(Long areaId, String creatureName) {
-        System.out.println(areaId + " " + creatureName); // to delete
+    public void addCreature(Long areaId, String creatureName) {
         Area area = areaDao.getById(areaId);
-        creatureDao.findAll().stream()
-                .forEach(c -> System.out.println(c.getName())); // to delete
-        Creature c = creatureDao.getByName("Dracula");
-        System.out.println(c);
         Creature creature = creatureDao.getByName(creatureName);
-        System.out.println(creature); // to delete
-        if (creature.getArea() != null) {
-            return false;
-        }
+
         area.addCreature(creature);
         areaDao.update(area);
-        return true;
     }
 }

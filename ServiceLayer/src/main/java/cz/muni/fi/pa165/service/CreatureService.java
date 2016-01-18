@@ -87,4 +87,11 @@ public interface CreatureService {
      * @return list of the results
      */
     List<Creature> getCreaturesInNoArea();
+
+    /**
+     * Remove an area of a creature with the specified id.
+     *
+     * @param creatureId the id of the creature
+     */
+    void removeAreaOfCreature(Long creatureId);
 }

@@ -46,6 +46,53 @@
                     </button>
                 </div>
             </div>
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title" ng-if="hasArea">
+                        Area
+                    </h3>
+                    <h3 class="box-title" ng-if="!hasArea">
+                        In no area
+                    </h3>
+                </div>
+                <div class="box-body no-padding" ng-if="hasArea">
+                    <table class="table">
+                        <thread>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th ng-if="isAuthenticated()"></th>
+                            </tr>
+                        </thread>
+                        <tbody>
+                        <tr>
+                            <td><a href="#/area/{{creature.area.id}}">{{creature.area.name}}</a></td>
+                            <td>{{creature.area.description}}</td>
+                            <td ng-if="isAuthenticated()" align="right">
+                                <button class="btn btn-flat btn-primary" type="submit" ng-click="removeArea()">
+                                    Remove area
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-body" ng-if="!hasArea">
+                    <form name="areaForm" novalidate role="form">
+                        <div class="form-group">
+                            <label for="addArea">Choose area:</label>
+                            <select class="form-control" name="name" ng-model="chosenArea.areaName" id="addArea" required>
+                                <option  ng-repeat="area in selectAreas | orderBy:'+name' ">{{area.name}}</option>
+                            </select>
+                        </div>
+                        <br>
+                        <button ng-disabled="!areaForm.$valid" class="btn btn-flat btn-primary" type="submit"
+                                ng-click="selectArea()">
+                            Select area
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="box box-primary">

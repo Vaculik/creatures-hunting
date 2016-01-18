@@ -2,9 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.dto.AreaAddCreatureDTO;
 import cz.muni.fi.pa165.dto.AreaDTO;
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.entity.Area;
-import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.service.AreaService;
 import cz.muni.fi.pa165.util.EntityMapper;
 
@@ -83,5 +81,5 @@ public class AreaFacadeImpl implements AreaFacade {
     public void addCreature(AreaAddCreatureDTO areaAddCreatureDTO){
         areaService.addCreature(areaAddCreatureDTO.getAreaId(), areaAddCreatureDTO.getCreatureName());
     }
-    
+
 }

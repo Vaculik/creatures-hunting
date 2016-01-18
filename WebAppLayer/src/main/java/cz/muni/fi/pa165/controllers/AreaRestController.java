@@ -188,7 +188,7 @@ public class AreaRestController {
             throw new InvalidRequestFormatException(msg);
         }
 
-        logger.debug("POST add new Creature with name={} to Area with id={}",
+        logger.debug("POST add Creature with name={} to Area with id={}",
                 areaAddCreatureDTO.getCreatureName(),
                 areaAddCreatureDTO.getAreaId());
 

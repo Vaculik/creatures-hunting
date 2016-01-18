@@ -38,7 +38,7 @@ app.config(['$routeProvider', function ($routeProvider) {
             controller: 'EditCreatureController'}).
         when('/weapons', {templateUrl: 'pages/weapons.html', controller: 'WeaponsController'}).
         when('/weapons/new', {templateUrl: 'pages/new/new-weapon.html', controller: 'NewWeaponController'}).
-        when('/efficiency/new', {templateUrl: 'pages/new/new-efficiency.html', controller: 'NewWeaponEfficiencyController'}).//In WeaponControllers
+        when('/efficiency/new/:weaponId', {templateUrl: 'pages/new/new-efficiency.html', controller: 'NewWeaponEfficiencyController'}).//In WeaponControllers
         when('/weapons/edit/:weaponId', {templateUrl: 'pages/edit/edit-weapon.html', controller: 'EditWeaponController'}).
         when('/weapons/:weaponId', {templateUrl: 'pages/particular/weapon.html', controller: 'ParticularWeaponController'}).
         when('/areas', {templateUrl: 'pages/areas.html', controller: 'AreasController'}).

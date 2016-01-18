@@ -125,6 +125,19 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 $scope.othersAreas = response.data['_embedded']['areas']
                 ;
             });
+
+    $scope.removeCreature = function(id) {
+        console.log('Remove creature with id='+id+' from area '+$scope.area.name);
+        $http.post('rest/creatures/'+id+'/remove-area').
+            then(function success(response) {
+                console.log('Area of creature with id='+id+' was removed.');
+                $route.reload();
+            }, function error(response) {
+                console.log('Error when removing area of creature with id='+id);
+                console.log(response);
+                $rootScope.errorAlert('Error when removing area of creature with id='+id);
+            })
+    }
 });
 
 

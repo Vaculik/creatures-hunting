@@ -95,4 +95,11 @@ public interface CreatureFacade {
      * @return the AreaDTO
      */
     AreaDTO getAreaOfCreature(Long creatureId);
+
+    /**
+     * Remove an area of a creature specified by the id.
+     *
+     * @param creatureId the id of the creature
+     */
+    void removeAreaOfCreature(Long creatureId);
 }

@@ -30,13 +30,21 @@ var areaOfCreature = function (creatureId, $http, $scope) {
     console.log('GET area of creature with id=' + creatureId);
     $http.get('rest/creatures/'+creatureId+'/area').
         then(function (response) {
+            $scope.hasArea = false;
             $scope.creature.area = response.data;
+            if (response.data.id != -1) {
+                $scope.hasArea = true;
+            }
         })
-}
+};
 
 
-controllers.controller('ParticularCreatureController', function ($http, $rootScope, $location, $routeParams, $scope) {
+controllers.controller('ParticularCreatureController', function ($http, $route, $rootScope, $location, $routeParams, $scope) {
     var creatureId = $routeParams.creatureId;
+    $scope.chosenArea = {
+        'areaName': ''
+    };
+
     console.log('GET particular creature with id=' + creatureId);
     $http.get('rest/creatures/' + creatureId).
         then(function (response) {
@@ -67,6 +75,52 @@ controllers.controller('ParticularCreatureController', function ($http, $rootSco
                 $rootScope.errorAlert('Problem has occured when deleting creature!');
             });
     };
+
+    console.log('GET all areas');
+    $http.get('rest/areas').
+        then(function (response) {
+            if ('_embedded' in response.data) {
+                $scope.selectAreas = response.data['_embedded']['areas'];
+            }
+        });
+
+    $scope.selectArea = function () {
+        console.log('Add creature with name=' + $scope.creature.name + ' to area with name=' + $scope.chosenArea.areaName);
+        var addCreatureDTO = {
+            'areaId': 0,
+            'creatureName': $scope.creature.name
+        };
+        for (var i = 0; i < $scope.selectAreas.length; i++) {
+            console.log('Area with name=' + $scope.selectAreas[i].name);
+            if ($scope.selectAreas[i].name == $scope.chosenArea.areaName) {
+                addCreatureDTO.areaId = $scope.selectAreas[i].id;
+            }
+        }
+        if (addCreatureDTO.areaId != 0) {
+            $http.post('rest/areas/add-creature', addCreatureDTO).
+                then(function success(response) {
+                    console.log('Creature was added to area with name=' + $scope.chosenArea.areaName + ' .');
+                    $route.reload();
+                }, function error(response) {
+                    console.log('Error when adding creature to area with name=' + $scope.chosenArea.areaName);
+                    console.log(response);
+                    $rootScope.errorAlert('Error when adding creature to area with name=', $scope.chosenArea.areaName);
+                });
+        }
+    };
+
+    $scope.removeArea = function() {
+        console.log('Remove area of creature with name=' + $scope.creature.name);
+        $http.post('rest/creatures/'+$scope.creature.id+'/remove-area').
+            then(function success(response) {
+                console.log('Area of creature '+$scope.creature.name+' was removed.');
+                $route.reload();
+            }, function error(response) {
+                console.log('Error when removing area of creature '+$scope.creature.name);
+                console.log(response);
+                $rootScope.errorAlert('Error when removing area of creature with name='+$scope.creature.name);
+            })
+    }
 });
 
 controllers.controller('NewCreatureController', function ($http, $rootScope, $location, $scope, TYPES) {

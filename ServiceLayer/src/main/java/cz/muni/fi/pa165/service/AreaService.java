@@ -89,5 +89,11 @@ public interface AreaService {
      */
     List<Area> getAreasFewestCreatures();
 
-    boolean addCreature(Long areaId, String creatureName);
+    /**
+     * This method adds a creature to an area.
+     *
+     * @param areaId the area id
+     * @param creatureName the creature name
+     */
+    void addCreature(Long areaId, String creatureName);
 }

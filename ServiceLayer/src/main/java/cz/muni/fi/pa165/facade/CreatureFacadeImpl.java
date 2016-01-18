@@ -83,4 +83,9 @@ public class CreatureFacadeImpl implements CreatureFacade {
         Creature creature = creatureService.getCreatureById(creatureId);
         return entityMapper.map(creature.getArea(), AreaDTO.class);
     }
+
+    @Override
+    public void removeAreaOfCreature(Long creatureId) {
+        creatureService.removeAreaOfCreature(creatureId);
+    }
 }
