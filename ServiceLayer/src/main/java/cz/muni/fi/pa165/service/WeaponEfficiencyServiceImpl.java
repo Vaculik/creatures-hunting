@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +36,11 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
     @Override
     public void deleteWeaponEfficiency(WeaponEfficiency weaponEfficiency) {
         weaponEfficiencyDao.delete(weaponEfficiency);
+    }
+
+    @Override
+    public void updateWeaponEfficiency(WeaponEfficiency weaponEfficiency) {
+        weaponEfficiencyDao.update(weaponEfficiency);
     }
 
     @Override
@@ -101,5 +107,18 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
                 .stream()
                 .filter(w -> weapon.equals(w.getWeapon()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public WeaponEfficiency findWeaponEfficiency(Weapon weapon, Creature creature) {
+        if (weapon == null || creature == null) {
+            return null;
+        }
+        Optional<WeaponEfficiency> optional = weaponEfficiencyDao.findAll()
+                .stream()
+                .filter(w -> weapon.equals(w.getWeapon()) && creature.equals(w.getCreature()))
+                .findFirst();
+
+        return optional.isPresent() ? optional.get() : null;
     }
 }

@@ -37,6 +37,13 @@ public interface WeaponEfficiencyService {
     void deleteWeaponEfficiency(WeaponEfficiency weaponEfficiency);
 
     /**
+     * Update the WeaponEfficiency.
+     *
+     * @param weaponEfficiency the WeaponEfficiency to be updated
+     */
+    void updateWeaponEfficiency(WeaponEfficiency weaponEfficiency);
+
+    /**
      * Find all WeaponEfficiencies.
      *
      * @return list of the results
@@ -66,4 +73,13 @@ public interface WeaponEfficiencyService {
      * @return list of the WeaponEfficiencies
      */
     List<WeaponEfficiency> findAllWeaponEfficienciesOfWeapon(Weapon weapon);
+
+    /**
+     * Find a WeaponEfficiency of the specified Weapon against the specified Creature.
+     *
+     * @param weapon the Weapon
+     * @param creature the Creature
+     * @return the WeaponEfficiency, if doesn't exist, then return null
+     */
+    WeaponEfficiency findWeaponEfficiency(Weapon weapon, Creature creature);
 }

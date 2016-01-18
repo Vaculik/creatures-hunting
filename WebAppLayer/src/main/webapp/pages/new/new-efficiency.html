@@ -4,7 +4,8 @@
         <h1>New weapon efficiency</h1>
     </div>
     <ol class="breadcrumb">
-        <li><a href="#/weapons"><i class="fa fa-dashboard"></i> Weapons</a></li>
+        <li><a href="#/weapons/"><i class="fa fa-dashboard"></i> Weapons</a></li>
+        <li><a href="#/weapons/{{weapon.id}}"><i class="fa fa-dashboard"></i> {{weapon.name}}</a></li>
         <li class="active">New weapon efficiency</li>
     </ol>
 </section>
@@ -12,29 +13,48 @@
 
 <!-- Main content -->
 <section class="content">
+    <div class="row">
 
-<form name="form" novalidate role="form">
-    <div class="form-group" ng-class="{'has-error': !form.weaponDTO.$valid}">
-        <label for="type">Weapon:</label>
-        <select class="form-control" name="type" ng-model="efficiency.weaponDTO" id="type" required>
-            <option ng-repeat="weaponDTO in weaponDTOs">{{weaponDTO}}</option>
-        </select>
-        <p class="help-block" ng-show="form.weaponDTO.$error.required">Weapon is required</p>
-    </div>
-    <div class="form-group" ng-class="{'has-error': !form.creatureDTO.$valid}">
-        <label for="type">Creature:</label>
-        <select class="form-control" name="type" ng-model="efficiency.creatureDTO" id="type" required>
-            <option ng-repeat="creatureDTO in creatureDTOs">{{creatureDTO}}</option>
-        </select>
-        <p class="help-block" ng-show="form.creatureDTO.$error.required">Weapon is required</p>
-    </div>
-    <div class="form-group" ng-class="{'has-error': !form.efficiency.$valid}">
-            <label for="efficiency">Relative weapon efficiency on creature:</label>
-            <input placeholder="0" type="number" ng-min="1" ng-pattern="/^-?\d*$/" required class="form-control" name="efficiency" ng-model="weapon.efficiency" id="efficiency">
-            <p class="help-block" ng-show="form.efficiency.$error.required">Efficiency is required</p>
-            <p class="help-block" ng-show="form.efficiency.$error.min">Efficiency must be at least 0</p>
-            <p class="help-block" ng-show="form.efficiency.$error.pattern">Efficiency must be integer</p>
+        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <form name="form" novalidate role="form">
+                        <div class="form-group" ng-class="{'has-error': !form.weapon.$valid}">
+                            <label for="weapon">Weapon:</label>
+                            <select class="form-control" name="weapon" ng-model="efficiency.weaponName"
+                                    id="weapon" required>
+                                <option ng-repeat="weaponDTO in weaponDTOs">{{weaponDTO.name}}</option>
+                            </select>
+
+                            <p class="help-block" ng-show="form.weaponDTO.$error.required">Weapon is required</p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !form.creature.$valid}">
+                            <label for="creature">Creature:</label>
+                            <select class="form-control" name="creature" ng-model="efficiency.creatureName"
+                                    id="creature" required>
+                                <option ng-repeat="creatureDTO in creatureDTOs">{{creatureDTO.name}}</option>
+                            </select>
+
+                            <p class="help-block" ng-show="form.creatureDTO.$error.required">Creature is required</p>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': !form.efficiency.$valid}">
+                            <label for="efficiency">Relative weapon efficiency on creature:</label>
+                            <input placeholder="0" type="number" ng-min="0  " ng-pattern="/^-?\d*$/" required
+                                   class="form-control" name="efficiency" ng-model="efficiency.efficiency" id="efficiency">
+
+                            <p class="help-block" ng-show="form.efficiency.$error.required">Efficiency is required</p>
+
+                            <p class="help-block" ng-show="form.efficiency.$error.min">Efficiency must be at least 0</p>
+
+                            <p class="help-block" ng-show="form.efficiency.$error.pattern">Efficiency must be
+                                integer</p>
+                        </div>
+                        <button ng-disabled="!form.$valid" class="btn btn-default" type="submit"
+                                ng-click="create()">Create efficiency
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-    <button ng-disabled="!form.$valid" class="btn btn-default" type="submit" ng-click="create(efficiency)">Create efficiency</button>
-</form>
+    </div>
 </section>

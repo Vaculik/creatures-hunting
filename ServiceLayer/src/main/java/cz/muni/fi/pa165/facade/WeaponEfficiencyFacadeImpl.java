@@ -42,17 +42,22 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
 
     @Override
     public Long createWeaponEfficiency(WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO) {
-        WeaponEfficiency newWeaponEfficiency = new WeaponEfficiency();
-        newWeaponEfficiency.setEfficiency(weaponEfficiencyCreateDTO.getEfficiency());
-
         Creature creature = creatureService.getCreatureById(weaponEfficiencyCreateDTO.getCreatureId());
-        newWeaponEfficiency.setCreature(creature);
-
         Weapon weapon = weaponService.getWeaponById(weaponEfficiencyCreateDTO.getWeaponId());
-        newWeaponEfficiency.setWeapon(weapon);
+        WeaponEfficiency weaponEfficiency = weaponEfficiencyService.findWeaponEfficiency(weapon, creature);
 
-        weaponEfficiencyService.createWeaponEfficiency(newWeaponEfficiency);
-        return newWeaponEfficiency.getId();
+        if (weaponEfficiency == null) {
+            weaponEfficiency = new WeaponEfficiency();
+            weaponEfficiency.setWeapon(weapon);
+            weaponEfficiency.setCreature(creature);
+            weaponEfficiency.setEfficiency(weaponEfficiencyCreateDTO.getEfficiency());
+            weaponEfficiencyService.createWeaponEfficiency(weaponEfficiency);
+        } else {
+            weaponEfficiency.setEfficiency(weaponEfficiencyCreateDTO.getEfficiency());
+            weaponEfficiencyService.updateWeaponEfficiency(weaponEfficiency);
+        }
+
+        return weaponEfficiency.getId();
     }
 
     @Override
