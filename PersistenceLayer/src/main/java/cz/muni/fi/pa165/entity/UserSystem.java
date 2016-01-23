@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
+import cz.muni.fi.pa165.util.PasswordHash;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -101,7 +102,7 @@ public class UserSystem {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = PasswordHash.hashPassword(password);;
     }
 
     @Override
