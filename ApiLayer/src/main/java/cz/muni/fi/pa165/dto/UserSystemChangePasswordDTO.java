@@ -1,15 +1,22 @@
 package cz.muni.fi.pa165.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author Karel Vaculik
  */
 
 public class UserSystemChangePasswordDTO {
 
+    @NotNull
     private Long userId;
 
+    @NotNull
     private String originalPassword;
 
+    @NotNull
+    @Size(min=5, max=64)
     private String newPassword;
 
     public Long getUserId() {

@@ -1,14 +1,21 @@
 package cz.muni.fi.pa165.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * @author Karel Vaculik
  */
 public class UserSystemVerifiedDTO {
 
+    @NotNull
     private Long userId;
 
+    @NotNull
+    @Size(min=3, max=64)
     private String userLoginName;
 
+    @NotNull
     private Boolean admin;
 
 
