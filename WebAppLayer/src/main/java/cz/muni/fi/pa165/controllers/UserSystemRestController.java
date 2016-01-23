@@ -55,6 +55,7 @@ public class UserSystemRestController {
 	@Autowired
 	private UserSystemVerifiedResourceAssembler userVerifiedResourceAssembler;
 
+	//permission:ANYONE
 	@RequestMapping(method = RequestMethod.GET)
 	public HttpEntity<Resources<UserSystemResource>> getAllUsers(@RequestParam(value = "view", defaultValue = "all") String viewType) {
 		List<UserSystemDTO> usersDTO;
@@ -71,6 +72,7 @@ public class UserSystemRestController {
 		return new ResponseEntity<>(resources, HttpStatus.OK);
 	}
 
+	//permission:ANYONE
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public HttpEntity<UserSystemResource> getUser(@PathVariable long id) {
 		logger.debug("GET user with id=" + id);
@@ -84,6 +86,7 @@ public class UserSystemRestController {
 		return new ResponseEntity<>(userResource, HttpStatus.OK);
 	}
 
+	//permission:ANYONE
 	@RequestMapping(value = "/login-name/{name}", method = RequestMethod.GET)
 	public HttpEntity<UserSystemResource> getCreature(@PathVariable String name) {
 		logger.debug("GET user with name=" + name);
@@ -97,6 +100,7 @@ public class UserSystemRestController {
 		return new ResponseEntity<>(userResource, HttpStatus.OK);
 	}
 
+	//permission:ANYONE
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createUser(@RequestBody @Valid UserSystemDTO userDTO,
     												BindingResult bindingResult) {
@@ -110,6 +114,7 @@ public class UserSystemRestController {
         userFacade.createUser(userDTO);
     }
 
+	//permission:ANYONE
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public HttpEntity<UserSystemVerifiedResource> loginUser(@RequestBody @Valid UserSystemLoginDTO userLoginDTO,
 															BindingResult bindingResult) {
@@ -128,7 +133,8 @@ public class UserSystemRestController {
 		UserSystemVerifiedResource userVerifiedResource = userVerifiedResourceAssembler.toResource(userVerifiedDTO);
 		return new ResponseEntity<>(userVerifiedResource, HttpStatus.OK);
 	}
-    
+
+	//permission:USER
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable long id) {
     	logger.debug("DELETE user with id=" + id);
@@ -142,7 +148,8 @@ public class UserSystemRestController {
     	
     	userFacade.deleteUser(userDTO);
     }
-    
+
+	//permission:ANYONE
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public HttpEntity<Resources<UserSystemResource>> getUsersOfType(@PathVariable UserType type) {
     	logger.debug("GET user of type=" + type);
@@ -153,7 +160,8 @@ public class UserSystemRestController {
 
     	return new ResponseEntity<>(userResources, HttpStatus.OK);
     }
-    
+
+	//permission:ANYONE
     @RequestMapping(value = "/sex/{sex}", method = RequestMethod.GET)
     public HttpEntity<Resources<UserSystemResource>> getUsersOfSex(@PathVariable SexType sex) {
     	logger.debug("GET user of sex=" + sex);
@@ -164,7 +172,8 @@ public class UserSystemRestController {
 
     	return new ResponseEntity<>(userResources, HttpStatus.OK);
     }
-    
+
+	//permission:USER
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void editWeapon(@PathVariable long id, @RequestBody @Valid UserSystemDTO userDTO,
             BindingResult bindingResult) {

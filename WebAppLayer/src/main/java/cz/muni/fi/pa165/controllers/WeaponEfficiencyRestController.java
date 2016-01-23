@@ -53,7 +53,7 @@ public class WeaponEfficiencyRestController {
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
 
-
+    //permission:ANYONE
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponEfficiencyResource>> getAllWeaponEfficiencies() {
         logger.debug("GET all weapon efficiencies");
@@ -66,7 +66,7 @@ public class WeaponEfficiencyRestController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<WeaponEfficiencyResource> getWeaponEfficiency(@PathVariable Long id) {
         logger.debug("GET weapon efficiency with id=" + id);
@@ -80,7 +80,7 @@ public class WeaponEfficiencyRestController {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-
+    //permission:USER
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteWeaponEfficiency(@PathVariable Long id) {
         logger.debug("DELETE weapon efficiency with id=" + id);
@@ -93,7 +93,7 @@ public class WeaponEfficiencyRestController {
         weaponEfficiencyFacade.deleteWeaponEfficiency(weaponEfficiencyDTO);
     }
 
-
+    //permission:USER
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<WeaponEfficiencyResource> createWeaponEfficiency(
             @RequestBody @Valid WeaponEfficiencyCreateDTO weaponEfficiencyCreateDTO,
@@ -111,7 +111,7 @@ public class WeaponEfficiencyRestController {
         return new ResponseEntity<>(resource, HttpStatus.OK);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/most-effective-to/creature/{id}", method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> findMostEffectiveWeaponsAtCreature(@PathVariable Long id) {
         logger.debug("GET most effective weapons at creature with id=" + id);
@@ -127,7 +127,7 @@ public class WeaponEfficiencyRestController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/most-vulnerable-to/weapon/{id}", method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> findMostVulnerableCreaturesToWeapon(@PathVariable Long id) {
         logger.debug("GET most vulnerable creatures to weapon with id=" + id);
@@ -145,7 +145,7 @@ public class WeaponEfficiencyRestController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/weapon/{id}", method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponEfficiencyResource>> findAllWeaponEfficienciesOfWeapon(
             @PathVariable Long id) {
