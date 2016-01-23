@@ -23,17 +23,11 @@ public class UserSystemDaoImpl implements UserSystemDao {
 
     @Override
     public UserSystem getById(Long id) {
-        if (id == null) {
-            throw new NullPointerException("Argument id is null");
-        }
         return em.find(UserSystem.class, id);
     }
 
     @Override
     public UserSystem getByUserName(String name) {
-        if (name == null) {
-            throw new NullPointerException("Argument name is null");
-        }
         TypedQuery<UserSystem> query = em.createQuery("SELECT userSystem FROM UserSystem as userSystem WHERE userSystem.userName=:n",
                 UserSystem.class).setParameter("n", name);
         try {
@@ -51,25 +45,16 @@ public class UserSystemDaoImpl implements UserSystemDao {
 
     @Override
     public void create(UserSystem user) {
-        if (user == null) {
-            throw new NullPointerException("Argument user is null");
-        }
         em.persist(user);
     }
 
     @Override
     public void update(UserSystem user) {
-        if (user == null) {
-            throw new NullPointerException("Argument user is null");
-        }
         em.merge(user);
     }
 
     @Override
     public void delete(UserSystem user) {
-        if (user == null) {
-            throw new NullPointerException("Argument user is null");
-        }
         em.remove(em.contains(user) ? user : em.merge(user));
     }
 }
