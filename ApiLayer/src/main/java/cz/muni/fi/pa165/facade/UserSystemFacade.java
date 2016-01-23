@@ -2,9 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import java.util.List;
 
-import cz.muni.fi.pa165.dto.UserSystemDTO;
-import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
-import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.dto.*;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
@@ -77,4 +75,12 @@ public interface UserSystemFacade {
      * @return the UserSystemVerifiedDTO or null, if authentication failed
      */
     UserSystemVerifiedDTO login(UserSystemLoginDTO userSystemLoginDTO);
+
+    /**
+     * Change the password of the user.
+     *
+     * @param userSystemChangePasswordDTO the UserSystemChangePasswordDTO
+     * @return true if the change was successful, otherwise return false
+     */
+    boolean changePassword(UserSystemChangePasswordDTO userSystemChangePasswordDTO);
 }

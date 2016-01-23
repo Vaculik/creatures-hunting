@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
-import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
+import cz.muni.fi.pa165.dto.*;
 import cz.muni.fi.pa165.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
@@ -87,5 +85,13 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
             verifiedUserDTO.setAdmin(false);
         }
         return verifiedUserDTO;
+    }
+
+    @Override
+    public boolean changePassword(UserSystemChangePasswordDTO userSystemChangePasswordDTO) {
+        return userSystemService.changePassword(
+                userSystemService.getUserById(userSystemChangePasswordDTO.getUserId()),
+                userSystemChangePasswordDTO.getOriginalPassword(),
+                userSystemChangePasswordDTO.getNewPassword());
     }
 }
