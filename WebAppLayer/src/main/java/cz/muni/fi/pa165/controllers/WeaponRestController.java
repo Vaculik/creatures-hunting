@@ -47,6 +47,7 @@ public class WeaponRestController {
     @Autowired
     private WeaponResourceAssembler weaponResourceAssembler;
 
+    //permission:ANYONE
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> getAllWeapons() {
         List<WeaponDTO> weaponDTOs;
@@ -68,6 +69,7 @@ public class WeaponRestController {
         return new ResponseEntity<>(weaponResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> getAllWeaponsOfType(@PathVariable WeaponType type) {
         List<WeaponDTO> weaponDTOs;
@@ -82,6 +84,7 @@ public class WeaponRestController {
         return new ResponseEntity<>(weaponResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/ammotype/{ammoType}", method = RequestMethod.GET)
     public HttpEntity<Resources<WeaponResource>> getAllWeaponsOfAmmoType(@PathVariable AmmoType ammoType) {
         List<WeaponDTO> weaponDTOs;
@@ -96,6 +99,7 @@ public class WeaponRestController {
         return new ResponseEntity<>(weaponResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<WeaponResource> getWeapon(@PathVariable long id) {
         logger.debug("GET weapon by id=" + id);
@@ -110,6 +114,7 @@ public class WeaponRestController {
         return new ResponseEntity<>(weaponResource, HttpStatus.OK);
     }
 
+    //permission:USER
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<WeaponResource> createWeapon(@RequestBody @Valid WeaponDTO weaponDTO,
             BindingResult bindingResult) {
@@ -127,6 +132,7 @@ public class WeaponRestController {
         return new ResponseEntity<>(weaponResource, HttpStatus.OK);
     }
 
+    //permission:ADMIN
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteWeapon(@PathVariable long id) {
         logger.debug("DELETE weapon with id=" + id);
@@ -139,6 +145,7 @@ public class WeaponRestController {
         weaponFacade.deleteWeapon(weaponDTO);
     }
 
+    //permission:USER
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void editWeapon(@PathVariable long id, @RequestBody @Valid WeaponDTO weaponDTO,
             BindingResult bindingResult) {

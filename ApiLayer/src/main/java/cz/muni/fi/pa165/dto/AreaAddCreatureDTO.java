@@ -1,12 +1,16 @@
 package cz.muni.fi.pa165.dto;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Karel Vaculik
  */
 public class AreaAddCreatureDTO {
 
+    @NotNull
     private Long areaId;
 
+    @NotNull
     private String creatureName;
 
     public Long getAreaId() {

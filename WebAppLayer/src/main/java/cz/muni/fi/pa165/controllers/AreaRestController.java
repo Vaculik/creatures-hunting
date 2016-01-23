@@ -57,6 +57,7 @@ public class AreaRestController {
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
 
+    //permission:ANYONE
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAllAreas() {
         logger.debug("GET all areas.");
@@ -80,6 +81,7 @@ public class AreaRestController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<AreaResource> getArea(@PathVariable long id) {
         logger.debug("GET area with id=" + id);
@@ -94,6 +96,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 
+    //permission:USER
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<AreaResource> createArea(@RequestBody @Valid AreaDTO areaDTO,
             BindingResult bindingResult) {
@@ -110,6 +113,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 
+    //permission:ADMIN
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteArea(@PathVariable long id) {
         logger.debug("DELETE area with id=" + id);
@@ -124,6 +128,7 @@ public class AreaRestController {
         areaFacade.deleteArea(areaDTO);
     }
 
+    //permission:USER
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateArea(@RequestBody @Valid AreaDTO areaDTO, BindingResult bindingResult) {
         logger.debug("POST update area");
@@ -135,6 +140,7 @@ public class AreaRestController {
         areaFacade.updateArea(areaDTO);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/no-creature", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAreasWithNoCreature() {
         logger.debug("GET areas with no creature");
@@ -146,6 +152,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/any-creature", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAreasWithAnyCreature() {
         logger.debug("GET areas with any creature");
@@ -157,6 +164,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/most-creatures", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAreasMostCreatures() {
         logger.debug("GET areas with most creatures");
@@ -168,6 +176,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/fewest-creatures", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getAreasFewestCreatures() {
         logger.debug("GET areas with fewest creatures");
@@ -179,6 +188,7 @@ public class AreaRestController {
         return new ResponseEntity<>(areaResources, HttpStatus.OK);
     }
 
+    //permission:USER
     @RequestMapping(value = "/add-creature", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void addCreature(@RequestBody @Valid AreaAddCreatureDTO areaAddCreatureDTO,
                                                 BindingResult bindingResult) {
@@ -195,6 +205,7 @@ public class AreaRestController {
         areaFacade.addCreature(areaAddCreatureDTO);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/{id}/otherscreatures", method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> getCreaturesFromOthersAreas(@PathVariable long id) {
         logger.debug("GET others creatures for area with id=" + id);
@@ -221,6 +232,7 @@ public class AreaRestController {
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }
 
+    //permission:ANYONE
     @RequestMapping(value = "/{id}/othersareas", method = RequestMethod.GET)
     public HttpEntity<Resources<AreaResource>> getOthersAreas(@PathVariable long id) {
         logger.debug("GET others creatures for area with id=" + id);
