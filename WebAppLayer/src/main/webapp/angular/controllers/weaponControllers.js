@@ -34,27 +34,17 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
     }, function (response) {
         $rootScope.warningAlert = "Could not load weapon efficiencies: " + data.message;
     });
-
+    
     $scope.delete = function (id) {
         console.log('DELETE weapon by id=' + weaponId);
-        console.log('GET weapon-efficiencies of weapon'); //DELETE weapon-efficiencies of weapon
-        $http.get('rest/weapon-efficiencies/weapon/' + weaponId).then(function (response) {//Request succesful
-            var efficiencies = (response.data['_embedded'] != null) ? response.data['_embedded']['weapon-efficiencies'] : [];
-            var promises = [];
-            for (var i = 0; i < efficiencies.length; i++) {
-                promises.push($http.delete('rest/weapon-efficiencies/' + efficiencies[i].id));
-            }
-            if (promises.length > 0)
-                $q.all(promises);
-            $http.delete('rest/weapons/' + weaponId).then(function (response) {//Request succesful
+        $http.delete('rest/weapons/' + weaponId).then(function (response) {//Request succesful
                 console.log('DELETE weapon id=' + weaponId + 'SUCCESS');
                 $rootScope.succesAllert = "Weapon " + $scope.weapon.name + "deleted.";
                 $location.path('/weapons/');
             }, function (data) {//Request failed
                 console.log('DELETE weapon id=' + weaponId + 'FAILURE');
                 $rootScope.errorAlert = "Could not delete weapon: " + data.message;
-            });
-        }, function (response) {//Request failed
+            }, function (response) {//Request failed
             console.log('GET weapon-efficiencies of weapon FAILURE');
             console.log('DELETE weapon id=' + weaponId + 'FAILURE');
             $rootScope.errorAlert = "Could not delete weapon: " + response.data.message;

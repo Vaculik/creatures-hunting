@@ -67,4 +67,12 @@ public interface WeaponEfficiencyFacade {
      * @return list of the WeaponEfficiencyDTOs
      */
     List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfWeapon(WeaponDTO weaponDTO);
+    
+    /**
+     * Find all WeaponEfficiencyDTOs, which belongs to the given CreatureDTO.
+     *
+     * @param creatureDTO the CreatureDTO
+     * @return list of the WeaponEfficiencyDTOs
+     */
+    List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfCreature(CreatureDTO creatureDTO);
 }

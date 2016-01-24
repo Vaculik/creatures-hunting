@@ -73,6 +73,14 @@ public interface WeaponEfficiencyService {
      * @return list of the WeaponEfficiencies
      */
     List<WeaponEfficiency> findAllWeaponEfficienciesOfWeapon(Weapon weapon);
+    
+    /**
+     * Find all WeaponEfficiencies, which belongs to the given Creature.
+     *
+     * @param creature the Creature
+     * @return list of the WeaponEfficiencies
+     */
+    List<WeaponEfficiency> findAllWeaponEfficienciesOfCreature(Creature creature);
 
     /**
      * Find a WeaponEfficiency of the specified Weapon against the specified Creature.

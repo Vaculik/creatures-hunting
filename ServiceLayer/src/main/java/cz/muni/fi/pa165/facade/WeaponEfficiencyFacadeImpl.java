@@ -90,4 +90,11 @@ public class WeaponEfficiencyFacadeImpl implements WeaponEfficiencyFacade {
         return entityMapper.map(weaponEfficiencyService.
                 findAllWeaponEfficienciesOfWeapon(weapon), WeaponEfficiencyDTO.class);
     }
+    
+    @Override
+    public List<WeaponEfficiencyDTO> findAllWeaponEfficienciesOfCreature(CreatureDTO creatureDTO) {
+        Creature creature = entityMapper.map(creatureDTO, Creature.class);
+        return entityMapper.map(weaponEfficiencyService.
+                findAllWeaponEfficienciesOfCreature(creature), WeaponEfficiencyDTO.class);
+    }
 }

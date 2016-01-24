@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.controllers;
 
 import cz.muni.fi.pa165.dto.WeaponDTO;
+import cz.muni.fi.pa165.dto.WeaponEfficiencyDTO;
+import cz.muni.fi.pa165.entity.WeaponEfficiency;
 import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.WeaponType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.facade.WeaponEfficiencyFacade;
 import cz.muni.fi.pa165.facade.WeaponFacade;
 import cz.muni.fi.pa165.hateoas.WeaponResource;
 import cz.muni.fi.pa165.hateoas.WeaponResourceAssembler;
@@ -44,6 +47,8 @@ public class WeaponRestController {
 
     @Autowired
     private WeaponFacade weaponFacade;
+    @Autowired
+    private WeaponEfficiencyFacade efficiencyFacade;
     @Autowired
     private WeaponResourceAssembler weaponResourceAssembler;
 
@@ -141,6 +146,9 @@ public class WeaponRestController {
             String msg = "Weapon by id=" + id + " not found.";
             logger.debug(msg);
             throw new ResourceNotFoundException(msg);
+        }
+        for (WeaponEfficiencyDTO efficiency : efficiencyFacade.findAllWeaponEfficienciesOfWeapon(weaponDTO)) {
+            efficiencyFacade.deleteWeaponEfficiency(efficiency);
         }
         weaponFacade.deleteWeapon(weaponDTO);
     }

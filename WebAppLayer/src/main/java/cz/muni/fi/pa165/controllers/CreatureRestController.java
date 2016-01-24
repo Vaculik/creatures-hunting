@@ -2,10 +2,12 @@ package cz.muni.fi.pa165.controllers;
 
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
+import cz.muni.fi.pa165.dto.WeaponEfficiencyDTO;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.CreatureFacade;
+import cz.muni.fi.pa165.facade.WeaponEfficiencyFacade;
 import cz.muni.fi.pa165.hateoas.AreaResource;
 import cz.muni.fi.pa165.hateoas.AreaResourceAssembler;
 import cz.muni.fi.pa165.hateoas.CreatureResource;
@@ -41,6 +43,8 @@ public class CreatureRestController {
 
     @Autowired
     private CreatureFacade creatureFacade;
+    @Autowired
+    private WeaponEfficiencyFacade efficiencyFacade;
 
     @Autowired
     private CreatureResourceAssembler creatureResourceAssembler;
@@ -113,6 +117,9 @@ public class CreatureRestController {
             String msg = "Creature with id=" + id + " not found.";
             logger.debug(msg);
             throw new ResourceNotFoundException(msg);
+        }
+        for (WeaponEfficiencyDTO efficiency : efficiencyFacade.findAllWeaponEfficienciesOfCreature(creatureDTO)) {
+            efficiencyFacade.deleteWeaponEfficiency(efficiency);
         }
         creatureFacade.deleteCreature(creatureDTO);
     }

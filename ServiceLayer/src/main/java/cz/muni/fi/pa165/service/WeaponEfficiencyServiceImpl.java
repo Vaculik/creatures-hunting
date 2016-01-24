@@ -108,6 +108,17 @@ public class WeaponEfficiencyServiceImpl implements WeaponEfficiencyService {
                 .filter(w -> weapon.equals(w.getWeapon()))
                 .collect(Collectors.toList());
     }
+    
+    @Override
+    public List<WeaponEfficiency> findAllWeaponEfficienciesOfCreature(Creature creature) {
+        if (creature == null) {
+            return new LinkedList<>();
+        }
+        return weaponEfficiencyDao.findAll()
+                .stream()
+                .filter(w -> creature.equals(w.getCreature()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public WeaponEfficiency findWeaponEfficiency(Weapon weapon, Creature creature) {
