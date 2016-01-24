@@ -78,7 +78,7 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
 
         UserSystemVerifiedDTO verifiedUserDTO = new UserSystemVerifiedDTO();
         verifiedUserDTO.setUserId(verifiedUser.getId());
-        verifiedUserDTO.setUserLoginName(verifiedUser.getUserName());
+        verifiedUserDTO.setLoginName(verifiedUser.getUserName());
         if (verifiedUser.getType() == UserType.ADMIN) {
             verifiedUserDTO.setAdmin(true);
         } else {

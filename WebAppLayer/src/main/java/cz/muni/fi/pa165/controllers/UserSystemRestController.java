@@ -9,8 +9,6 @@ import javax.validation.Valid;
 
 import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
-import cz.muni.fi.pa165.dto.WeaponDTO;
-import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
 import cz.muni.fi.pa165.hateoas.*;
 
@@ -31,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;

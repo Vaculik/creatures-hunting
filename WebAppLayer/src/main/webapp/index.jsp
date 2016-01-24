@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Creatures Hunting</title>
+    <title>CreaturesHunting</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -34,6 +34,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.js"></script>
     <%--end: AngularJS--%>
 
 </head>
@@ -71,7 +72,7 @@ desired effect
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <%--<span class="logo-mini"><b>CH</b></span>--%>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>Creatures Hunting</b></span>
+            <span class="logo-lg"><b>CreaturesHunting</b></span>
         </a>
 
         <!-- Header Navbar -->
@@ -227,7 +228,6 @@ desired effect
 <script src="angular/controllers/weaponControllers.js"></script>
 <script src="angular/controllers/areaControllers.js"></script>
 <script src="angular/controllers/userControllers.js"></script>
-<script src="angular/security.js"></script>
 <script src="angular/controllers/creatureControllers.js"></script>
 <%--end: AngularJS--%>
 

@@ -28,6 +28,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular-cookies.js"></script>
     <!--end: AngularJS-->
 
 </head>
@@ -35,19 +36,21 @@
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="../index.jsp"><b>Admin</b>LTE</a>
+        <a href="../index.jsp"><b>Creatures</b>Hunting</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Log in to start your session</p>
 
-        <form action="../index.jsp" method="post">
+        <form name="form" novalidate role="form">
             <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <input type="text" id="username" class="form-control" minlength="3" maxlength="64" required
+                       ng-model="credentials.loginName" placeholder="Username">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" id="password" class="form-control" minlength="3" maxlength="64" required
+                       ng-model="credentials.password" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
@@ -60,13 +63,13 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
+                    <button type="submit" ng-disabled="!form.$valid" ng-click="login(credentials)"
+                            class="btn btn-primary btn-block btn-flat">Log In</button>
                 </div>
                 <!-- /.col -->
             </div>
         </form>
 
-        <a href="#">I forgot my password</a><br>
         <a href="register.html" class="text-center">Register a new account</a>
 
     </div>
@@ -75,8 +78,7 @@
 <!-- /.login-box -->
 
 <!--start: AngularJS-->
-<script src="../angular/creaturesHuntingApp.js"></script>
-<script src="../angular/security.js"></script>
+<script src="../angular/accountApp.js"></script>
 <!--end: AngularJS-->
 
 <!-- jQuery 2.1.4 -->
@@ -98,16 +100,16 @@
 </html>
 
 <!--<form name="form" novalidate role="form">-->
-    <!--<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">-->
-        <!--<div class="form-group">-->
-            <!--<label for="username">Username:</label>-->
-            <!--<input placeholder="username" class="form-control" maxlength="64" required name="text" id="username" ng-model="credentials.loginName">-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label for="password">Password:</label>-->
-            <!--<input type="password" class="form-control" maxlength="32" required id="password" ng-model="credentials.password">-->
-        <!--</div>-->
-        <!--<button class="btn btn-default" ng-disabled="!form.$valid" ng-click="login(credentials)" type="submit">Login</button>-->
-    <!--</div>-->
+<!--<div class="col-xs-12 col-sm-8 col-md-6 col-lg-4">-->
+<!--<div class="form-group">-->
+<!--<label for="username">Username:</label>-->
+<!--<input placeholder="username" class="form-control" maxlength="64" required name="text" id="username" ng-model="credentials.loginName">-->
+<!--</div>-->
+<!--<div class="form-group">-->
+<!--<label for="password">Password:</label>-->
+<!--<input type="password" class="form-control" maxlength="32" required id="password" ng-model="credentials.password">-->
+<!--</div>-->
+<!--<button class="btn btn-default" ng-disabled="!form.$valid" ng-click="login(credentials)" type="submit">Login</button>-->
+<!--</div>-->
 <!--</form>-->
 

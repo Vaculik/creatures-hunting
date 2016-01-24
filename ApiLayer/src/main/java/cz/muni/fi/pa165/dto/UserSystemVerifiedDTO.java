@@ -13,7 +13,7 @@ public class UserSystemVerifiedDTO {
 
     @NotNull
     @Size(min=3, max=64)
-    private String userLoginName;
+    private String loginName;
 
     @NotNull
     private Boolean admin;
@@ -27,12 +27,12 @@ public class UserSystemVerifiedDTO {
         this.userId = userId;
     }
 
-    public String getUserLoginName() {
-        return userLoginName;
+    public String getLoginName() {
+        return loginName;
     }
 
-    public void setUserLoginName(String userLoginName) {
-        this.userLoginName = userLoginName;
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
     }
 
     public Boolean getAdmin() {
@@ -47,7 +47,7 @@ public class UserSystemVerifiedDTO {
     public String toString() {
         return "UserSystemVerifiedDTO{" +
                 "userId=" + userId +
-                ", userLoginName='" + userLoginName + '\'' +
+                ", loginName='" + loginName + '\'' +
                 ", admin=" + admin +
                 '}';
     }
@@ -60,13 +60,13 @@ public class UserSystemVerifiedDTO {
         UserSystemVerifiedDTO that = (UserSystemVerifiedDTO) o;
 
         if (getUserId() != null ? !getUserId().equals(that.getUserId()) : that.getUserId() != null) return false;
-        return !(getUserLoginName() != null ? !getUserLoginName().equals(that.getUserLoginName()) : that.getUserLoginName() != null);
+        return !(getLoginName() != null ? !getLoginName().equals(that.getLoginName()) : that.getLoginName() != null);
     }
 
     @Override
     public int hashCode() {
         int result = getUserId() != null ? getUserId().hashCode() : 0;
-        result = 31 * result + (getUserLoginName() != null ? getUserLoginName().hashCode() : 0);
+        result = 31 * result + (getLoginName() != null ? getLoginName().hashCode() : 0);
         return result;
     }
 }

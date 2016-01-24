@@ -1,10 +1,11 @@
 package cz.muni.fi.pa165.security;
 
 import cz.muni.fi.pa165.dto.UserSystemDTO;
-import org.springframework.hateoas.ResourceSupport;
-import org.springframework.http.HttpEntity;
+import cz.muni.fi.pa165.facade.UserSystemFacade;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,16 +13,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author Karel Vaculik
  */
 
-
+@Component
 public class TokenAuthenticationService {
 
+    @Autowired
     private TokenHandler tokenHandler;
 
     public static final String AUTH_NAME_HEADER = "X-AUTH-TOKEN";
 
-    public TokenAuthenticationService(String key) {
-        tokenHandler = new TokenHandler(key);
-    }
 
     public void addAuthentication(HttpHeaders httpHeaders, UserAuthentication userAuthentication) {
         UserSystemDTO user = userAuthentication.getDetails();

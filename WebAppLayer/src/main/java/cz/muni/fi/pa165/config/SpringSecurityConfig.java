@@ -1,10 +1,15 @@
 package cz.muni.fi.pa165.config;
 
+import cz.muni.fi.pa165.InitialDataConfig;
+import cz.muni.fi.pa165.facade.UserSystemFacade;
 import cz.muni.fi.pa165.security.AuthenticationFilter;
 import cz.muni.fi.pa165.security.TokenAuthenticationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,16 +25,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@Order(2)
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.security"})
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private TokenAuthenticationService tokenAuthenticationService;
-
-    private static final String KEY = "tokenKey";
+    @Autowired
+    private AuthenticationFilter authenticationFilter;
 
     public SpringSecurityConfig() {
         super(true); // enable the default configuration
-        tokenAuthenticationService = new TokenAuthenticationService(KEY);
     }
 
     @Override
@@ -55,8 +59,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll().and()
 
                 .formLogin().loginPage("/login.html").and()
-                .addFilterBefore(new AuthenticationFilter(tokenAuthenticationService),
-                        UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -68,11 +71,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public TokenAuthenticationService tokenAuthenticationService() {
-        return tokenAuthenticationService;
     }
 
 }

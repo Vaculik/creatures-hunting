@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -15,13 +17,11 @@ import java.io.IOException;
  * @author Karel Vaculik
  */
 
+@Component
 public class AuthenticationFilter extends GenericFilterBean {
 
+    @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
-
-    public AuthenticationFilter(TokenAuthenticationService tokenAuthenticationService) {
-        this.tokenAuthenticationService = tokenAuthenticationService;
-    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,

@@ -23,7 +23,7 @@ public class UserSystemVerifiedResource extends ResourceSupport {
 
     public UserSystemVerifiedResource(UserSystemVerifiedDTO userVerifiedDTO) {
         this.userId = userVerifiedDTO.getUserId();
-        this.loginName = userVerifiedDTO.getUserLoginName();
+        this.loginName = userVerifiedDTO.getLoginName();
         this.admin = userVerifiedDTO.getAdmin();
     }
 
