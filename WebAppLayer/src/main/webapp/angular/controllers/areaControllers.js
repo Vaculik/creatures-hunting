@@ -63,7 +63,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     };
     $scope.creatures = {};
 
-    console.log('GET particular area with id=' + id);
+        console.log('GET particular area with id=' + id);
     $http.get('rest/areas/' + id).
             then(function (response) {
                 $scope.area = response.data;
@@ -71,7 +71,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                     function error(response) {
                         $rootScope.warningAlert = 'Problem occured when load area ' + response.data.message;
                     });
-
+    
     $scope.delete = function (id) {
         console.log('Delete area with id=' + id);
         $http.delete('rest/areas/' + id).
@@ -85,11 +85,11 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                     $rootScope.errorAlert('Problem has occured when deleting area!');
                 });
     };
-    
-    
-     $scope.addCreature = function () {
-         console.log('Add creature with name=' + $scope.addCreatureDTO.creatureName + ' to area with id ' + $scope.addCreatureDTO.areaId);
-         $http.post('rest/areas/add-creature', $scope.addCreatureDTO).
+
+
+    $scope.addCreature = function () {
+        console.log('Add creature with name=' + $scope.addCreatureDTO.creatureName + ' to area with id ' + $scope.addCreatureDTO.areaId);
+        $http.post('rest/areas/add-creature', $scope.addCreatureDTO).
                 then(function success(response) {
                     console.log('Creature with name=' + $scope.addCreatureDTO.creatureName + ' was added.');
                     $route.reload();
@@ -105,12 +105,12 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
             then(function (response) {
                 $scope.areas = response.data['_embedded']['areas'];
             });
-            
+
     $http.get('rest/creatures').
             then(function (response) {
-            $scope.creatures2 = response.data['_embedded']['creatures'];
-            });        
-    
+                $scope.creatures2 = response.data['_embedded']['creatures'];
+            });
+
     console.log('GET creatures in no area');
     $http.get('rest/creatures/?view=no-area').
             then(function (response) {
@@ -118,25 +118,25 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                     $scope.addCreatures = response.data['_embedded']['creatures'];
                 }
             });
-    
+
     console.log('GET others areas to area with id=' + id);
-    $http.get('rest/areas/' + id +'/othersareas').
+    $http.get('rest/areas/' + id + '/othersareas').
             then(function (response) {
                 $scope.othersAreas = response.data['_embedded']['areas']
-                ;
+                        ;
             });
 
-    $scope.removeCreature = function(id) {
-        console.log('Remove creature with id='+id+' from area '+$scope.area.name);
-        $http.post('rest/creatures/'+id+'/remove-area').
-            then(function success(response) {
-                console.log('Area of creature with id='+id+' was removed.');
-                $route.reload();
-            }, function error(response) {
-                console.log('Error when removing area of creature with id='+id);
-                console.log(response);
-                $rootScope.errorAlert('Error when removing area of creature with id='+id);
-            })
+    $scope.removeCreature = function (id) {
+        console.log('Remove creature with id=' + id + ' from area ' + $scope.area.name);
+        $http.post('rest/creatures/' + id + '/remove-area').
+                then(function success(response) {
+                    console.log('Area of creature with id=' + id + ' was removed.');
+                    $route.reload();
+                }, function error(response) {
+                    console.log('Error when removing area of creature with id=' + id);
+                    console.log(response);
+                    $rootScope.errorAlert('Error when removing area of creature with id=' + id);
+                })
     }
 });
 
@@ -144,7 +144,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
 controllers.controller('NewAreaController', function ($http, $rootScope, $location, $scope) {
     console.log('New area controller');
     $scope.area = {
-        'name': '',       
+        'name': '',
         'description': ''
     };
     $scope.create = function (area) {
@@ -159,7 +159,7 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
                     $rootScope.errorAlert = 'Problem has occured, cannot create new area!';
                 });
     };
-    
+
 });
 
 
@@ -167,12 +167,12 @@ controllers.controller('EditAreaController', function ($http, $routeParams, $roo
     var areaId = $routeParams.areaId;
     console.log('GET area by id=' + areaId);
     $http.get('rest/areas/' + areaId).
-        then(function (response) {
-            $scope.area = response.data;
-        },
-        function error(response) {
-            $rootScope.warningAlert = 'Problem occured when loading area ' + response.data.message;
-        });
+            then(function (response) {
+                $scope.area = response.data;
+            },
+                    function error(response) {
+                        $rootScope.warningAlert = 'Problem occured when loading area ' + response.data.message;
+                    });
 
     $scope.edit = function (area) {
         console.log("EDIT area " + area.name);

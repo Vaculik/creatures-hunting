@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dao.CreatureDao;
+import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 import org.mockito.InjectMocks;
@@ -35,6 +36,8 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
     private CreatureService creatureService;
     private List<Creature> creatures;
     private Creature creature;
+
+    private Area area;
 
     @BeforeMethod
     public void init() {
@@ -214,6 +217,53 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         verify(creatureDao).findAll();
     }
 
+    @Test
+    public void updateCreatureTest() {
+        doNothing().when(creatureDao).update(creature);
+        creatureService.updateCreature(creature);
+        verify(creatureDao).update(creature);
+    }
+
+    @Test
+    public void getCreaturesInNoAreaTest() {
+        Creature smallCreature = createCreature(1, 1, CreatureType.VAMPIRE);
+        Creature creatureWithMaxWeight1 = createCreature(2, 2, CreatureType.UNDEAD);
+        Creature creatureWithMaxWeight2 = createCreature(1, 2, CreatureType.BEAST);
+        area = createArea();
+        area.addCreature(smallCreature);
+
+        creatures.add(creatureWithMaxWeight1);
+        creatures.add(creatureWithMaxWeight2);
+        creatures.add(smallCreature);
+
+        when(creatureDao.findAll()).thenReturn(creatures);
+
+        List<Creature> actual = creatureService.getCreaturesInNoArea();
+        Assert.assertEquals(actual.size(), 2);        
+
+        verify(creatureDao).findAll();
+
+    }
+
+    @Test
+    public void removeAreaOfCreatureTest() {
+        area = createArea();
+        area.addCreature(creature);
+        Long id = 1l;
+        creature.setId(id);
+        when(creatureDao.getById(id)).thenReturn(creature);
+        
+        creatureService.removeAreaOfCreature(id);
+        
+        
+        Assert.assertEquals(area.getCreatures().size(), 0);
+
+        verify(creatureDao).getById(id);
+
+        
+    }
+    
+    
     private Creature createCreature(Integer height, Integer weight, CreatureType type) {
         Creature c = new Creature();
         c.setHeight(height);
@@ -221,5 +271,12 @@ public class CreatureServiceTest extends AbstractTestNGSpringContextTests {
         c.setType(type);
         c.setName("testing-creature");
         return c;
+    }
+
+    private Area createArea() {
+        Area a = new Area();
+        a.setDescription("Desc");
+        a.setName("Noname");
+        return a;
     }
 }

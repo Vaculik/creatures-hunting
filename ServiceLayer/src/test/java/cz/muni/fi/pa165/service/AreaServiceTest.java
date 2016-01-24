@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.service;
 
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
-import cz.muni.fi.pa165.service.exception.AreaServiceException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.mockito.InjectMocks;
@@ -155,7 +154,16 @@ public class AreaServiceTest extends AbstractTestNGSpringContextTests {
         when(areaDao.findAll()).thenReturn(areas);
         Assert.assertEquals(areaService.getAreasFewestCreatures().size(), 2);
         verify(areaDao, times(1)).findAll();
-    }  
+    } 
+    
+    @Test
+    public void addCreatureTest() {              
+        when(areaDao.getById(id)).thenReturn(area);
+        Assert.assertEquals(areaService.getAreaById(id).getCreatures().size(), 0);
+        area.addCreature(createCreature("Ned"));
+        Assert.assertEquals(areaService.getAreaById(id).getCreatures().size(), 1);
+        verify(areaDao, times(2)).getById(id);        
+    }
  
     private List<Area> createAreasList() {
         areas = new ArrayList<>();

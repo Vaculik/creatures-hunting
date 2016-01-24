@@ -288,7 +288,30 @@ public class WeaponEfficiencyServiceTest extends AbstractTestNGSpringContextTest
         verify(weaponEfficiencyDao).findAll();
     }
 
-
+    @Test
+    public void updateWeaponEfficiencyTest() {
+        doNothing().when(weaponEfficiencyDao).update(weaponEfficiency);
+        weaponEfficiencyService.updateWeaponEfficiency(weaponEfficiency);
+        verify(weaponEfficiencyDao).update(weaponEfficiency);
+    }
+    
+    @Test
+    public void findWeaponEfficiencyTest() {
+        Creature creature = new Creature();
+        creature.setName("creature");
+        Weapon inputWeapon = new Weapon();
+        inputWeapon.setName("input-weapon");
+        WeaponEfficiency matchingWeaponEfficiency1 = new WeaponEfficiency();
+        matchingWeaponEfficiency1.setEfficiency(1);
+        matchingWeaponEfficiency1.setCreature(creature);
+        matchingWeaponEfficiency1.setWeapon(inputWeapon);
+        weaponEfficiencies.add(matchingWeaponEfficiency1);
+        when(weaponEfficiencyDao.findAll()).thenReturn(weaponEfficiencies);
+        WeaponEfficiency tmp = weaponEfficiencyService.findWeaponEfficiency(inputWeapon, creature);        
+        Assert.assertEquals(tmp.getEfficiency(), matchingWeaponEfficiency1.getEfficiency());
+        verify(weaponEfficiencyDao).findAll();
+    }
+    
     private WeaponEfficiency createWeaponEfficiency(Integer efficiency) {
         WeaponEfficiency weaponEfficiency = new WeaponEfficiency();
         weaponEfficiency.setEfficiency(efficiency);

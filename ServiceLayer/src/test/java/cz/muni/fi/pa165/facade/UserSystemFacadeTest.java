@@ -20,6 +20,8 @@ import org.testng.annotations.Test;
 import cz.muni.fi.pa165.config.MockConfiguration;
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
+import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
+import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
 import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
@@ -179,6 +181,31 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
 
         verify(entityMapper).map(users, UserSystemDTO.class);
         verify(userSystemService).getUsersOfSex(sex);
+    }
+    
+    @Test
+    public void loginTest() {
+        UserSystem user1 = createUser("Bob", SexType.MALE, UserType.ORDINARY);
+        user1.setUserName("admin");
+        user1.setPassword("123456");
+        Long id = 1l;
+        user1.setId(id);
+        
+        UserSystemDTO userDTO = createUserDTO(user1);
+        UserSystemLoginDTO userLogin = new UserSystemLoginDTO();
+        
+        userLogin.setLoginName("admin");
+        userLogin.setPassword("123456");
+                                        
+        when(userSystemService.login("admin", "123456")).thenReturn(user1);
+        UserSystemVerifiedDTO loginVer = userSystemFacade.login(userLogin);        
+        
+        Assert.assertEquals(loginVer.getUserId(),id);
+        Assert.assertFalse(loginVer.getAdmin());
+        Assert.assertEquals(loginVer.getUserLoginName(),"admin");
+        
+
+        verify(userSystemService).login("admin", "123456");
     }
 
     private UserSystem createUser(String name, SexType sex, UserType type) {

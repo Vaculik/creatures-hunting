@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
+import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
+import cz.muni.fi.pa165.entity.Area;
 import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 import cz.muni.fi.pa165.service.CreatureService;
@@ -176,6 +178,60 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         verify(creatureService).getCreaturesWithMaxHeight();
     }
 
+    @Test
+    public void updateAreaTest() {
+        doNothing().when(creatureService).updateCreature(creature);
+        when(entityMapper.map(creatureDTO, Creature.class)).thenReturn(creature);
+        creatureFacade.updateCreature(creatureDTO);
+        verify(creatureService).updateCreature(creature);
+        verify(entityMapper).map(creatureDTO, Creature.class);
+    }
+    
+    @Test
+    public void removeAreaOfCreatureTest() {
+        Long id = 1l;
+        creature.setId(id);
+        creatureDTO.setId(id);
+        doNothing().when(creatureService).updateCreature(creature);
+        creatureFacade.removeAreaOfCreature(id);
+        verify(creatureService).removeAreaOfCreature(id);        
+    }
+    
+    @Test
+    public void getCreaturesInNoAreaTest() {
+        List<Creature> creatures = new LinkedList<>();
+        List<CreatureDTO> creatureDTOs = new LinkedList<>();
+        creatures.add(creature);
+        creatureDTOs.add(creatureDTO);
+
+        when(entityMapper.map(creatures, CreatureDTO.class)).thenReturn(creatureDTOs);
+        when(creatureService.getCreaturesInNoArea()).thenReturn(creatures);
+
+        Assert.assertEquals(creatureFacade.getCreaturesInNoArea(), creatureDTOs);
+
+        verify(entityMapper).map(creatures, CreatureDTO.class);
+        verify(creatureService).getCreaturesInNoArea();
+    }
+    
+    @Test
+    public void getAreaOfCreatureTest() {
+        Long id = 1l;
+        creature.setId(id);
+        creatureDTO.setId(id);
+        Area ar = createArea();
+        AreaDTO arDTO = createAreaDTO(ar);
+        ar.addCreature(creature);
+        arDTO.addCreature(creatureDTO);
+        
+        when(entityMapper.map(ar, AreaDTO.class)).thenReturn(arDTO);
+        when(creatureService.getCreatureById(id)).thenReturn(creature);
+
+        Assert.assertEquals(creatureFacade.getAreaOfCreature(id), arDTO);
+        
+        verify(entityMapper).map(ar, AreaDTO.class);
+        verify(creatureService).getCreatureById(id);
+    }
+    
     private Creature createCreature(String name, Integer height, Integer weight, CreatureType type) {
         Creature c = new Creature();
         c.setName(name);
@@ -197,5 +253,19 @@ public class CreatureFacadeTest extends AbstractTransactionalTestNGSpringContext
         creatureDTO.setWeight(creature.getWeight());
         creatureDTO.setType(creature.getType());
         return creatureDTO;
+    }
+    
+    private Area createArea() {
+        Area a = new Area();
+        a.setDescription("Desc");
+        a.setName("Noname");
+        return a;
+    }
+    
+    private AreaDTO createAreaDTO(Area area) {
+        AreaDTO a = new AreaDTO();
+        a.setDescription(area.getDescription());
+        a.setName(area.getName());
+        return a;
     }
 }

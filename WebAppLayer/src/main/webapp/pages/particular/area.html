@@ -34,7 +34,7 @@
                         </button>
                     </a>
                     <div ng-if="isAuthorized(userRoles.admin)">
-                        <button class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
+                        <button data-ng-disabled="area.creatures.length != 0" class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
                         </button>
                     </div>
                 </div>

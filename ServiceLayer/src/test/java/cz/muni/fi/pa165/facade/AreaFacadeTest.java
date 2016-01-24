@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.facade;
 
 import cz.muni.fi.pa165.config.MockConfiguration;
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
+import cz.muni.fi.pa165.dto.AreaAddCreatureDTO;
 import cz.muni.fi.pa165.dto.AreaDTO;
 import cz.muni.fi.pa165.dto.CreatureDTO;
 import cz.muni.fi.pa165.entity.Area;
@@ -177,7 +178,26 @@ public class AreaFacadeTest extends AbstractTestNGSpringContextTests {
         verify(entityMapper).map(areas, AreaDTO.class);
         verify(areaService).getAreasFewestCreatures();
     }
-
+    
+     @Test
+    public void updateAreaTest() {
+        doNothing().when(areaService).updateArea(area);
+        when(entityMapper.map(areaDTO, Area.class)).thenReturn(area);
+        areaFacade.updateArea(areaDTO);
+        verify(areaService).updateArea(area);
+        verify(entityMapper).map(areaDTO, Area.class);
+    }
+    
+    @Test
+    public void addCreatureTest() {
+        String name2 = "Ned";
+        AreaAddCreatureDTO tmp = new AreaAddCreatureDTO();
+        tmp.setAreaId(id);
+        tmp.setCreatureName(name2);
+        doNothing().when(areaService).addCreature(id,name2);        
+        areaFacade.addCreature(tmp);
+        verify(areaService).addCreature(id, name2);        
+    }
 
     private AreaDTO createAreaDTO(Area area) {
         AreaDTO tmp = new AreaDTO();

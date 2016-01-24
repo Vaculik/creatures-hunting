@@ -121,9 +121,25 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
 
         verify(userSystemDao).findAll();
     }
-
+    
     @Test
-    public void getUsersByTypeTest() {
+    public void loginTest() {
+        UserSystem user1 = createUser("Bob", SexType.MALE, UserType.ORDINARY);
+        user1.setUserName("admin");
+        user1.setPassword("123456");
+        Long id = 1l;
+        user1.setId(id);
+        
+        when(userSystemDao.getByUserName("admin")).thenReturn(user1);
+        
+        Assert.assertEquals(userSystemService.login("admin", "123456").getId(),id);
+        
+
+        verify(userSystemDao).getByUserName("admin");
+    }
+    
+    @Test
+    public void getUsersOfTypeTest() {
         UserSystem user1 = createUser("Bob Dylan", SexType.MALE, UserType.ORDINARY);
         UserSystem user2 = createUser("Bob Marley", SexType.MALE, UserType.ORDINARY);
         UserSystem user3 = createUser("Bohus Matus", SexType.MALE, UserType.ADMIN);
@@ -152,7 +168,7 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void getUsersBySexTest() {
+    public void getUsersOfSexTest() {
         UserSystem user1 = createUser("Bob Dylan", SexType.MALE, UserType.ORDINARY);
         UserSystem user2 = createUser("Bob Marley", SexType.MALE, UserType.ORDINARY);
         UserSystem user3 = createUser("Luiza Lian", SexType.FEMALE, UserType.ORDINARY);

@@ -14,7 +14,6 @@ import cz.muni.fi.pa165.service.WeaponEfficiencyService;
 import cz.muni.fi.pa165.service.WeaponService;
 import cz.muni.fi.pa165.util.EntityMapper;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
