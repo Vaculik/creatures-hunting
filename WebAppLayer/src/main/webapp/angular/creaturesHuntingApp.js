@@ -3,17 +3,8 @@
  * @author Karel Vaculik
  */
 
-var app = angular.module('creaturesHuntingApp', ['ngRoute', 'controllers']);
+var app = angular.module('creaturesHuntingApp', ['ngRoute', 'ngCookies', 'controllers']);
 var controllers = angular.module('controllers', []);
-
-app.constant('AUTH_EVENTS', {
-    loginSuccess: 'auth-login-success',
-    loginFailed: 'auth-login-failed',
-    logoutSuccess: 'auth-logout-success',
-    sessionTimeout: 'auth-session-timeout',
-    notAuthenticated: 'auth-not-authenticated',
-    notAuthorized: 'auth-not-authorized'
-});
 
 app.constant('USER_ROLES', {
     admin: 'admin',
@@ -25,7 +16,7 @@ app.constant('TYPES', {
 });
 
 
-app.config(['$routeProvider', function ($routeProvider) {
+app.config(['$routeProvider', '$httpProvider', function ($routeProvider, $httpProvider) {
     $routeProvider.
         when('/home', {templateUrl: 'pages/home.html'}).
         when('/creatures/:viewType', {templateUrl: 'pages/creatures.html', controller: 'CreaturesController'}).
@@ -59,5 +50,95 @@ app.config(['$routeProvider', function ($routeProvider) {
         when('/user/edit/:userId', {templateUrl: 'pages/edit/edit-user.html', controller: 'EditUserController'}).
         when('/user/:userId', {templateUrl: 'pages/particular/user.html', controller: 'ParticularUserController'}).
         otherwise({redirectTo: '/home'});
+
+
+    /* Registers auth token interceptor, auth token is passed by header as soon as there is an authenticated user */
+    $httpProvider.interceptors.push(function ($q, $rootScope, Session) {
+        return {
+            'request': function(config) {
+                var isRestCall = config.url.indexOf('rest') == 0;
+                if (isRestCall && angular.isDefined(Session.authToken)) {
+                    config.headers['X-AUTH-TOKEN'] = Session.authToken;
+                }
+                return config || $q.when(config);
+            }
+        };
+    });
+
 }]);
 
+app.run(function ($rootScope, $cookies, Session, USER_ROLES, AuthService) {
+    $rootScope.hideSuccessAlert = function () {
+        $rootScope.successAlert = undefined;
+    };
+    $rootScope.hideWarningAlert = function () {
+        $rootScope.warningAlert = undefined;
+    };
+    $rootScope.hideErrorAlert = function () {
+        $rootScope.errorAlert = undefined;
+    };
+
+    $rootScope.currentUser = null;
+    $rootScope.userRoles = USER_ROLES;
+    $rootScope.isAuthenticated = AuthService.isAuthenticated;
+    $rootScope.isAuthorized = AuthService.isAuthorized;
+
+    $rootScope.logout = AuthService.logout;
+
+    var auth = $cookies.getObject('auth');
+    if (auth != undefined) {
+        Session.create(auth.userId, auth.role, auth.authToken);
+        $rootScope.currentUser = {
+            userId: auth.userId,
+            loginName: auth.loginName
+        };
+    }
+});
+
+app.service('Session', function () {
+    this.create = function (userId, userRole, token) {
+        console.log('Create session:', userId, userRole);
+        this.userId = userId;
+        this.userRole = userRole;
+        this.authToken = token;
+    };
+    this.destroy = function () {
+        console.log('Destroy session');
+        this.userId = null;
+        this.userRole = null;
+        this.authToken = null;
+    };
+});
+
+app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $cookies) {
+    var authService = {};
+
+    // If id is null then boolean value is false -> return false;
+    // If id != 0 then boolean value is true -> return true;
+    authService.isAuthenticated = function () {
+        return Boolean(Session.userId);
+    };
+
+    authService.isAuthorized = function (authorizedRoles) {
+        if (!angular.isArray(authorizedRoles)) {
+            authorizedRoles = [authorizedRoles];
+        }
+        return (authService.isAuthenticated() &&
+        authorizedRoles.indexOf(Session.userRole) != -1);
+    };
+
+    authService.logout = function() {
+        $rootScope.successAlert = 'User has been logged out.';
+        Session.destroy();
+        $rootScope.currentUser = null;
+        $cookies.remove('auth');
+    };
+
+    return authService;
+});
+
+
+controllers.controller('ApplicationController', function($scope, USER_ROLES, AuthService) {
+    // Initialize the scope properties for authentization
+
+});

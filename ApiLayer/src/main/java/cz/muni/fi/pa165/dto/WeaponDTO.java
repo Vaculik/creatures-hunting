@@ -2,6 +2,10 @@ package cz.muni.fi.pa165.dto;
 
 import cz.muni.fi.pa165.enums.AmmoType;
 import cz.muni.fi.pa165.enums.WeaponType;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -12,10 +16,21 @@ import java.util.Objects;
 public class WeaponDTO {
 
     private Long id;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String name;
+
+    @NotNull
     private WeaponType type;
+
+    @Min(0)
     private int range;
+
+    @NotNull
     private AmmoType ammoType;
+
+    @Size(max=255)
     private String description;
 
     public void setId(Long id) {

@@ -5,6 +5,9 @@ import java.sql.Date;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * This class is a Data Transfer Object of UserSystem.
  *
@@ -13,11 +16,26 @@ import cz.muni.fi.pa165.enums.UserType;
 public class UserSystemDTO {
 
     private Long id;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String name;
+
+    @NotNull
     private UserType type;
+
+    @NotNull
     private SexType sex;
+
+    @NotNull
     private Date dateOfBirth;
+
+    @NotNull
+    @Size(min=3, max=64)
     private String userName;
+
+    @NotNull
+    @Size(min=5)
     private String password;
 
     public Long getId() {

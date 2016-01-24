@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.config.EnableHypermediaSupport;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -30,6 +31,7 @@ import java.util.Locale;
 @Configuration
 @EnableWebMvc
 @Import(InitialDataConfig.class)
+@Order(1)
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.controllers", "cz.muni.fi.pa165.hateoas"})
 public class RestApiSpringConfig extends WebMvcConfigurerAdapter {
 

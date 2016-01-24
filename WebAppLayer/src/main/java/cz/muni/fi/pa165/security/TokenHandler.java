@@ -1,39 +1,39 @@
 package cz.muni.fi.pa165.security;
 
-import cz.muni.fi.pa165.entity.UserSystem;
-import cz.muni.fi.pa165.service.UserSystemService;
+import cz.muni.fi.pa165.dto.UserSystemDTO;
+import cz.muni.fi.pa165.facade.UserSystemFacade;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * @author Karel Vaculik
  */
+
+@Component
 public class TokenHandler {
 
-    private final String key;
+    private static final String KEY = "tokenKey";
+
     @Autowired
-    private UserSystemService userService;
+    private UserSystemFacade userFacade;
 
-    public TokenHandler(String key) {
-        this.key = key;
-    }
 
-    public UserSystem parseUserFromToken(String token) {
+    public UserSystemDTO parseUserFromToken(String token) {
         String username = Jwts.parser()
-                .setSigningKey(key)
+                .setSigningKey(KEY)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        return userService.getUserByUserName(username);
+        return userFacade.getUserByUserName(username);
     }
 
-    public String createToken(UserSystem user) {
+    public String createToken(UserSystemDTO user) {
         return Jwts.builder()
                 .setSubject(user.getUserName())
-                .signWith(SignatureAlgorithm.HS512, key)
+                .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
     }
 }

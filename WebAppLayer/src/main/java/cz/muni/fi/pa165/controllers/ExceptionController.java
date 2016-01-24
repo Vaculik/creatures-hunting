@@ -40,6 +40,7 @@ public class ExceptionController {
 
         logger.debug("Handle excpetion (name={}; message={}), HttpStatus={}",
                 exceptionName, e.getMessage(), statusCode);
+        logger.debug(e.getStackTrace().toString());
 
         return new ResponseEntity<>(resource, statusCode);
     }
