@@ -53,6 +53,10 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
                     function error(response) {
                         $rootScope.warningAlert = 'Problem occured when loading user ' + response.data.message;
                     });
+
+    $scope.makeAdmin = function(id) {
+
+    }
     
     $scope.delete = function (id) {
     	console.log('Delete user with id=' + id);
@@ -69,31 +73,6 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
     };
 });
 
-controllers.controller('NewUserController', function ($http, $rootScope, $location, $scope) {
-    console.log('New user controller');
-    $scope.types = ['ADMIN', 'ORDINARY'];
-    $scope.sexes = ['MALE', 'FEMALE'];
-    $scope.user = {
-        'name': '',
-        'type': $scope.types[0],
-        'sex': $scope.sexes[0],
-        'dateOfBirth': '',
-        'userName': '',
-        'password': ''
-    };
-    $scope.create = function (user) {
-        console.log('Create user: ' + user.name);
-        $http.post('rest/users/create', user).
-                then(function success(response) {
-                    $rootScope.succesAllert = 'New user was created.';
-                    $location.path('/users/all');
-                }, function error(response) {
-                    console.log('Error when creating new user');
-                    console.log(response);
-                    $rootScope.errorAlert = 'Problem has occured, cannot create new user!';
-                });
-    };
-});
 
 controllers.controller('EditUserController', function ($http, $routeParams, $rootScope, $location, $scope) {
     var userId = $routeParams.userId;

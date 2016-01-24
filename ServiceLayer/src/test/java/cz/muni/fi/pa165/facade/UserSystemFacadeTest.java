@@ -202,7 +202,7 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
         
         Assert.assertEquals(loginVer.getUserId(),id);
         Assert.assertFalse(loginVer.getAdmin());
-        Assert.assertEquals(loginVer.getUserLoginName(),"admin");
+        Assert.assertEquals(loginVer.getLoginName(),"admin");
         
 
         verify(userSystemService).login("admin", "123456");

@@ -170,9 +170,8 @@ public class CreatureRestController {
      * Return a http response containing an area of a creature with the given id.
      * If there is no such an area, then return an area with an id equal -1.
      * This auxiliary area represents a null value.
-     *
-     * permission:ANYONE
      */
+    //permission:ANYONE
     @RequestMapping(value = "/{id}/area", method = RequestMethod.GET)
     public HttpEntity<AreaResource> getAreaOfCreature(@PathVariable Long id) {
         logger.debug("GET area of creature with id={}", id);

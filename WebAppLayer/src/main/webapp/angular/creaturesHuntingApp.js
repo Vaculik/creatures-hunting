@@ -128,7 +128,7 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $co
     };
 
     authService.logout = function() {
-        $rootScope.successAlert = 'User has been logged out.';
+        $rootScope.successAlrt = 'User has been logged out.';
         Session.destroy();
         $rootScope.currentUser = null;
         $cookies.remove('auth');

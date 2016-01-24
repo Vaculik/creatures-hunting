@@ -38,42 +38,80 @@
     </div>
 
     <div class="register-box-body">
-        <p class="login-box-msg">Register a new account</p>
+        <p class="login-box-msg"><b>Register a new account</b></p>
 
-        <form action="../index.jsp" method="post">
-            <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Full name">
+        <form name="form" novalidate role="form">
+            <div class="form-group has-feedback" ng-class="{'has-error': !form.userName.$valid}">
+                <label for="userName">Username:</label>
+                <input placeholder="Username" type="text" ng-minlength="3" maxlength="64" required class="form-control"
+                       ng-model="user.userName" name="userName" id="userName">
                 <span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+                <p class="help-block" ng-show="form.userName.$error.required">UserName is required</p>
+
+                <p class="help-block" ng-show="form.userName.$error.minlength">UserName must be at least 3
+                    characters</p>
             </div>
-            <div class="form-group has-feedback">
-                <input type="email" class="form-control" placeholder="Email">
-                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Password">
+            <div class="form-group has-feedback" ng-class="{'has-error': !form.password.$valid}">
+                <label for="password">Password:</label>
+                <input placeholder="Password" type="password" ng-minlength="5" maxlength="64" required
+                       class="form-control" ng-model="user.password" name="password" id="password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                <p class="help-block" ng-show="form.password.$error.required">Password is required</p>
+
+                <p class="help-block" ng-show="form.password.$error.minlength">Password must be at least 5
+                    characters</p>
             </div>
-            <div class="form-group has-feedback">
-                <input type="password" class="form-control" placeholder="Retype password">
-                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+            <div class="form-group has-feedback"
+                 ng-class="{'has-error': !form.retypePassword.$valid || !retypePasswordValid()}">
+                <label for="retypePassword">Retype password:</label>
+                <input placeholder="Retype password" type="password" ng-minlength="5" maxlength="64" required
+                       class="form-control" ng-model="retypePassword" name="retypePassword" id="retypePassword">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+                <p class="help-block" ng-show="!retypePasswordValid() && form.retypePassword.$valid">Retyped password is not same</p>
             </div>
+            <div class="form-group has-feedback" ng-class="{'has-error': !form.name.$valid}">
+                <label for="name">Full name:</label>
+                <input placeholder="Full name" type="text" ng-minlength="5" maxlength="64" required class="form-control"
+                       ng-model="user.name" name="name" id="name">
+
+                <p class="help-block" ng-show="form.name.$error.required">Name is required</p>
+
+                <p class="help-block" ng-show="form.name.$error.minlength">Name must be at least 5 characters</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error': !form.sex.$valid}">
+                <label for="sex">Sex:</label>
+                <select class="form-control" name="sex" ng-model="user.sex" id="sex" required>
+                    <option ng-repeat="sex in sexes">{{sex}}</option>
+                </select>
+
+                <p class="help-block" ng-show="form.sex.$error.required">Sex is required</p>
+            </div>
+            <div class="form-group" ng-class="{'has-error': !form.dateOfBirth.$valid}">
+                <label for="dateOfBirth">Date of birth:</label>
+                <input type="date" class="form-control" required ng-model="user.dateOfBirth" name="dateOfBirth"
+                       id="dateOfBirth">
+
+                <p class="help-block" ng-show="form.dateOfBirth.$error.required">Date of birth is required</p>
+            </div>
+
             <div class="row">
                 <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> I agree to the <a href="#">terms</a>
-                        </label>
-                    </div>
+                    <a href="login.html" class="text-center">I already have an account</a>
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+                    <button ng-disabled="!form.$valid || !retypePasswordValid()" class="btn btn-flat btn-primary" type="submit"
+                            ng-click="register(user)">Register
+                    </button>
                 </div>
                 <!-- /.col -->
             </div>
         </form>
 
-        <a href="login.html" class="text-center">I already have an account</a>
+
     </div>
     <!-- /.form-box -->
 </div>
