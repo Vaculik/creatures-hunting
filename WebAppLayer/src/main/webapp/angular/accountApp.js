@@ -1,8 +1,8 @@
 /**
- * Created by vaculik on 3.1.16.
+ * @author Karel Vaculik
  */
 
-var app = angular.module('accountsApp', ['ngRoute', 'controllers']);
+var app = angular.module('accountApp', ['ngRoute', 'controllers']);
 var controllers = angular.module('controllers', []);
 
 app.config(['$routeProvider', function ($routeProvider) {

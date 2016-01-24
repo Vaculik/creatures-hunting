@@ -13,7 +13,7 @@ public class UserSystemLoginDTO {
     private String loginName;
 
     @NotNull
-    @Size(min=5, max=64)
+    @Size(min=3, max=64)
     private String password;
 
     public String getLoginName() {

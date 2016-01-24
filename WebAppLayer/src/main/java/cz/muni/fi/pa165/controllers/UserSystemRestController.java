@@ -10,19 +10,19 @@ import javax.validation.Valid;
 import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
 import cz.muni.fi.pa165.dto.WeaponDTO;
+import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
 import cz.muni.fi.pa165.hateoas.*;
 
+import cz.muni.fi.pa165.security.TokenAuthenticationService;
+import cz.muni.fi.pa165.security.UserAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,6 +54,9 @@ public class UserSystemRestController {
 
 	@Autowired
 	private UserSystemVerifiedResourceAssembler userVerifiedResourceAssembler;
+
+	@Autowired
+	private TokenAuthenticationService tokenAuthenticationService;
 
 	//permission:ANYONE
 	@RequestMapping(method = RequestMethod.GET)
@@ -130,8 +133,15 @@ public class UserSystemRestController {
 			logger.debug(msg);
 			throw new AuthenticationFailedException(msg);
 		}
+
 		UserSystemVerifiedResource userVerifiedResource = userVerifiedResourceAssembler.toResource(userVerifiedDTO);
-		return new ResponseEntity<>(userVerifiedResource, HttpStatus.OK);
+
+		UserSystemDTO user = userFacade.getUserById(userVerifiedDTO.getUserId());
+		UserAuthentication userAuthentication = new UserAuthentication(user);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		tokenAuthenticationService.addAuthentication(httpHeaders, userAuthentication);
+
+		return new ResponseEntity<>(userVerifiedResource, httpHeaders, HttpStatus.OK);
 	}
 
 	//permission:USER
@@ -175,7 +185,7 @@ public class UserSystemRestController {
 
 	//permission:USER
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void editWeapon(@PathVariable long id, @RequestBody @Valid UserSystemDTO userDTO,
+    public void editUser(@PathVariable long id, @RequestBody @Valid UserSystemDTO userDTO,
             BindingResult bindingResult) {
         if (userDTO.getId() != id) {
             String msg = "User edit id mismatch.";

@@ -1,5 +1,5 @@
 /**
- * Created by vaculik on 18.12.15.
+ * @author Karel Vaculik
  */
 
 app.service('Session', function () {

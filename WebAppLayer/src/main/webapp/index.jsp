@@ -84,7 +84,7 @@ desired effect
             <div class="navbar-custom-menu">
                 <ul ng-if="!isAuthenticated()" class="nav navbar-nav">
                     <li>
-                    <a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="pages/login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                     </li>
                 </ul>
                 <ul ng-if="isAuthenticated()" class="nav navbar-nav">
@@ -106,7 +106,7 @@ desired effect
                     </ul>
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="#">Register</a>
+                            <a href="pages/register.html">Register</a>
                         </li>
                     </ul>
             </div>

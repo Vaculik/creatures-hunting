@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.security;
 
-import cz.muni.fi.pa165.entity.UserSystem;
+import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.enums.UserType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +16,11 @@ import java.util.Set;
  */
 public class UserAuthentication implements Authentication {
 
-    private final UserSystem user;
+    private final UserSystemDTO user;
     private Set<GrantedAuthority> authorities = new HashSet<>();
     private boolean authenticated = true;
 
-    public UserAuthentication(UserSystem user) {
+    public UserAuthentication(UserSystemDTO user) {
         this.user = user;
         authorities.add(new SimpleGrantedAuthority("USER"));
         if (user.getType() == UserType.ADMIN) {
@@ -39,7 +39,7 @@ public class UserAuthentication implements Authentication {
     }
 
     @Override
-    public UserSystem getDetails() {
+    public UserSystemDTO getDetails() {
         return user;
     }
 
