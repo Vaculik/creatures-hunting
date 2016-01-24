@@ -47,7 +47,7 @@ public class CreatureRestController {
     @Autowired
     private AreaResourceAssembler areaResourceAssembler;
 
-
+    //permission:ANYONE
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> getAllCreatures(
             @RequestParam(value="view", defaultValue = "all") String viewType) {
@@ -89,7 +89,7 @@ public class CreatureRestController {
         return new ResponseEntity<>(creatureResources, HttpStatus.OK);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public HttpEntity<CreatureResource> getCreature(@PathVariable long id) {
         logger.debug("GET creature with id=" + id);
@@ -104,7 +104,7 @@ public class CreatureRestController {
         return new ResponseEntity<>(creatureResource, HttpStatus.OK);
     }
 
-
+    //permission:ADMIN
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteCreature(@PathVariable long id) {
         logger.debug("DELETE creature with id=" + id);
@@ -117,7 +117,7 @@ public class CreatureRestController {
         creatureFacade.deleteCreature(creatureDTO);
     }
 
-
+    //permission:USER
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CreatureResource> createCreature(@RequestBody @Valid CreatureDTO creatureDTO,
                                                        BindingResult bindingResult) {
@@ -135,7 +135,7 @@ public class CreatureRestController {
         return new ResponseEntity<>(creatureResource, HttpStatus.OK);
     }
 
-
+    //permission:USER
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateCreature(@RequestBody @Valid CreatureDTO creatureDTO, BindingResult bindingResult) {
         logger.debug("POST update creature");
@@ -147,7 +147,7 @@ public class CreatureRestController {
         creatureFacade.updateCreature(creatureDTO);
     }
 
-
+    //permission:ANYONE
     @RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
     public HttpEntity<Resources<CreatureResource>> getCreaturesOfType(@PathVariable CreatureType type) {
         logger.debug("GET all creatures of type=" + type);
@@ -162,7 +162,9 @@ public class CreatureRestController {
     /**
      * Return a http response containing an area of a creature with the given id.
      * If there is no such an area, then return an area with an id equal -1.
-     * This auxiliary area represents null value.
+     * This auxiliary area represents a null value.
+     *
+     * permission:ANYONE
      */
     @RequestMapping(value = "/{id}/area", method = RequestMethod.GET)
     public HttpEntity<AreaResource> getAreaOfCreature(@PathVariable Long id) {
@@ -179,9 +181,9 @@ public class CreatureRestController {
         return new ResponseEntity<>(areaResource, HttpStatus.OK);
     }
 
-
+    //permission:USER
     @RequestMapping(value = "/{id}/remove-area", method = RequestMethod.POST)
-    public void removeCreature(@PathVariable Long id) {
+    public void removeAreaOfCreature(@PathVariable Long id) {
         logger.debug("POST remove area of Creature with id={}", id);
         creatureFacade.removeAreaOfCreature(id);
     }

@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.dto;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 /**
  * Data transfer object for creating new WeaponEfficiency entity.
  *
@@ -7,10 +10,14 @@ package cz.muni.fi.pa165.dto;
  */
 public class WeaponEfficiencyCreateDTO {
 
+    @NotNull
+    @Min(0)
     private Integer efficiency;
 
+    @NotNull
     private Long creatureId;
 
+    @NotNull
     private Long weaponId;
 
     public Integer getEfficiency() {

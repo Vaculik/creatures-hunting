@@ -79,4 +79,14 @@ public interface UserSystemService {
      * @return the authenticated UserSystem or null, if authentication failed
      */
     UserSystem login(String loginName, String password);
+
+    /**
+     * Change a password of a user.
+     *
+     * @param user the user
+     * @param originPassword the original password
+     * @param newPassword the new password
+     * @return true if the change was successful, otherwise return false
+     */
+    boolean changePassword(UserSystem user, String originPassword, String newPassword);
 }

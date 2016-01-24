@@ -4,8 +4,6 @@
  */
 package cz.muni.fi.pa165.dao;
 
-import cz.muni.fi.pa165.entity.Creature;
-import cz.muni.fi.pa165.exceptions.DatabaseCreatureException;
 import cz.muni.fi.pa165.entity.Area;
 import java.util.List;
 
@@ -32,68 +30,38 @@ public class AreaDaoImpl implements AreaDao {
 
     @Override
     public void create(Area area) {
-        if (area == null) {
-            throw new NullPointerException("Input Area is null");
-        }
-        try {
-            em.persist(area);
-        } catch (Exception ex) {
-            throw new DatabaseCreatureException("Error while creating area");
-        }
+        em.persist(area);
     }
 
     @Override
     public void delete(Area area) {
-        if (area == null) {
-            throw new NullPointerException("Input Area is null");
-        }
-        try {
-            em.remove(em.contains(area) ? area : em.merge(area));
-        } catch (Exception ex) {
-            throw new DatabaseCreatureException("Error while deleting area.  Error: " + ex.getMessage());
-        }
+        em.remove(em.contains(area) ? area : em.merge(area));
     }
 
     @Override
     public void update(Area area) {
-        if (area == null) {
-            throw new NullPointerException("Input Area is null");
-        }
-        try {
-            em.merge(area);
-        } catch (Exception ex) {
-            throw new DatabaseCreatureException("Error while updating area. Error: " + ex.getMessage());
-        }
-
+        em.merge(area);
     }
 
     @Override
     public List<Area> findAll() {
-        try {
             TypedQuery<Area> qr = em.createQuery("SELECT ar FROM Area AS ar", Area.class);
             return qr.getResultList();
-        } catch (Exception ex) {
-            throw new DatabaseCreatureException("Error while getting areas. Error: " + ex.getMessage());
-        }
     }
 
     @Override
     public Area getById(Long id) {
-        if (id == null) {
-            throw new NullPointerException("Input Id is null");
-        }
         return em.find(Area.class, id);
     }
 
     @Override
     public Area getByName(String name) {
-        if (name == null) {
-            throw new NullPointerException("Input Name is null");
-        }
+            TypedQuery<Area> query = em.createQuery("SELECT area FROM Area as area WHERE area.name = :parName", Area.class)
+                    .setParameter("parName", name);
         try {
-            return em.createQuery("SELECT area FROM Area as area WHERE area.name = :parName", Area.class).setParameter("parName", name).getSingleResult();
-        } catch (Exception ex) {
-            throw new NoResultException("Error while getting areas. Error: " + ex.getMessage());
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
     }
 }

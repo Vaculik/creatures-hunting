@@ -24,16 +24,10 @@ public class WeaponDaoImpl implements WeaponDao {
     private EntityManager em;
 
     public Weapon getById(Long id) {
-        if (id == null) {
-            throw new NullPointerException("Argument id is null");
-        }
         return em.find(Weapon.class, id);
     }
 
     public Weapon getByName(String name) {
-        if (name == null) {
-            throw new NullPointerException("Argument name is null");
-        }
         TypedQuery<Weapon> query = em.createQuery("SELECT weapn FROM Weapon AS weapn WHERE weapn.name=:nam", Weapon.class).setParameter("nam", name);
         try {
             return query.getSingleResult();
@@ -48,24 +42,14 @@ public class WeaponDaoImpl implements WeaponDao {
     }
 
     public void create(Weapon weapon) {
-        if (weapon == null) {
-            throw new NullPointerException("Argument weapon is null");
-        }
         em.persist(weapon);
     }
 
     public void update(Weapon weapon) {
-        if (weapon == null) {
-            throw new NullPointerException("Argument weapon is null");
-        }
         em.merge(weapon);
     }
 
     public void delete(Weapon weapon) {
-
-        if (weapon == null) {
-            throw new NullPointerException("Argument weapon is null");
-        }
         em.remove(em.contains(weapon) ? weapon : em.merge(weapon));
     }
 }

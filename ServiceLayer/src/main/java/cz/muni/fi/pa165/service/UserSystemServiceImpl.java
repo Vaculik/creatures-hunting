@@ -55,7 +55,7 @@ public class UserSystemServiceImpl implements UserSystemService {
     @Override
     public List<UserSystem> getUsersOfSex(SexType sex) {
         List<UserSystem> allUsers = userSystemDao.findAll();
-        List<UserSystem> selectedUsers = new ArrayList<UserSystem>();
+        List<UserSystem> selectedUsers = new ArrayList<>();
 
         for (UserSystem user : allUsers) {
             if (user.getSex() == sex) {
@@ -83,5 +83,16 @@ public class UserSystemServiceImpl implements UserSystemService {
             return null;
         }
         return PasswordUtil.checkPassword(password, user.getPassword()) ? user : null;
+    }
+
+    @Override
+    public boolean changePassword(UserSystem user, String originPassword, String newPassword) {
+        if (PasswordUtil.checkPassword(originPassword, user.getPassword())) {
+            String newPasswordHash = PasswordUtil.hashPassword(newPassword);
+            user.setPassword(newPasswordHash);
+            userSystemDao.update(user);
+            return true;
+        }
+        return false;
     }
 }

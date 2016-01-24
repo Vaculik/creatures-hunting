@@ -31,10 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
-//    private final String adminPasswordHash = PasswordUtil.hashPassword("admin");
-//    private final String userPasswordHash = PasswordUtil.hashPassword("user");
-    private final String adminPasswordHash = "admin";
-    private final String userPasswordHash = "user";
+    private final String adminPasswordHash = PasswordUtil.hashPassword("admin");
+    private final String userPasswordHash = PasswordUtil.hashPassword("user");
     
     @Autowired
     private CreatureService creatureService;

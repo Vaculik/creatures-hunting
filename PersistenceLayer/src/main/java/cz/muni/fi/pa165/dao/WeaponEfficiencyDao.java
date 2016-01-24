@@ -17,7 +17,6 @@ public interface WeaponEfficiencyDao {
      * @param id id of a WeaponEfficiency entity
      * @return the found WeaponEfficiency entity or null if the entity does not
      * exist
-     * @throws IllegalArgumentException if the id argument is null
      */
     WeaponEfficiency getById(Long id);
 
@@ -25,7 +24,6 @@ public interface WeaponEfficiencyDao {
      * Create the WeaponEfficiency entity.
      *
      * @param weaponEfficiency WeaponEfficiency entity
-     * @throws IllegalArgumentException if the WeaponEfficiency argument is null
      */
     void create(WeaponEfficiency weaponEfficiency);
 
@@ -33,7 +31,6 @@ public interface WeaponEfficiencyDao {
      * Remove the WeaponEfficiency entity.
      *
      * @param weaponEfficiency WeaponEfficiency entity
-     * @throws IllegalArgumentException if the WeaponEfficiency argument is null
      */
     void delete(WeaponEfficiency weaponEfficiency);
 
@@ -41,7 +38,6 @@ public interface WeaponEfficiencyDao {
      * Update the WeaponEfficiency entity.
      *
      * @param weaponEfficiency WeaponEfficiency entity
-     * @throws IllegalArgumentException if the WeaponEfficiency argument is null
      */
     void update(WeaponEfficiency weaponEfficiency);
 
