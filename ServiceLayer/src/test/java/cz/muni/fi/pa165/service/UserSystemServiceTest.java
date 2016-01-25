@@ -25,6 +25,7 @@ import cz.muni.fi.pa165.dao.UserSystemDao;
 import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
+import cz.muni.fi.pa165.util.PasswordUtil;
 
 /**
  * Tests for all methods of the UserSystemService interface.
@@ -126,17 +127,32 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
     public void loginTest() {
         UserSystem user1 = createUser("Bob", SexType.MALE, UserType.ORDINARY);
         user1.setUserName("admin");
-        user1.setPassword("123456");
+        String password = PasswordUtil.hashPassword("123456");
+        user1.setPassword(password);
         Long id = 1l;
         user1.setId(id);
-        
+
         when(userSystemDao.getByUserName("admin")).thenReturn(user1);
         
-        Assert.assertEquals(userSystemService.login("admin", "123456").getId(),id);
-        
+        Assert.assertEquals(userSystemService.login("admin", "123456").getId(),id);        
 
         verify(userSystemDao).getByUserName("admin");
     }
+    
+//    @Test
+//    public void changePasswordTest() {
+//        UserSystem user1 = createUser("Bob", SexType.MALE, UserType.ORDINARY);
+//        user1.setUserName("admin");
+//        String password = PasswordUtil.hashPassword("123456");
+//        String password2 = PasswordUtil.hashPassword("1234567");
+//        user1.setPassword(password);
+//        Long id = 1l;
+//        user1.setId(id);
+////        doNothing().when(userSystemDao).update(user1);
+//        userSystemService.changePassword(user1, password, "1234567");
+//        Assert.assertEquals(user1.getPassword(),password);        
+////        verify(userSystemDao).update(user1);
+//    }
     
     @Test
     public void getUsersOfTypeTest() {

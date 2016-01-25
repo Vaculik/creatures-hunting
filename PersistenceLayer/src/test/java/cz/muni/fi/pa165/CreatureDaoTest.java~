@@ -42,10 +42,10 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void getByIdNull() {
-//        creatureDao.getById(null);
-//    }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void getByIdNull() {
+        creatureDao.getById(null);
+    }
 
     @Test
     public void getByNameStandard() {

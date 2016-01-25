@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Interface of operations over transfer objects of WeaponDTO class.
  *
- * @author Pavel Vesely <448290@mail.muni.cz>
+ * @author Pavel Vesely - 448290@mail.muni.cz
  */
 public interface WeaponFacade {
 
@@ -74,10 +74,8 @@ public interface WeaponFacade {
     List<WeaponDTO> getWeaponsOfAmmoType(AmmoType ammoType);
 
     /**
-     * Finds all weaponDTOs with range min <= weapon.range <= max.
-     * @
-     *
-     * param min integer, lower threshold
+     * Finds all weaponDTOs with range min &le; weapon.range &le; max.
+     * @param min integer, lower threshold
      * @param max integer, upper threshold
      * @return List of weaponDTOs of corresponding range
      */

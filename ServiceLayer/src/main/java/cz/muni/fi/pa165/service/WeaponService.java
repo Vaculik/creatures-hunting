@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Interface of service layer operations over Weapon class objects.
  *
- * @author Pavel Vesely <448290@mail.muni.cz>
+ * @author Pavel Vesely - 448290@mail.muni.cz
  */
 public interface WeaponService {
 

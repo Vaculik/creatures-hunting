@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * This class represents an interface of Data Access Object of Weapon Entity.
  *
- * @author Pavel Vesely <448290@mail.muni.cz>
+ * @author Pavel Vesely - 448290@mail.muni.cz
  */
 public interface WeaponDao {
 
