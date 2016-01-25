@@ -15,8 +15,8 @@ accountApp.constant('AUTH_EVENTS', {
 });
 
 accountApp.constant('USER_ROLES', {
-    admin: 'admin',
-    user: 'user'
+    admin: 'ADMIN',
+    user: 'ORDINARY'
 });
 
 accountApp.config(['$cookiesProvider', function ($cookiesProvider) {

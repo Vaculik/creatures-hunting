@@ -25,9 +25,9 @@ public interface UserSystemFacade {
     /**
      * This method updates a user.
      *
-     * @param user UserSystemDTO to be updated
+     * @param userUpdate the user
      */
-    void updateUser(UserSystemDTO user);
+    void updateUser(UserSystemUpdateDTO userUpdate);
 
     /**
      * Find all Users.
@@ -83,4 +83,18 @@ public interface UserSystemFacade {
      * @return true if the change was successful, otherwise return false
      */
     boolean changePassword(UserSystemChangePasswordDTO userSystemChangePasswordDTO);
+
+    /**
+     * Promote a user to admin.
+     *
+     * @param userSystemDTO the user
+     */
+    void promoteToAdmin(UserSystemDTO userSystemDTO);
+
+    /**
+     * Degrade a user from admin to user.
+     *
+     * @param userSystemDTO the user
+     */
+    void degradeToUser(UserSystemDTO userSystemDTO);
 }

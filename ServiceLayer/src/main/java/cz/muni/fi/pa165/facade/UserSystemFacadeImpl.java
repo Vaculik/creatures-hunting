@@ -38,8 +38,13 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
     }
 
     @Override
-    public void updateUser(UserSystemDTO user) {
-        userSystemService.updateUser(entityMapper.map(user, UserSystem.class));
+    public void updateUser(UserSystemUpdateDTO userUpdate) {
+        UserSystem user = userSystemService.getUserById(userUpdate.getId());
+        user.setName(userUpdate.getName());
+        user.setUserName(userUpdate.getUserName());
+        user.setSex(userUpdate.getSex());
+        user.setDateOfBirth(userUpdate.getDateOfBirth());
+        userSystemService.updateUser(user);
     }
 
     @Override
@@ -93,5 +98,17 @@ public class UserSystemFacadeImpl implements UserSystemFacade {
                 userSystemService.getUserById(userSystemChangePasswordDTO.getUserId()),
                 userSystemChangePasswordDTO.getOriginalPassword(),
                 userSystemChangePasswordDTO.getNewPassword());
+    }
+
+    @Override
+    public void promoteToAdmin(UserSystemDTO userSystemDTO) {
+        userSystemDTO.setType(UserType.ADMIN);
+        userSystemService.updateUser(entityMapper.map(userSystemDTO, UserSystem.class));
+    }
+
+    @Override
+    public void degradeToUser(UserSystemDTO userSystemDTO) {
+        userSystemDTO.setType(UserType.ORDINARY);
+        userSystemService.updateUser(entityMapper.map(userSystemDTO, UserSystem.class));
     }
 }

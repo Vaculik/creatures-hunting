@@ -34,14 +34,19 @@
                         Date of birth: {{user.dateOfBirth}}
                     </p>
                     <br>
-                    <a ng-if="isAuthenticated()" href="#user/edit/{{user.id}}">
-                        <button type="button" class="btn btn-flat btn-primary">Edit user</button>
+                    <a ng-if="isAuthenticatedUser(user.userName)" href="#user/edit/{{user.id}}">
+                        <button type="button" class="btn btn-flat btn-primary">
+                            Edit user
+                        </button>
                     </a>
-                    <button ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit"
-                            ng-click="makeAdmin(user.id)">Promote to admin
+                    <button ng-if="isAuthorized(userRoles.admin)" ng-disabled="user.type == userRoles.admin"
+                            class="btn btn-flat btn-primary" type="submit"
+                            ng-click="makeAdmin(user.id)">
+                        Promote to admin
                     </button>
-                    <button ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit"
-                            ng-click="delete(user.id)">Delete
+                    <button ng-if="isAuthorized(userRoles.admin) || isAuthenticatedUser(user.userName)"
+                            class="btn btn-flat btn-primary" type="submit" ng-click="delete(user.id)">
+                        Delete
                     </button>
                 </div>
             </div>

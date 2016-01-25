@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.controllers;
 
+import cz.muni.fi.pa165.exceptions.AccessDeniedException;
 import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
 import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
 import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
@@ -28,7 +29,7 @@ public class ExceptionController {
         ExceptionResource resource = new ExceptionResource(exceptionName, e.getMessage());
 
         HttpStatus statusCode;
-        if (e instanceof AuthenticationFailedException) {
+        if (e instanceof AuthenticationFailedException || e instanceof AccessDeniedException) {
             statusCode = HttpStatus.UNAUTHORIZED;
         } else if(e instanceof InvalidRequestFormatException) {
             statusCode = HttpStatus.BAD_REQUEST;
