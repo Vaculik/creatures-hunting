@@ -87,12 +87,12 @@ controllers.controller('NewWeaponController', function ($http, $rootScope, $loca
     $scope.create = function (weapon) {
         console.log("Create weapon " + weapon.name);
         $http.post('rest/weapons/create', weapon).then(function (response) {//Request successful
-//            $rootScope.succesAllert("Weapon " + weapon.name + " created");
+            $rootScope.succesAllert = "Weapon " + weapon.name + " created";
             $location.path('/weapons');
         }, function (response) {//Request failed
             console.log("CREATE weapon failed");
             console.log(response);
-            $rootScope.errorAlert("Weapon could not be created.");
+            $rootScope.errorAlert = "Weapon could not be created.";
         });
     };
 });
@@ -110,12 +110,12 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
     $scope.edit = function (weapon) {
         console.log("EDIT weapon " + weapon.name);
         $http.post('rest/weapons/edit/' + weapon.id, weapon).then(function (response) {//Request successful
-//            $rootScope.succesAllert("Weapon " + weapon.name + " edited");
+            $rootScope.succesAllert = "Weapon " + weapon.name + " edited";
             $location.path('/weapons/' + weapon.id);
         }, function (response) {//Request failed
             console.log("EDIT weapon failed");
             console.log(response);
-            $rootScope.errorAlert("Weapon could not be edited.");
+            $rootScope.errorAlert = "Weapon could not be edited.";
         });
     };
 });
@@ -172,12 +172,12 @@ controllers.controller('NewWeaponEfficiencyController', function ($http, $rootSc
             newEfficiency.creatureId+' with efficiency='+newEfficiency.efficiency);
         $http.post('rest/weapon-efficiencies/create', newEfficiency).
             then(function (response) {//Request successful
-            //$rootScope.succesAllert("Weapon " + weapon.name + " created");
+            $rootScope.succesAllert = "Weapon " + weapon.name + " created";
             $location.path('/weapons/'+weaponId);
         }, function (response) {//Request failed
             console.log("CREATE efficiency failed");
             console.log(response);
-            $rootScope.errorAlert("Efficiency could not be created.");
+            $rootScope.errorAlert = "Efficiency could not be created.";
         });
     };
 });

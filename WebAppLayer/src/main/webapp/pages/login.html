@@ -40,6 +40,26 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
+            <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
+            <div ng-cloak ng-click="hideWarningAlert()" ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                    &times;</button>
+                <h4><i class="icon fa fa-warning"></i> Warning!</h4>
+                {{warningAlert}}
+            </div>
+            <div ng-cloak ng-click="hideErrorAlert()" ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                    &times;</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                {{errorAlert}}
+            </div>
+            <div ng-cloak ng-click="hideSuccessAlert()" ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                    &times;</button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                {{successAlert}}
+            </div>
+
         <p class="login-box-msg"><b>Log in to start your session</b></p>
 
         <form name="form" novalidate role="form">

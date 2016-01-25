@@ -35,12 +35,12 @@
                         {{creature.description}}
                     </p>
                     <br>
-                    <a ng-if="isAuthenticated()" href="#creature/{{creature.id}}/edit">
+                    <a ng-cloak ng-if="isAuthenticated()" href="#creature/{{creature.id}}/edit">
                         <button class="btn btn-flat btn-primary" type="submit">
                             Edit creature
                         </button>
                     </a>
-                    <button ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit"
+                    <button ng-cloak ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit"
                             ng-click="delete(creature.id)">
                         Delete
                     </button>
@@ -55,7 +55,7 @@
                         In no area
                     </h3>
                 </div>
-                <div class="box-body no-padding" ng-if="hasArea">
+                <div ng-cloak class="box-body no-padding" ng-if="hasArea">
                     <table class="table">
                         <thread>
                             <tr>
@@ -68,7 +68,7 @@
                         <tr>
                             <td><a href="#/area/{{creature.area.id}}">{{creature.area.name}}</a></td>
                             <td>{{creature.area.description}}</td>
-                            <td ng-if="isAuthenticated()" align="right">
+                            <td ng-cloak ng-if="isAuthenticated()" align="right">
                                 <button class="btn btn-flat btn-primary" type="submit" ng-click="removeArea()">
                                     Remove area
                                 </button>
@@ -77,7 +77,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="box-body" ng-if="!hasArea">
+                <div ng-cloak class="box-body" ng-if="!hasArea">
                     <form name="areaForm" novalidate role="form">
                         <div class="form-group">
                             <label for="addArea">Choose area:</label>

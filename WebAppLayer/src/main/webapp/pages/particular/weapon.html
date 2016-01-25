@@ -34,10 +34,10 @@
                     {{weapon.description}}
                 </p>
                 <br>
-                <a ng-if="isAuthenticated()" href="#weapons/edit/{{weapon.id}}">
+                <a ng-cloak ng-if="isAuthenticated()" href="#weapons/edit/{{weapon.id}}">
                     <button type="button" class="btn btn-flat btn-primary">Edit weapon</button>
                 </a>
-                    <button ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit" ng-click="delete(weapon.id)">
+                    <button ng-cloak ng-if="isAuthorized(userRoles.admin)" class="btn btn-flat btn-primary" type="submit" ng-click="delete(weapon.id)">
                         Delete
                     </button>
             </div>
@@ -67,7 +67,7 @@
                         <td><a href="#/creature/{{efficiency.creatureDTO.id}}">{{efficiency.creatureDTO.name}}</a></td>
                         <td>{{efficiency.creatureDTO.type}}</td>
                         <td>{{efficiency.efficiency}}</td>
-                        <td ng-if="isAuthenticated()" align="right">
+                        <td ng-cloak ng-if="isAuthenticated()" align="right">
                             <button class="btn btn-flat btn-primary" type="submit" ng-click="deleteEff(efficiency.id)">
                                 Delete efficiency
                             </button>
@@ -75,7 +75,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <a ng-if="isAuthenticated()" href="#efficiency/new/{{weapon.id}}">
+                <a ng-cloak ng-if="isAuthenticated()" href="#efficiency/new/{{weapon.id}}">
                     <button type="button" class="btn btn-flat btn-primary">New efficiency</button>
                 </a>
             </div>

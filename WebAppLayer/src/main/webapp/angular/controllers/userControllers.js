@@ -64,7 +64,7 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
             }, function error(response) {
                 console.log('Error when promoting user with id=' + id + ' to admin.');
                 console.log(response);
-                $rootScope.errorAlert('Problem has occured when promoting user to admin!');
+                $rootScope.errorAlert = 'Problem has occured when promoting user to admin!';
             })
     };
 
@@ -78,7 +78,7 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
             }, function error(response) {
                 console.log('Error when deleting user with id=' + id);
                 console.log(response);
-                $rootScope.errorAlert('Problem has occured when deleting user!');
+                $rootScope.errorAlert = 'Problem has occured when deleting user!';
             });
     };
 });
@@ -107,7 +107,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
         }, function (response) {//Request failed
             console.log("EDIT user failed");
             console.log(response);
-            $rootScope.errorAlert("User could not be edited.");
+            $rootScope.errorAlert = "User could not be edited.";
         });
     };
 
@@ -122,7 +122,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
             }, function error(response) {
                 console.log('Error when degrading user with id=' + id + ' to user.');
                 console.log(response);
-                $rootScope.errorAlert('Problem has occured when degrading user from admin to user!');
+                $rootScope.errorAlert = 'Problem has occured when degrading user from admin to user!';
             })
     };
 });

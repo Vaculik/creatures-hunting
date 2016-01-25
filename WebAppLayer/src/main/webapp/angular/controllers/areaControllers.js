@@ -82,7 +82,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 }, function error(response) {
                     console.log('Error when deleting area with id=' + id);
                     console.log(response);
-                    $rootScope.errorAlert('Problem has occured when deleting area!');
+                    $rootScope.errorAlert = 'Problem has occured when deleting area!';
                 });
     };
 
@@ -96,7 +96,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 }, function error(response) {
                     console.log('Error when adding creature with name=' + $scope.addCreatureDTO.creatureName);
                     console.log(response);
-                    $rootScope.errorAlert('Error when adding creature with name=', $scope.addCreatureDTO.creatureName);
+                    $rootScope.errorAlert = 'Error when adding creature with name=', $scope.addCreatureDTO.creatureName;
                 });
 
     };
@@ -135,7 +135,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 }, function error(response) {
                     console.log('Error when removing area of creature with id=' + id);
                     console.log(response);
-                    $rootScope.errorAlert('Error when removing area of creature with id=' + id);
+                    $rootScope.errorAlert='Error when removing area of creature with id=' + id;
                 })
     }
 });
@@ -182,7 +182,7 @@ controllers.controller('EditAreaController', function ($http, $routeParams, $roo
         }, function (response) {//Request failed
             console.log("EDIT area failed");
             console.log(response);
-            $rootScope.errorAlert("Area could not be edited.");
+            $rootScope.errorAlert = "Area could not be edited.";
         });
     };
 });

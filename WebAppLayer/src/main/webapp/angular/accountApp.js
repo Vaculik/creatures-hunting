@@ -23,7 +23,22 @@ accountApp.config(['$cookiesProvider', function ($cookiesProvider) {
     $cookiesProvider.defaults.path = '/pa165';
 }]);
 
-accountApp.factory('AuthService', function ($http, $rootScope, USER_ROLES, $cookies) {
+accountApp.run(function ($rootScope) {
+    $rootScope.successAlert = undefined;
+    $rootScope.warningAlert = undefined;
+    $rootScope.errorAlert = undefined;
+    $rootScope.hideSuccessAlert = function () {
+        $rootScope.successAlert = undefined;
+    };
+    $rootScope.hideWarningAlert = function () {
+        $rootScope.warningAlert = undefined;
+    };
+    $rootScope.hideErrorAlert = function () {
+        $rootScope.errorAlert = undefined;
+    };
+});
+
+accountApp.factory('AuthService', function ($http, $rootScope, USER_ROLES, $cookies, $window, AUTH_EVENTS) {
     var authService = {};
 
     authService.login = function (credentials) {
@@ -42,10 +57,12 @@ accountApp.factory('AuthService', function ($http, $rootScope, USER_ROLES, $cook
                 auth.authToken = response.headers('X-AUTH-TOKEN');
 
                 $cookies.putObject('auth', auth);
-                $rootScope.successAlert = 'User has been authenticated.';
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $window.location.href = '/pa165/index.jsp';
             }, function (response) {
                 console.log("User hasn't been  authenticated");
-                $rootScope.errorAlert = 'Authentication has failed.';
+                $rootScope.warningAlert = 'Authentication has failed.';
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
             });
     };
 
@@ -59,12 +76,7 @@ controllers.controller('LoginController', function ($scope, $rootScope, AUTH_EVE
         password: ''
     };
     $scope.login = function (credentials) {
-        AuthService.login(credentials).then(function () {
-            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            $window.location.href = '/pa165/index.jsp';
-        }, function () {
-            $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-        });
+        AuthService.login(credentials);
     };
 });
 
