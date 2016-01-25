@@ -3,7 +3,7 @@ Startable with the command: mvn clean install && cd WebAppLayer && mvn tomcat7:r
 Accesible under the link: http://localhost:8080/pa165 <br>
 Login and password:<br>
 - Ordinary user: Jakub, user<br>
-- Admin: Martin, admin<br>
+- Admin: _Martin, admin_<br>
 <br>
 More information about the system on <a href="https://github.com/Vaculik/creatures-hunting/wiki">the wiki page of project</a>
 
