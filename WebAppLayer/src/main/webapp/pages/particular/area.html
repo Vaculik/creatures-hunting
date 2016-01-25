@@ -49,8 +49,7 @@
                             <label for="addCreature">Creature:</label>
                             <select class="form-control" name="name" ng-model="addCreatureDTO.creatureName"
                                     id="addCreature" required>
-                                <option ng-repeat="creature in addCreatures | orderBy:'+name' ">{{creature.name}}
-                                </option>
+                                <option ng-repeat="creature in addCreatures">{{creature.name}}</option>
                             </select>
                         </div>
                         <br>
