@@ -53,7 +53,7 @@
                             </select>
                         </div>
                         <br>
-                        <button ng-disabled="!form2.$valid" class="btn btn-flat btn-primary" type="submit"
+                        <button ng-disabled="!form2.$valid || !isAuthenticated()" class="btn btn-flat btn-primary" type="submit"
                                 ng-click="addCreature()">
                             Add creature
                         </button>
