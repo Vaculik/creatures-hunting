@@ -62,6 +62,11 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         'creatureName': ''
     };
     $scope.creatures = {};
+    
+    $http.get('rest/creatures/?view=all').
+        then(function (response) {
+            $scope.addCreatures = response.data['_embedded']['creatures']; // TODO subtract area.creatures
+        });
 
         console.log('GET particular area with id=' + id);
     $http.get('rest/areas/' + id).
