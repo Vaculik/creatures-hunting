@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.enums.WeaponType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -29,7 +30,7 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
     private WeaponDao weaponDao;
 
     @Test
-    public void getById() {
+    public void getByIdTest() {
         Weapon w = createDefaultWeapon();
         weaponDao.create(w);
         Weapon result = weaponDao.getById(w.getId());
@@ -37,13 +38,13 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(result, w);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void nullId() {
-//        weaponDao.getById(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void nullIdTest() {
+        weaponDao.getById(null);
+    }
 
     @Test
-    public void getByName() {
+    public void getByNameTest() {
         Weapon w = createDefaultWeapon();
         weaponDao.create(w);
         Weapon result = weaponDao.getByName(w.getName());
@@ -52,12 +53,12 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void nullName() {
+    public void nullNameTest() {
         Assert.assertNull(weaponDao.getByName(null));
     }
 
     @Test
-    public void getByNameNoResult() {
+    public void getByNameNoResultTest() {
         Weapon w = createDefaultWeapon();
         weaponDao.create(w);
         Weapon result = weaponDao.getByName("A");
@@ -66,7 +67,7 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findAll() {
+    public void findAllTest() {
         Weapon w1 = createDefaultWeapon("W1");
         Weapon w2 = createDefaultWeapon("W2");
         Weapon w3 = createDefaultWeapon("W3");
@@ -82,17 +83,17 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void findAllEmptyResult() {
+    public void findAllEmptyResultTest() {
         Assert.assertEquals(0, weaponDao.findAll().size());
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void createNull() {
-//        weaponDao.create(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void createNullTest() {
+        weaponDao.create(null);
+    }
 
     @Test
-    public void update() {
+    public void updateTest() {
         Weapon w = createDefaultWeapon();
         weaponDao.create(w);
         w.setName("A");
@@ -102,13 +103,13 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(result, w);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void updateNull() {
-//        weaponDao.update(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void updateNullTest() {
+        weaponDao.update(null);
+    }
 
     @Test
-    public void remove() {
+    public void removeTest() {
         Weapon w1 = createDefaultWeapon("W1");
         Weapon w2 = createDefaultWeapon("W2");
         weaponDao.create(w1);
@@ -126,10 +127,10 @@ public class WeaponDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(result.size(), 0);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void removeNull() {
-//        weaponDao.delete(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void removeNullTest() {
+        weaponDao.delete(null);
+    }
 
     private Weapon createDefaultWeapon() {
         return createDefaultWeapon("W");

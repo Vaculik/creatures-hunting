@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.enums.CreatureType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -42,10 +43,10 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void getByIdNull() {
-//        creatureDao.getById(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void getByIdNull() {
+        creatureDao.getById(null);
+    }
 
     @Test
     public void getByNameStandard() {
@@ -71,10 +72,10 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void createNullArg() {
-//        creatureDao.create(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void createNullArg() {
+        creatureDao.create(null);
+    }
 
     @Test
     public void deleteStandard() {
@@ -98,10 +99,10 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(creat0, result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void deleteNullArg() {
-//        creatureDao.delete(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void deleteNullArg() {
+        creatureDao.delete(null);
+    }
 
     @Test
     public void updateStandard() {
@@ -127,10 +128,10 @@ public class CreatureDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNotEquals(creat1, result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void updateNullArg() {
-//        creatureDao.update(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void updateNullArg() {
+        creatureDao.update(null);
+    }
 
     @Test
     public void findAllStandard() {

@@ -12,6 +12,7 @@ import cz.muni.fi.pa165.enums.WeaponType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -57,15 +58,15 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void getByIdNullArg() {
-//        efficiencyDao.getById(null);
-//    }
-//
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void createNullArg() {
-//        efficiencyDao.create(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void getByIdNullArg() {
+        efficiencyDao.getById(null);
+    }
+
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void createNullArg() {
+        efficiencyDao.create(null);
+    }
 
     @Test
     public void deleteStandard() {
@@ -100,10 +101,10 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void deleteNullArg() {
-//        efficiencyDao.delete(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void deleteNullArg() {
+        efficiencyDao.delete(null);
+    }
 
     @Test
     public void updateStandard() {
@@ -139,10 +140,10 @@ public class WeaponEfficiencyDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(efficiency, result);
     }
 
-//    @Test(expectedExceptions = IllegalArgumentException.class)
-//    public void updateNullArg() {
-//        efficiencyDao.update(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void updateNullArg() {
+        efficiencyDao.update(null);
+    }
 
     @Test
     public void findAllStandard() {

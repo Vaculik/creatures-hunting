@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165;
 
 import java.util.List;
-import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -16,7 +15,6 @@ import cz.muni.fi.pa165.entity.Creature;
 import cz.muni.fi.pa165.enums.CreatureType;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.testng.TestException;
 
 
 /**
@@ -82,17 +80,17 @@ public class AreaDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(areaDao.getByName(null));
     }
 
-//    @Test(expectedExceptions = DataAccessException.class);
-//    public void deleteAreaTest() {
-//        Area area = createArea("Brno", "StudentCity");
-//        areaDao.create(area);
-//
-//        Area tmp = areaDao.getByName("Brno");
-//        Assert.assertEquals(area, tmp);
-//        areaDao.delete(area);
-//
-//        areaDao.getByName("Brno");
-//    }
+    @Test
+    public void deleteAreaTest() {
+        Area area = createArea("Brno", "StudentCity");
+        areaDao.create(area);
+
+        Area tmp = areaDao.getByName("Brno");
+        Assert.assertEquals(area, tmp);
+        areaDao.delete(area);
+
+        Assert.assertNull(areaDao.getByName("Brno"));
+    }
 
     @Test
     public void updateUserTest() {

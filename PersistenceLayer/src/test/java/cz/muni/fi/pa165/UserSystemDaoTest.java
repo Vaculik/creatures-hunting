@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -53,12 +54,12 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(tmp);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void getByNullIdTest() {
-//        UserSystem user = createUser("Ned Stark");
-//        userDao.create(user);
-//        userDao.getById(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void getByNullIdTest() {
+        UserSystem user = createUser("Ned Stark");
+        userDao.create(user);
+        userDao.getById(null);
+    }
 
     @Test
     public void getByUserNameTest() {
@@ -78,17 +79,17 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(tmp);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void getByNullNameTest() {
-//        UserSystem user = createUser("Ned Stark");
-//        userDao.create(user);
-//        userDao.getByUserName(null);
-//    }
-//
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void createNullUserTest() {//       
-//        userDao.create(null);
-//    }
+    @Test
+    public void getByNullNameTest() {
+        UserSystem user = createUser("Ned Stark");
+        userDao.create(user);
+        Assert.assertNull(userDao.getByUserName(null));
+    }
+
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void createNullUserTest() {//       
+        userDao.create(null);
+    }
 
     @Test
     public void deleteUserTest() {
@@ -117,10 +118,10 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(tmp, user);
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void deleteNullUserTest() {
-//        userDao.delete(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void deleteNullUserTest() {
+        userDao.delete(null);
+    }
 
     @Test
     public void updateUserTest() {
@@ -159,10 +160,10 @@ public class UserSystemDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertTrue(userDao.findAll().contains(user));
     }
 
-//    @Test(expectedExceptions = NullPointerException.class)
-//    public void updateNullUserTest() {
-//        userDao.delete(null);
-//    }
+    @Test(expectedExceptions = InvalidDataAccessApiUsageException.class)
+    public void updateNullUserTest() {
+        userDao.delete(null);
+    }
 
     @Test
     public void findAllTest() {
