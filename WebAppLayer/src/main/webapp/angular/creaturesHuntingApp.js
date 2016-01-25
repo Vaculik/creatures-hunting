@@ -118,8 +118,9 @@ app.config(['$routeProvider', '$httpProvider', '$cookiesProvider',
                 'request': function (config) {
                     var isRestCall = config.url.indexOf('rest') == 0;
                     if (isRestCall && angular.isDefined(Session.authToken)) {
-                        console.log('Add token: '+Session.authToken);
-                        config.headers['X-AUTH-TOKEN'] = Session.authToken;
+                        if (Session.authToken != null) {
+                            config.headers['X-AUTH-TOKEN'] = Session.authToken;
+                        }
                     }
                     return config || $q.when(config);
                 }
@@ -196,10 +197,11 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $co
     };
 
     authService.logout = function () {
-        $rootScope.successAlert = 'User has been logged out.';
         Session.destroy();
         $rootScope.currentUser = null;
         $cookies.remove('auth');
+        $rootScope.successAlert = 'User has been logged out.';
+
     };
 
     authService.degradeToUser = function () {

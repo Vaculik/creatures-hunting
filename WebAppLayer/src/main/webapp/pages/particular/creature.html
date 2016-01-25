@@ -46,12 +46,12 @@
                     </button>
                 </div>
             </div>
-            <div class="box box-primary">
+            <div ng-cloak class="box box-primary">
                 <div class="box-header">
                     <h3 class="box-title" ng-if="hasArea">
                         Area
                     </h3>
-                    <h3 class="box-title" ng-if="!hasArea">
+                    <h3 class="box-title" ng-if="hasNoArea">
                         In no area
                     </h3>
                 </div>
@@ -77,7 +77,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div ng-cloak class="box-body" ng-if="!hasArea">
+                <div ng-cloak class="box-body" ng-if="hasNoArea">
                     <form name="areaForm" novalidate role="form">
                         <div class="form-group">
                             <label for="addArea">Choose area:</label>
@@ -86,7 +86,7 @@
                             </select>
                         </div>
                         <br>
-                        <button ng-disabled="!areaForm.$valid" class="btn btn-flat btn-primary" type="submit"
+                        <button ng-cloak ng-disabled="!areaForm.$valid" class="btn btn-flat btn-primary" type="submit"
                                 ng-click="selectArea()">
                             Select area
                         </button>

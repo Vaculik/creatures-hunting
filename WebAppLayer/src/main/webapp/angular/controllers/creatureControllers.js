@@ -1,5 +1,5 @@
 /**
- * Created by vaculik on 24.12.15.
+ * @author Karel Vaculik
  */
 
 controllers.controller('CreaturesController', function ($http, $routeParams, $scope) {
@@ -30,10 +30,11 @@ var areaOfCreature = function (creatureId, $http, $scope) {
     console.log('GET area of creature with id=' + creatureId);
     $http.get('rest/creatures/'+creatureId+'/area').
         then(function (response) {
-            $scope.hasArea = false;
             $scope.creature.area = response.data;
             if (response.data.id != -1) {
                 $scope.hasArea = true;
+            } else {
+                $scope.hasNoArea = true
             }
         })
 };
