@@ -1,6 +1,6 @@
 # Creature hunting information system<br>
 Startable with the command: _mvn clean install && cd WebAppLayer && mvn tomcat7:run<br>
-Accesible under the link: _ http://localhost:8080/creatures-hunting _<br>
+Accesible under the link: _ http://localhost:8080/pa165 _<br>
 Login and password:<br>
 - Ordinary user: _Jakub, user_<br>
 - Admin: _Martin, admin_<br>
@@ -45,11 +45,11 @@ Included in module WebAppLayer.<br>
 	- weapon (Weapon)<br>
 <br>
 **On REST layer are accesible following links:<br>**
-1. _http://localhost:8080/creatures-hunting/rest/areas<br>_
-2. _http://localhost:8080/creatures-hunting/rest/creatures<br>_
-3. _http://localhost:8080/creatures-hunting/rest/users<br>_
-4. _http://localhost:8080/creatures-hunting/rest/weapons<br>_
-5. _http://localhost:8080/creatures-hunting/rest/weapon-efficiencies/<br>_
+1. _http://localhost:8080/pa165/rest/areas<br>_
+2. _http://localhost:8080/pa165/rest/creatures<br>_
+3. _http://localhost:8080/pa165/rest/users<br>_
+4. _http://localhost:8080/pa165/rest/weapons<br>_
+5. _http://localhost:8080/pa165/rest/weapon-efficiencies/<br>_
 <br>
 
 ## GET<br>
@@ -58,11 +58,11 @@ Included in module WebAppLayer.<br>
 
 ###Entities<br>
 The command for retrieving data is:<br>
-_curl -i -X GET http://localhost:8080/creatures-hunting/rest/ENTITY_<br>
+_curl -i -X GET http://localhost:8080/pa165/rest/ENTITY_<br>
 <br>
 Each entity has some functions which choose only specific instances of entities.<br>
 Adress of each entity starts:<br>
-_curl -i -X GET http://localhost:8080/creatures-hunting/rest/...<br>_
+_curl -i -X GET http://localhost:8080/pa165/rest/...<br>_
 <br>
 Dots are replaced by:<br>
 **Area**<br>
@@ -91,7 +91,7 @@ weapons/type/MAGNUM_44 ... ammo's type<br>_
 <br>
 ##CREATE<br>
 An instance is possible to create with following command:<br>
-_curl -X POST -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/creatures-hunting/rest/ENTITY/create<br>_
+_curl -X POST -i -H "Content-Type: application/json" --data '{...}' http://localhost:8080/pa165/rest/ENTITY/create<br>_
 <br>
 where ENTITY is: _areas, creatures, users, weapons, weapon-efficiencies<br>_
 and dots area specific attributes with its values for each entity in the pattern of: "name":"King","description":"The king of all"<br>
@@ -100,7 +100,7 @@ Atributes are seen above.<br>
 <br>
 ##DELETE<br>
 Each instance is possible to delete with following command: <br>
-_curl -i -X DELETE http://localhost:8080/creatures-hunting/rest/ENTITY/ID<br>_
+_curl -i -X DELETE http://localhost:8080/pa165/rest/ENTITY/ID<br>_
 <br>
 where ENTITY is: _areas, creatures, users, weapons, weapon-efficiencies<br>_
 and ID is ID number of an instance of an entity<br>
