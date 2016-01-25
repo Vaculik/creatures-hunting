@@ -137,22 +137,7 @@ public class UserSystemServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(userSystemService.login("admin", "123456").getId(),id);        
 
         verify(userSystemDao).getByUserName("admin");
-    }
-    
-    @Test
-    public void changePasswordTest() {
-        UserSystem user1 = createUser("Bob", SexType.MALE, UserType.ORDINARY);
-        user1.setUserName("admin");
-        String password = PasswordUtil.hashPassword("123456");
-        String password2 = PasswordUtil.hashPassword("1234567");
-        user1.setPassword(password);
-        Long id = 1l;
-        user1.setId(id);
-//        doNothing().when(userSystemDao).update(user1);
-        userSystemService.changePassword(user1, password, "1234567");
-        Assert.assertEquals(user1.getPassword(),password);        
-//        verify(userSystemDao).update(user1);
-    }
+    }    
     
     @Test
     public void getUsersOfTypeTest() {
