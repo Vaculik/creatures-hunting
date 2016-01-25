@@ -1,14 +1,10 @@
 package cz.muni.fi.pa165.config;
 
-import cz.muni.fi.pa165.InitialDataConfig;
-import cz.muni.fi.pa165.facade.UserSystemFacade;
 import cz.muni.fi.pa165.security.AuthenticationFilter;
-import cz.muni.fi.pa165.security.TokenAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,7 +35,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-//                .exceptionHandling().and()
                 .anonymous().and()
 
                 .authorizeRequests()
@@ -47,6 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/creatures/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/areas/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/weapons/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/rest/user/make-admin/**").hasRole("ADMIN")
                 //permissions for all users (role: USER | ADMIN)
                 .antMatchers(HttpMethod.DELETE, "/rest/users/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/rest/users/edit/**").authenticated()

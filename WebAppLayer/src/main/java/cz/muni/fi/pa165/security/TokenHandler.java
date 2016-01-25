@@ -7,6 +7,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 
 /**
  * @author Karel Vaculik
@@ -35,5 +37,14 @@ public class TokenHandler {
                 .setSubject(user.getUserName())
                 .signWith(SignatureAlgorithm.HS512, KEY)
                 .compact();
+    }
+
+    public static boolean validateUsername(String username, String token) {
+        String tokenUsername = Jwts.parser()
+                .setSigningKey(KEY)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+        return Objects.equals(username, tokenUsername);
     }
 }

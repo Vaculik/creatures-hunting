@@ -60,7 +60,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body ng-app="creaturesHuntingApp" ng-controller="ApplicationController" class="skin-blue">
+<body ng-app="creaturesHuntingApp" class="skin-blue">
 
 <div class="wrapper">
 
@@ -97,7 +97,7 @@ desired effect
                                 <span class="glyphicon glyphicon-user"></span> {{currentUser.loginName}}</b>
                         </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Profile</a></li>
+                                <li><a href="#/user/{{currentUser.userId}}">Profile</a></li>
                                 <li><a href="#">Change password</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#/home" ng-click="logout()">
