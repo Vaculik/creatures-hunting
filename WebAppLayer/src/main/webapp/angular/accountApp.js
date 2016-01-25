@@ -85,6 +85,10 @@ controllers.controller('RegisterController', function($http, $rootScope, $locati
     };
     $scope.register = function (user) {
         console.log('Register new user: ' + user.userName);
+        
+        $scope.user.dateOfBirth.setDate($scope.user.dateOfBirth.getDate() + 1); //HACK to prevent 1 day decrease in conversion
+        $scope.user.dateOfBirth = $scope.user.dateOfBirth.toISOString().split('T')[0];//String YYYY-MM-DD
+        
         $http.post('/pa165/rest/users/create', user).
             then(function success(response) {
                 $rootScope.succesAllert = 'New user was registered.';

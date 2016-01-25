@@ -94,6 +94,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
         then(function (response) {
             $scope.user = response.data;
             $scope.userName = $scope.user.userName;
+            $scope.user.dateOfBirth = new Date($scope.user.dateOfBirth);
         },
         function error(response) {
             $rootScope.warningAlert = 'Problem occured when loading user ' + response.data.message;
