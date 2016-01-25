@@ -21,6 +21,7 @@ import cz.muni.fi.pa165.config.MockConfiguration;
 import cz.muni.fi.pa165.config.ServiceApplicationContext;
 import cz.muni.fi.pa165.dto.UserSystemDTO;
 import cz.muni.fi.pa165.dto.UserSystemLoginDTO;
+import cz.muni.fi.pa165.dto.UserSystemUpdateDTO;
 import cz.muni.fi.pa165.dto.UserSystemVerifiedDTO;
 import cz.muni.fi.pa165.entity.UserSystem;
 import cz.muni.fi.pa165.enums.SexType;
@@ -111,15 +112,24 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
         verify(userSystemService).deleteUser(user);
     }
 
-//    @Test
-//    public void updateUserTest() {
-//        when(entityMapper.map(userDTO, UserSystem.class)).thenReturn(user);
-//        doNothing().when(userSystemService).updateUser(user);
-//
-//        userSystemFacade.updateUser(userDTO);
-//        verify(entityMapper).map(userDTO, UserSystem.class);
-//        verify(userSystemService).updateUser(user);
-//    }
+   @Test
+    public void updateUserTest() {
+        Long id = 1l;
+        user.setId(id);
+        user.setDateOfBirth(null);
+        doNothing().when(userSystemService).updateUser(user);
+        UserSystemUpdateDTO tmp = new UserSystemUpdateDTO();
+        tmp.setDateOfBirth(null);
+        tmp.setSex(user.getSex());  
+        tmp.setId(user.getId());
+        tmp.setName(user.getName());
+        tmp.setUserName("Test");
+        when(userSystemService.getUserById(tmp.getId())).thenReturn(user);
+        
+        userSystemFacade.updateUser(tmp);        
+        Assert.assertEquals(tmp.getUserName(), "Test");
+        verify(userSystemService).updateUser(user);
+    }
 
     @Test
     public void getAllUsersTest() {
@@ -207,6 +217,25 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
 
         verify(userSystemService).login("admin", "123456");
     }
+         
+    @Test
+    public void promoteToAdminTest() {
+        when(entityMapper.map(userDTO, UserSystem.class)).thenReturn(user);
+        user.setType(UserType.ORDINARY);
+        userSystemFacade.promoteToAdmin(userDTO);
+        Assert.assertEquals(userDTO.getType(), UserType.ADMIN);        
+        verify(entityMapper).map(userDTO, UserSystem.class);
+    }
+    
+    @Test
+    public void degradeToUserTest() {
+        when(entityMapper.map(userDTO, UserSystem.class)).thenReturn(user);
+        user.setType(UserType.ADMIN);
+        userSystemFacade.degradeToUser(userDTO);
+        Assert.assertEquals(userDTO.getType(), UserType.ORDINARY);
+        verify(entityMapper).map(userDTO, UserSystem.class);
+    }
+    
 
     private UserSystem createUser(String name, SexType sex, UserType type) {
         UserSystem user = new UserSystem();
