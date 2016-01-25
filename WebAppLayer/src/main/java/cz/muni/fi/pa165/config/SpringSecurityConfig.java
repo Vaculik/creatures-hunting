@@ -42,10 +42,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/creatures/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/areas/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/weapons/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/rest/user/make-admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/rest/users/make-admin/**").hasRole("ADMIN")
                 //permissions for all users (role: USER | ADMIN)
                 .antMatchers(HttpMethod.DELETE, "/rest/users/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/rest/users/edit/**").authenticated()
+                .antMatchers(HttpMethod.POST, "/rest/users/change-password").authenticated()
                 .antMatchers(HttpMethod.POST, "/rest/creatures/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/rest/areas/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/rest/weapon-efficiencies/**").authenticated()
@@ -54,7 +55,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //anonymous users have permissions for any other requests
                 .anyRequest().permitAll().and()
 
-                .formLogin().loginPage("/login.html").and()
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 

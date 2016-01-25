@@ -111,15 +111,15 @@ public class UserSystemFacadeTest extends AbstractTestNGSpringContextTests {
         verify(userSystemService).deleteUser(user);
     }
 
-    @Test
-    public void updateUserTest() {
-        when(entityMapper.map(userDTO, UserSystem.class)).thenReturn(user);
-        doNothing().when(userSystemService).updateUser(user);
-
-        userSystemFacade.updateUser(userDTO);
-        verify(entityMapper).map(userDTO, UserSystem.class);
-        verify(userSystemService).updateUser(user);
-    }
+//    @Test
+//    public void updateUserTest() {
+//        when(entityMapper.map(userDTO, UserSystem.class)).thenReturn(user);
+//        doNothing().when(userSystemService).updateUser(user);
+//
+//        userSystemFacade.updateUser(userDTO);
+//        verify(entityMapper).map(userDTO, UserSystem.class);
+//        verify(userSystemService).updateUser(user);
+//    }
 
     @Test
     public void getAllUsersTest() {

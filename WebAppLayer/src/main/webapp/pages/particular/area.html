@@ -33,10 +33,9 @@
                             Edit area
                         </button>
                     </a>
-                    <div ng-if="isAuthorized(userRoles.admin)">
-                        <button data-ng-disabled="area.creatures.length != 0" class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
-                        </button>
-                    </div>
+                    <button ng-if="isAuthorized(userRoles.admin)" data-ng-disabled="area.creatures.length != 0"
+                            class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
+                    </button>
                 </div>
             </div>
 
@@ -48,8 +47,10 @@
                     <form name="form2" novalidate role="form">
                         <div class="form-group">
                             <label for="addCreature">Creature:</label>
-                            <select class="form-control" name="name" ng-model="addCreatureDTO.creatureName" id="addCreature" required>
-                                <option  ng-repeat="creature in addCreatures | orderBy:'+name' ">{{creature.name}}</option>
+                            <select class="form-control" name="name" ng-model="addCreatureDTO.creatureName"
+                                    id="addCreature" required>
+                                <option ng-repeat="creature in addCreatures | orderBy:'+name' ">{{creature.name}}
+                                </option>
                             </select>
                         </div>
                         <br>
@@ -69,6 +70,7 @@
                     <h3 class="box-title">
                         Creatures in area {{area.name}}
                     </h3>
+
                     <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
@@ -87,7 +89,8 @@
                             <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
                             <td>{{creature.type}}</td>
                             <td ng-if="isAuthenticated()" align="right">
-                                <button class="btn btn-flat btn-primary" type="submit" ng-click="removeCreature(creature.id)">
+                                <button class="btn btn-flat btn-primary" type="submit"
+                                        ng-click="removeCreature(creature.id)">
                                     Remove creature
                                 </button>
                             </td>

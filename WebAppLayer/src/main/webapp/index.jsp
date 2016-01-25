@@ -98,7 +98,7 @@ desired effect
                         </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#/user/{{currentUser.userId}}">Profile</a></li>
-                                <li><a href="#">Change password</a></li>
+                                <li><a href="#/user/change-password/{{currentUser.userId}}">Change password</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#/home" ng-click="logout()">
                                     <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
