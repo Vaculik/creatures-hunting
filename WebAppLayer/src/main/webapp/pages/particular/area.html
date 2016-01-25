@@ -28,12 +28,12 @@
                         Description:</b> {{area.description}}
                     </p>
                     <br>
-                    <a ng-if="isAuthenticated()" href="#areas/{{area.id}}/edit">
+                    <a ng-cloak ng-if="isAuthenticated()" href="#areas/{{area.id}}/edit">
                         <button class="btn btn-flat btn-primary" type="submit">
                             Edit area
                         </button>
                     </a>
-                    <button ng-if="isAuthorized(userRoles.admin)" data-ng-disabled="area.creatures.length != 0"
+                    <button ng-cloak ng-if="isAuthorized(userRoles.admin)" data-ng-disabled="area.creatures.length != 0"
                             class="btn btn-flat btn-primary" type="submit" ng-click="delete(area.id)">Delete
                     </button>
                 </div>
@@ -87,7 +87,7 @@
                         <tr ng-repeat="creature in area.creatures| orderBy:'+type'">
                             <td><a href="#/creature/{{creature.id}}">{{creature.name}}</a></td>
                             <td>{{creature.type}}</td>
-                            <td ng-if="isAuthenticated()" align="right">
+                            <td ng-cloak ng-if="isAuthenticated()" align="right">
                                 <button class="btn btn-flat btn-primary" type="submit"
                                         ng-click="removeCreature(creature.id)">
                                     Remove creature

@@ -82,10 +82,10 @@ desired effect
                 <span class="sr-only">Toggle navigation</span>
             </div>
             <!-- Navbar Right Menu -->
-            <div class="navbar-custom-menu">
+            <div ng-cloak class="navbar-custom-menu">
                 <ul ng-if="!isAuthenticated()" class="nav navbar-nav">
                     <li>
-                    <a href="pages/login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                        <a href="pages/login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                     </li>
                 </ul>
                 <ul ng-if="isAuthenticated()" class="nav navbar-nav">
@@ -96,20 +96,20 @@ desired effect
                             <b><span ng-if="isAuthorized(userRoles.admin)">Admin: </span>
                                 <span class="glyphicon glyphicon-user"></span> {{currentUser.loginName}}</b>
                         </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#/user/{{currentUser.userId}}">Profile</a></li>
-                                <li><a href="#/user/change-password/{{currentUser.userId}}">Change password</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#/home" ng-click="logout()">
-                                    <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                            </ul>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/user/{{currentUser.userId}}">Profile</a></li>
+                            <li><a href="#/user/change-password/{{currentUser.userId}}">Change password</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#/home" ng-click="logout()">
+                                <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                        </ul>
                     </li>
-                    </ul>
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="pages/register.html">Register</a>
-                        </li>
-                    </ul>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="pages/register.html">Register</a>
+                    </li>
+                </ul>
             </div>
         </nav>
     </header>
@@ -136,6 +136,29 @@ desired effect
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+        <section class="content-header">
+                    <!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->
+                    <div ng-cloak ng-click="hideWarningAlert()" ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                            &times;</button>
+                        <h4><i class="icon fa fa-warning"></i> Warning!</h4>
+                        {{warningAlert}}
+                    </div>
+                    <div ng-cloak ng-click="hideErrorAlert()" ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                            &times;</button>
+                        <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                        {{errorAlert}}
+                    </div>
+                    <div ng-cloak ng-click="hideSuccessAlert()" ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" aria-hidden="true">
+                            &times;</button>
+                        <h4><i class="icon fa fa-check"></i> Success!</h4>
+                        {{successAlert}}
+                    </div>
+        </section>
+
         <div ng-view>
         </div>
 
@@ -150,78 +173,6 @@ desired effect
 
 </div>
 <!-- ./wrapper -->
-
-
-
-
-
-<%--<nav id="navbar" class="navbar navbar-inverse navbar-static-top">--%>
-    <%--<div class="container">--%>
-        <%--<div class="navbar-header">--%>
-            <%--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">--%>
-                <%--<span class="icon-bar"></span>--%>
-                <%--<span class="icon-bar"></span>--%>
-                <%--<span class="icon-bar"></span>--%>
-            <%--</button>--%>
-            <%--<a class="navbar-brand" href="#/home">Creatures Hunting</a>--%>
-        <%--</div>--%>
-        <%--<div class="collapse navbar-collapse" id="myNavbar">--%>
-            <%--<ul class="nav navbar-nav">--%>
-                <%--<li><a href="#/home">Home</a></li>--%>
-                <%--<li><a href="#/creatures/all">Creatures</a></li>--%>
-                <%--<li><a href="#/weapons">Weapons</a></li>--%>
-                <%--<li><a href="#/areas">Areas</a></li>--%>
-                <%--<li><a href="#/users/all">Users</a></li>--%>
-            <%--</ul>--%>
-            <%--<ul ng-if="!isAuthenticated()" class="nav navbar-nav navbar-right">--%>
-                <%--<li>--%>
-                    <%--<a href="#/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>--%>
-                <%--</li>--%>
-            <%--</ul>--%>
-            <%--<ul ng-if="isAuthenticated()" class="nav navbar-nav navbar-right">--%>
-                <%--<li ng-if="isAuthorized(userRoles.user)">--%>
-                    <%--<a href="#/user/{{currentUser.userId}}">{{currentUser.loginName}}</a>--%>
-                <%--</li>--%>
-                <%--<li ng-if="isAuthorized(userRoles.admin)">--%>
-                    <%--<a href="#/user/{{currentUser.userId}}">Admin: {{currentUser.loginName}}</a>--%>
-                <%--</li>--%>
-                <%--<li>--%>
-                    <%--<a href="#/home" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>--%>
-                <%--</li>--%>
-            <%--</ul>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</nav>--%>
-
-<%--<div id="content" class="container">--%>
-    <%--<div>--%>
-        <%--<!-- Bootstrap-styled alerts, visible when $rootScope.xxxAlert is defined -->--%>
-        <%--<div ng-show="warningAlert" class="alert alert-warning alert-dismissible" role="alert">--%>
-            <%--<button type="button" class="close" aria-label="Close" ng-click="hideWarningAlert()"><span--%>
-                    <%--aria-hidden="true">&times;</span></button>--%>
-            <%--<strong>Warning!</strong> <span>{{warningAlert}}</span>--%>
-        <%--</div>--%>
-        <%--<div ng-show="errorAlert" class="alert alert-danger alert-dismissible" role="alert">--%>
-            <%--<button type="button" class="close" aria-label="Close" ng-click="hideErrorAlert()"><span--%>
-                    <%--aria-hidden="true">&times;</span></button>--%>
-            <%--<strong>Error!</strong> <span>{{errorAlert}}</span>--%>
-        <%--</div>--%>
-        <%--<div ng-show="successAlert" class="alert alert-success alert-dismissible" role="alert">--%>
-            <%--<button type="button" class="close" aria-label="Close" ng-click="hideSuccessAlert()"><span--%>
-                    <%--aria-hidden="true">&times;</span></button>--%>
-            <%--<strong>Success !</strong> <span>{{successAlert}}</span>--%>
-        <%--</div>--%>
-
-        <%--<div ng-view>--%>
-        <%--</div>--%>
-    <%--</div>--%>
-<%--</div>--%>
-<%--<footer id="footer" class="footer">--%>
-    <%--<div class="container">--%>
-        <%--<p class="text-muted">&copy;&nbsp;Masaryk University</p>--%>
-    <%--</div>--%>
-<%--</footer>--%>
-
 
 <%--start: AngularJS--%>
 <script src="angular/creaturesHuntingApp.js"></script>
