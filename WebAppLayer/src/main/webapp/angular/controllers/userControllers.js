@@ -126,3 +126,29 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
             })
     };
 });
+
+controllers.controller('ChangePasswordController', function($http, $rootScope, $location, $scope) {
+    console.log('Change password controller');
+    $scope.changePasswordDTO = {
+        userId: $rootScope.currentUser.userId,
+        userName: $rootScope.currentUser.loginName,
+        oldPassword: '',
+        newPassword: ''
+    };
+    $scope.retypePassword = '';
+    $scope.retypePasswordValid = function() {
+        return $scope.changePasswordDTO.newPassword == $scope.retypePassword;
+    };
+    $scope.changePassword = function (changePasswordDTO) {
+        console.log('Change password of user: ' + changePasswordDTO.userName);
+        $http.post('/pa165/rest/users/change-password', changePasswordDTO).
+            then(function success(response) {
+                $rootScope.succesAllert = 'Password has been changed.';
+                $location.path('user/' + changePasswordDTO.userId)
+            }, function error(response) {
+                console.log('Error when changing password');
+                console.log(response);
+                $rootScope.errorAlert = 'Problem has occured, cannot change password!';
+            });
+    };
+});
