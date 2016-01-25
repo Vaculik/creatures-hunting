@@ -1,8 +1,8 @@
 # Creature hunting information system<br>
-Startable with the command: mvn clean install && cd WebAppLayer && mvn tomcat7:run<br>
-Accesible under the link: http://localhost:8080/pa165 <br>
+Startable with the command: _mvn clean install && cd WebAppLayer && mvn tomcat7:run_<br>
+Accesible under the link: _http://localhost:8080/pa165_ <br>
 Login and password:<br>
-- Ordinary user: Jakub, user<br>
+- Ordinary user: _Jakub, user_<br>
 - Admin: _Martin, admin_<br>
 <br>
 More information about the system on <a href="https://github.com/Vaculik/creatures-hunting/wiki">the wiki page of project</a>
