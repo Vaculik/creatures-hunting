@@ -26,9 +26,9 @@ public class UserAuthentication implements Authentication {
 
     public UserAuthentication(UserSystemDTO user) {
         this.user = user;
-        authorities.add(new SimpleGrantedAuthority("USER"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         if (user.getType() == UserType.ADMIN) {
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
     }
 

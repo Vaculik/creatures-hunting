@@ -42,7 +42,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/rest/creatures/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/areas/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/rest/weapons/**").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/rest/user/make-admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/rest/users/make-admin/**").hasRole("ADMIN")
                 //permissions for all users (role: USER | ADMIN)
                 .antMatchers(HttpMethod.DELETE, "/rest/users/**").authenticated()
                 .antMatchers(HttpMethod.POST, "/rest/users/edit/**").authenticated()
