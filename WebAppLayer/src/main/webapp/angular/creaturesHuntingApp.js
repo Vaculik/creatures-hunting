@@ -119,6 +119,7 @@ app.config(['$routeProvider', '$httpProvider', '$cookiesProvider',
                     var isRestCall = config.url.indexOf('rest') == 0;
                     if (isRestCall && angular.isDefined(Session.authToken)) {
                         if (Session.authToken != null) {
+                            console.log(Session.authToken);
                             config.headers['X-AUTH-TOKEN'] = Session.authToken;
                         }
                     }

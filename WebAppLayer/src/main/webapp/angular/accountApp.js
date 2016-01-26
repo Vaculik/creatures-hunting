@@ -24,9 +24,6 @@ accountApp.config(['$cookiesProvider', function ($cookiesProvider) {
 }]);
 
 accountApp.run(function ($rootScope) {
-    $rootScope.successAlert = undefined;
-    $rootScope.warningAlert = undefined;
-    $rootScope.errorAlert = undefined;
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
     };
@@ -103,7 +100,7 @@ controllers.controller('RegisterController', function($http, $rootScope, $locati
         
         $http.post('/pa165/rest/users/create', user).
             then(function success(response) {
-                $rootScope.succesAllert = 'New user was registered.';
+                $rootScope.successAlert = 'New user was registered.';
                 $window.location.href = '/pa165/pages/login.html';
             }, function error(response) {
                 console.log('Error when register new user');

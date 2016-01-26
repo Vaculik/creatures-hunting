@@ -82,7 +82,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         $http.delete('rest/areas/' + id).
                 then(function success(response) {
                     console.log('Area with id=' + id + ' was deleted.');
-                    $rootScope.succesAllert = 'Area was deleted';
+                    $rootScope.successAlert = 'Area was deleted';
                     $location.path('/areas');
                 }, function error(response) {
                     console.log('Error when deleting area with id=' + id);
@@ -156,7 +156,7 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
         console.log('Create area: ' + area.name);
         $http.post('rest/areas/create', area).
                 then(function success(response) {
-                    $rootScope.succesAllert = 'The new area was created.';
+                    $rootScope.successAlert = 'The new area was created.';
                     $location.path('/areas');
                 }, function error(response) {
                     console.log('Error when creating new area');
@@ -182,7 +182,7 @@ controllers.controller('EditAreaController', function ($http, $routeParams, $roo
     $scope.edit = function (area) {
         console.log("EDIT area " + area.name);
         $http.post('rest/areas/update', area).then(function (response) {
-            $rootScope.succesAllert = 'Area was changed.';
+            $rootScope.successAlert = 'Area was changed.';
             $location.path('/area/' + area.id);
         }, function (response) {//Request failed
             console.log("EDIT area failed");

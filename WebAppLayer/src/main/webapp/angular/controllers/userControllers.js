@@ -42,7 +42,7 @@ controllers.controller('UsersController', function ($http, $routeParams, $scope)
     }
 });
 
-controllers.controller('ParticularUserController', function ($http, $rootScope, $route, $location, $routeParams, $scope) {
+controllers.controller('ParticularUserController', function ($http, $rootScope, $route, $location, $routeParams, $scope, AuthService) {
     var userId = $routeParams.userId;
     console.log('GET particular user with id=' + userId);
     $http.get('rest/users/' + userId).
@@ -59,7 +59,7 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
         $http.post('rest/users/make-admin/' + id).
             then(function success(response) {
                 console.log('User with id=' + id + ' has been promoted to admin.');
-                $rootScope.successAllert = 'User has been promoted to admin';
+                $rootScope.successAlert = 'User has been promoted to admin';
                 $route.reload();
             }, function error(response) {
                 console.log('Error when promoting user with id=' + id + ' to admin.');
@@ -73,7 +73,8 @@ controllers.controller('ParticularUserController', function ($http, $rootScope, 
         $http.delete('rest/users/' + id).
             then(function success(response) {
                 console.log('User with id=' + id + ' was deleted.');
-                $rootScope.succesAllert = 'User was deleted';
+                AuthService.logout();
+                $rootScope.successAlert = 'User was deleted';
                 $location.path('/users/all');
             }, function error(response) {
                 console.log('Error when deleting user with id=' + id);
@@ -103,7 +104,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
     $scope.edit = function (user) {
         console.log("EDIT user " + user.name);
         $http.post('rest/users/edit/' + user.id, user).then(function (response) {//Request successful
-            $rootScope.succesAllert = 'User was changed.';
+            $rootScope.successAlert = 'User was changed.';
             $location.path('/user/' + user.id);
         }, function (response) {//Request failed
             console.log("EDIT user failed");
@@ -117,7 +118,7 @@ controllers.controller('EditUserController', function ($http, $routeParams, $rou
         $http.post('rest/users/make-user/' + id).
             then(function success(response) {
                 console.log('User with id=' + id + ' has been degraded to user.');
-                $rootScope.successAllert = 'User has been degraded to user';
+                $rootScope.successAlert = 'User has been degraded to user';
                 AuthService.degradeToUser();
                 $route.reload();
             }, function error(response) {
@@ -133,7 +134,7 @@ controllers.controller('ChangePasswordController', function($http, $rootScope, $
     $scope.changePasswordDTO = {
         userId: $rootScope.currentUser.userId,
         userName: $rootScope.currentUser.loginName,
-        oldPassword: '',
+        originalPassword: '',
         newPassword: ''
     };
     $scope.retypePassword = '';
@@ -141,10 +142,11 @@ controllers.controller('ChangePasswordController', function($http, $rootScope, $
         return $scope.changePasswordDTO.newPassword == $scope.retypePassword;
     };
     $scope.changePassword = function (changePasswordDTO) {
+        console.log(changePasswordDTO);
         console.log('Change password of user: ' + changePasswordDTO.userName);
-        $http.post('/pa165/rest/users/change-password', changePasswordDTO).
+        $http.post('rest/users/change-password', changePasswordDTO).
             then(function success(response) {
-                $rootScope.succesAllert = 'Password has been changed.';
+                $rootScope.successAlert = 'Password has been changed.';
                 $location.path('user/' + changePasswordDTO.userId)
             }, function error(response) {
                 console.log('Error when changing password');
