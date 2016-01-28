@@ -62,13 +62,8 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         'creatureName': ''
     };
     $scope.creatures = {};
-    
-    $http.get('rest/creatures/?view=all').
-        then(function (response) {
-            $scope.addCreatures = response.data['_embedded']['creatures']; // TODO subtract area.creatures
-        });
 
-        console.log('GET particular area with id=' + id);
+    console.log('GET particular area with id=' + id);
     $http.get('rest/areas/' + id).
             then(function (response) {
                 $scope.area = response.data;
@@ -82,7 +77,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
         $http.delete('rest/areas/' + id).
                 then(function success(response) {
                     console.log('Area with id=' + id + ' was deleted.');
-                    $rootScope.successAlert = 'Area was deleted';
+                    $rootScope.successAlertToDisplay = 'Area was deleted';
                     $location.path('/areas');
                 }, function error(response) {
                     console.log('Error when deleting area with id=' + id);
@@ -101,7 +96,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
                 }, function error(response) {
                     console.log('Error when adding creature with name=' + $scope.addCreatureDTO.creatureName);
                     console.log(response);
-                    $rootScope.errorAlert = 'Error when adding creature with name=', $scope.addCreatureDTO.creatureName;
+                    $rootScope.errorAlert = 'Error when adding creature with name=' + $scope.addCreatureDTO.creatureName;
                 });
 
     };
@@ -127,8 +122,7 @@ controllers.controller('ParticularAreaController', function ($http, $rootScope, 
     console.log('GET others areas to area with id=' + id);
     $http.get('rest/areas/' + id + '/othersareas').
             then(function (response) {
-                $scope.othersAreas = response.data['_embedded']['areas']
-                        ;
+                $scope.othersAreas = response.data['_embedded']['areas'];
             });
 
     $scope.removeCreature = function (id) {
@@ -156,7 +150,7 @@ controllers.controller('NewAreaController', function ($http, $rootScope, $locati
         console.log('Create area: ' + area.name);
         $http.post('rest/areas/create', area).
                 then(function success(response) {
-                    $rootScope.successAlert = 'The new area was created.';
+                    $rootScope.successAlertToDisplay = 'The new area was created.';
                     $location.path('/areas');
                 }, function error(response) {
                     console.log('Error when creating new area');
@@ -182,7 +176,7 @@ controllers.controller('EditAreaController', function ($http, $routeParams, $roo
     $scope.edit = function (area) {
         console.log("EDIT area " + area.name);
         $http.post('rest/areas/update', area).then(function (response) {
-            $rootScope.successAlert = 'Area was changed.';
+            $rootScope.successAlertToDisplay = 'Area was changed.';
             $location.path('/area/' + area.id);
         }, function (response) {//Request failed
             console.log("EDIT area failed");

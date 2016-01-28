@@ -39,16 +39,12 @@ controllers.controller('ParticularWeaponController', function ($http, $rootScope
         console.log('DELETE weapon by id=' + weaponId);
         $http.delete('rest/weapons/' + weaponId).then(function (response) {//Request succesful
                 console.log('DELETE weapon id=' + weaponId + 'SUCCESS');
-                $rootScope.successAlert = "Weapon " + $scope.weapon.name + "deleted.";
-                $location.path('/weapons/');
-            }, function (data) {//Request failed
+                $rootScope.successAlertToDisplay = "Weapon " + $scope.weapon.name + " was deleted.";
+                $location.path('/weapons');
+            }, function (response) {//Request failed
                 console.log('DELETE weapon id=' + weaponId + 'FAILURE');
                 $rootScope.errorAlert = "Could not delete weapon: " + data.message;
-            }, function (response) {//Request failed
-            console.log('GET weapon-efficiencies of weapon FAILURE');
-            console.log('DELETE weapon id=' + weaponId + 'FAILURE');
-            $rootScope.errorAlert = "Could not delete weapon: " + response.data.message;
-        });
+            });
     };
 
     $scope.deleteEff = function (id) {
@@ -87,7 +83,7 @@ controllers.controller('NewWeaponController', function ($http, $rootScope, $loca
     $scope.create = function (weapon) {
         console.log("Create weapon " + weapon.name);
         $http.post('rest/weapons/create', weapon).then(function (response) {//Request successful
-            $rootScope.successAlert = "Weapon " + weapon.name + " created";
+            $rootScope.successAlertToDisplay = "Weapon " + weapon.name + " was created";
             $location.path('/weapons');
         }, function (response) {//Request failed
             console.log("CREATE weapon failed");
@@ -110,7 +106,7 @@ controllers.controller('EditWeaponController', function ($http, $routeParams, $r
     $scope.edit = function (weapon) {
         console.log("EDIT weapon " + weapon.name);
         $http.post('rest/weapons/edit/' + weapon.id, weapon).then(function (response) {//Request successful
-            $rootScope.successAlert = "Weapon " + weapon.name + " edited";
+            $rootScope.successAlertToDisplay = "Weapon " + weapon.name + " was edited";
             $location.path('/weapons/' + weapon.id);
         }, function (response) {//Request failed
             console.log("EDIT weapon failed");
@@ -172,7 +168,7 @@ controllers.controller('NewWeaponEfficiencyController', function ($http, $rootSc
             newEfficiency.creatureId+' with efficiency='+newEfficiency.efficiency);
         $http.post('rest/weapon-efficiencies/create', newEfficiency).
             then(function (response) {//Request successful
-            $rootScope.successAlert = "Weapon " + weapon.name + " created";
+            $rootScope.successAlertToDisplay = "Weapon efficency was created";
             $location.path('/weapons/'+weaponId);
         }, function (response) {//Request failed
             console.log("CREATE efficiency failed");

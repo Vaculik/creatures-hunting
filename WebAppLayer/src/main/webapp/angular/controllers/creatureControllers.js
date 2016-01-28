@@ -68,7 +68,7 @@ controllers.controller('ParticularCreatureController', function ($http, $route, 
         $http.delete('rest/creatures/' + id).
             then(function success(response) {
                 console.log('Creature with id=' + id + ' was deleted.');
-                $rootScope.successAlert = 'Creature was deleted';
+                $rootScope.successAlertToDisplay = 'Creature was deleted';
                 $location.path('/creatures/all');
             }, function error(response) {
                 console.log('Error when deleting creature with id=' + id);
@@ -138,7 +138,7 @@ controllers.controller('NewCreatureController', function ($http, $rootScope, $lo
         console.log('Create creature: ' + creature.name);
         $http.post('rest/creatures/create', creature).
             then(function success(response) {
-                $rootScope.successAlert = 'The new creature was created.';
+                $rootScope.successAlertToDisplay = 'The new creature was created.';
                 $location.path('/creatures/all');
             }, function error(response) {
                 console.log('Error when creating new creature');
@@ -163,7 +163,7 @@ controllers.controller('EditCreatureController', function ($http, $routeParams, 
     $scope.edit = function (creature) {
         console.log("EDIT creature " + creature.name);
         $http.post('rest/creatures/update', creature).then(function (response) {
-            $rootScope.successAlert = 'Creature was changed.';
+            $rootScope.successAlertToDisplay = 'Creature was changed.';
             $location.path('/creature/' + creature.id);
         }, function (response) {//Request failed
             console.log("EDIT creature failed");

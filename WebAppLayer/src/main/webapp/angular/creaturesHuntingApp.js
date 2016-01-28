@@ -119,7 +119,6 @@ app.config(['$routeProvider', '$httpProvider', '$cookiesProvider',
                     var isRestCall = config.url.indexOf('rest') == 0;
                     if (isRestCall && angular.isDefined(Session.authToken)) {
                         if (Session.authToken != null) {
-                            console.log(Session.authToken);
                             config.headers['X-AUTH-TOKEN'] = Session.authToken;
                         }
                     }
@@ -134,6 +133,7 @@ app.config(['$routeProvider', '$httpProvider', '$cookiesProvider',
 app.run(function ($rootScope, $cookies, Session, USER_ROLES, AuthService) {
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
+        $rootScope.successAlertToDisplay = undefined; //Because of logout function, see AuthService.logout
     };
     $rootScope.hideWarningAlert = function () {
         $rootScope.warningAlert = undefined;
@@ -141,6 +141,28 @@ app.run(function ($rootScope, $cookies, Session, USER_ROLES, AuthService) {
     $rootScope.hideErrorAlert = function () {
         $rootScope.errorAlert = undefined;
     };
+
+    $rootScope.$on('$locationChangeSuccess', function () {
+        $rootScope.successAlert = undefined;
+        $rootScope.warningAlert = undefined;
+        $rootScope.errorAlert = undefined;
+
+        //$rootScope.successAlertToDisplay is helping property to overstep first $location.path change.
+        //After it, the message in $rootScope.successAlertToDisplay is displayed by $rootScope.successAlert.
+        //For $rootScope.warningAlertToDisplay and $rootScope.errorAlertToDisplay applies the same.
+        if ($rootScope.successAlertToDisplay != undefined) {
+            $rootScope.successAlert = $rootScope.successAlertToDisplay;
+            $rootScope.successAlertToDisplay = undefined;
+        }
+        if ($rootScope.warningAlertToDisplay != undefined) {
+            $rootScope.warningAlert = $rootScope.warningAlertToDisplay;
+            $rootScope.warningAlertToDisplay = undefined;
+        }
+        if ($rootScope.errorAlertToDisplay != undefined) {
+            $rootScope.errorAlert = $rootScope.errorAlertToDisplay;
+            $rootScope.errorAlertToDisplay = undefined;
+        }
+    });
 
     $rootScope.currentUser = null;
     $rootScope.userRoles = USER_ROLES;
@@ -201,8 +223,10 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $co
         Session.destroy();
         $rootScope.currentUser = null;
         $cookies.remove('auth');
-        $rootScope.successAlert = 'User has been logged out.';
-
+        var msg = 'User has been logged out.';
+        //Don't know, if $location.path will be changed, so the message is set for both cases.
+        $rootScope.successAlert = msg;
+        $rootScope.successAlertToDisplay = msg;
     };
 
     authService.degradeToUser = function () {
