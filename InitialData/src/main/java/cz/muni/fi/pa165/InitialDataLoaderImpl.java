@@ -54,11 +54,12 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         Creature frankenstein = loadCreature("Frankenstein's monster", 190, 100,
                 CreatureType.UNDEAD, "Created from scientific experiment.");
 
-        Weapon knife = loadWeapon("Knife", WeaponType.MELEE, 0, AmmoType.NONE, "Short knife good for cutting meal.");
+        Weapon knife = loadWeapon("Knife", WeaponType.MELEE, 0, AmmoType.NONE,
+                "Short knife, good only just for cutting meal.");
         Weapon sword = loadWeapon("Silver sword", WeaponType.MELEE, 0, AmmoType.NONE,
                 "Fine silver sword, very effective against vampires.");
         Weapon magnum = loadWeapon("Revolver .44 magnum", WeaponType.GUN, 150, AmmoType.MAGNUM_44,
-                "Old fashion revolver, good for killing some monsters.");
+                "Old fashion revolver, handy to killing some monsters.");
         Weapon laserRifle = loadWeapon("Laser assault rifle", WeaponType.ENERGY, 100, AmmoType.BATTERY,
                 "Modern laser weapon for all monster hunters.");
 
