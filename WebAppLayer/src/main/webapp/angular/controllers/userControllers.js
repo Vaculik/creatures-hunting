@@ -151,7 +151,11 @@ controllers.controller('ChangePasswordController', function($http, $rootScope, $
             }, function error(response) {
                 console.log('Error when changing password');
                 console.log(response);
-                $rootScope.errorAlert = 'Problem has occured, cannot change password!';
+                if (response.status == 401) { //Unauthorized
+                    $rootScope.warningAlert = 'Invalid original password.';
+                } else {
+                    $rootScope.errorAlert = 'Problem has occured, cannot change password!';
+                }
             });
     };
 });

@@ -1,9 +1,6 @@
 package cz.muni.fi.pa165.controllers;
 
-import cz.muni.fi.pa165.exceptions.AccessDeniedException;
-import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
-import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
-import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.exceptions.*;
 import cz.muni.fi.pa165.hateoas.ExceptionResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

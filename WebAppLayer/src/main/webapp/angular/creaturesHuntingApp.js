@@ -133,7 +133,6 @@ app.config(['$routeProvider', '$httpProvider', '$cookiesProvider',
 app.run(function ($rootScope, $cookies, Session, USER_ROLES, AuthService) {
     $rootScope.hideSuccessAlert = function () {
         $rootScope.successAlert = undefined;
-        $rootScope.successAlertToDisplay = undefined; //Because of logout function, see AuthService.logout
     };
     $rootScope.hideWarningAlert = function () {
         $rootScope.warningAlert = undefined;
@@ -202,7 +201,7 @@ app.service('Session', function (USER_ROLES) {
     };
 });
 
-app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $cookies) {
+app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $cookies, $window) {
     var authService = {};
 
     // If id is null then boolean value is false -> return false;
@@ -224,9 +223,7 @@ app.factory('AuthService', function ($http, $rootScope, USER_ROLES, Session, $co
         $rootScope.currentUser = null;
         $cookies.remove('auth');
         var msg = 'User has been logged out.';
-        //Don't know, if $location.path will be changed, so the message is set for both cases.
-        $rootScope.successAlert = msg;
-        $rootScope.successAlertToDisplay = msg;
+        $window.location.href = '/pa165/pages/login.html';
     };
 
     authService.degradeToUser = function () {

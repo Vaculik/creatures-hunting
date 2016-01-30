@@ -100,7 +100,7 @@ desired effect
                             <li><a href="#/user/{{currentUser.userId}}">Profile</a></li>
                             <li><a href="#/user/change-password/{{currentUser.userId}}">Change password</a></li>
                             <li class="divider"></li>
-                            <li><a href="#/home" ng-click="logout()">
+                            <li><a href="javascript:void(0)" ng-click="logout()">
                                 <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                         </ul>
                     </li>

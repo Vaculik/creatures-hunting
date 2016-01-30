@@ -8,8 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import cz.muni.fi.pa165.dto.*;
-import cz.muni.fi.pa165.exceptions.AccessDeniedException;
-import cz.muni.fi.pa165.exceptions.AuthenticationFailedException;
+import cz.muni.fi.pa165.exceptions.*;
 import cz.muni.fi.pa165.hateoas.*;
 
 import cz.muni.fi.pa165.security.TokenAuthenticationService;
@@ -27,8 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import cz.muni.fi.pa165.enums.SexType;
 import cz.muni.fi.pa165.enums.UserType;
-import cz.muni.fi.pa165.exceptions.InvalidRequestFormatException;
-import cz.muni.fi.pa165.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.facade.UserSystemFacade;
 
 import static cz.muni.fi.pa165.security.TokenAuthenticationService.AUTH_NAME_HEADER;
@@ -243,7 +240,7 @@ public class UserSystemRestController {
     //permission:AUTHENTICATED_USER
     @RequestMapping(value = "/change-password", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void changePassword(@RequestBody @Valid UserSystemChangePasswordDTO changePasswordDTO,
-                               @RequestHeader(AUTH_NAME_HEADER) String token, BindingResult bindingResult) {
+                               BindingResult bindingResult, @RequestHeader(AUTH_NAME_HEADER) String token) {
         logger.debug("POST change user password");
 
         if (bindingResult.hasErrors()) {
@@ -258,7 +255,11 @@ public class UserSystemRestController {
             throw new AccessDeniedException(msg);
         }
 
-        userFacade.changePassword(changePasswordDTO);
+        if (!userFacade.changePassword(changePasswordDTO)) {
+            String msg = "Password change is denied, invalid original password.";
+            logger.debug(msg);
+            throw new AuthenticationFailedException(msg);
+        }
     }
 
 }
